@@ -1,0 +1,58 @@
+version: "3.2"
+services:
+
+  mysql:
+    image: mysql:8.0
+    container_name: eco-service-mysql
+    working_dir: /application
+    volumes:
+      - .:/application
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=ecoservice
+      - MYSQL_USER=ecoservice
+      - MYSQL_PASSWORD=admin
+    ports:
+      - "3306:3306"
+
+  nginx:
+    image: nginx:alpine
+    container_name: eco-service-nginx
+    working_dir: /application
+    volumes:
+        - .:/application
+        - ./.docker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+    ports:
+      - "80:80"
+
+  php-fpm:
+    build: .docker/php-fpm
+    container_name: eco-service-php-fpm
+    working_dir: /application
+    volumes:
+      - .:/application
+      - ./.docker/php-fpm/php-ini-overrides.ini:/etc/php/7.2/fpm/conf.d/99-overrides.ini
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: eco-service-phpmyadmin
+    links:
+      - mysql
+    environment:
+      PMA_HOST: mysql
+      PMA_PORT: 3306
+      PMA_USER: ecoservice
+      PMA_PASSWORD: admin
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: ecoservice
+      MYSQL_PASSWORD: admin
+    restart: always
+    ports:
+      - 81:80
+
+  composer:
+    image: composer
+    container_name: eco-service-composer
+    volumes:
+      - .:/app
+    command: install
