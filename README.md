@@ -9,7 +9,8 @@ Clonez le dépôt git et placez-vous sur la branche `develop`, ou sur la branche
 Ensuite, déplacez-vous dans le dossier du dépôt git puis construisez les containers Docker : `docker-compose build`.  
 Une fois cela effectué, vous pouvez lancer les containers : `docker-compose up -d`.
 
-Tapez ensuite `composer update`.
+Attendez une minute, le temps que toutes les dépendances de composer se téléchargent.  
+Tapez ensuite `composer config platform.php 7.3.14`.
 
 Le projet est maintenant disponible si vous aller sur l'URL `localhost` !  
 Si vous souhaitez avoir un plus bel URL, vous pouvez ajouter la ligne suivante à votre fichier de hosts `127.0.0.1 dev.eco-service.com` et le projet sera accessible sur l'URL `dev.eco-service.com` !
