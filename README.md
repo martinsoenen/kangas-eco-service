@@ -1,6 +1,6 @@
 # KANGAS - Eco Service
 
-Projet e-commerce réalisé dans le cadre de l'année d'ING1 à l'Institut G4.
+Projet e-commerce réalisé dans le cadre de l'année d'ING1 à l'Institut G4 Lyon.
 
 ## Première installation
 
