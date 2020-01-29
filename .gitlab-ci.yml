@@ -1,24 +1,39 @@
 stages:
     - build
     - test
-  
-docker:
+
+docker build:
     stage: build
+    image: tiangolo/docker-with-compose
+    before_script:
+        - docker info
+        - docker-compose --version
     script:
-        - docker-compose build
+        - docker-compose build    
 
 composer install:
     stage: build
+    image: tiangolo/docker-with-compose
+    before_script:
+        - docker info
+        - docker-compose --version
     script:
+        - composer install
         - docker-compose up --build
-        - sleep 120
     cache:
         paths:
         - vendor/ 
 
 cypress:
     stage: test
+    image: tiangolo/docker-with-compose
+    before_script:
+        - docker info
+        - docker-compose --version
     script:
+        - docker-compose up --build
+        - sleep 120
+        - npm install
         - npm run cypress
     cache:
         paths:
