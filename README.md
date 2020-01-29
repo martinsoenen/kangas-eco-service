@@ -4,7 +4,7 @@ Projet e-commerce réalisé dans le cadre de l'année d'ING1 à l'Institut G4.
 
 ## Première installation
 
-Clonez le dépôt git et placez-vous sur la branche develop, ou sur la branche qui vous concerne.
+Clonez le dépôt git et placez-vous sur la branche `develop`, ou sur la branche qui vous concerne.
 
 Ensuite, déplacez-vous dans le dossier du dépôt git puis construisez les containers Docker : `docker-compose build`.  
 Une fois cela effectué, vous pouvez lancer les containers : `docker-compose up -d`.
