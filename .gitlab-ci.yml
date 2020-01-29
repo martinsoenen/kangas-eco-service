@@ -6,7 +6,6 @@ stages:
 
 docker build:
     stage: build
-    image: tiangolo/docker-with-compose
     before_script:
         - docker-compose --version
     script:
@@ -14,7 +13,6 @@ docker build:
 
 composer install:
     stage: build
-    image: tiangolo/docker-with-compose
     before_script:
         - docker-compose --version
     script:
@@ -26,7 +24,6 @@ composer install:
 
 cypress:
     stage: test
-    image: tiangolo/docker-with-compose
     before_script:
         - docker-compose --version
     script:
