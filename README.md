@@ -16,7 +16,7 @@ Pour accéder à PHPMyAdmin, il suffit d'aller sur le port 81 de votre URL (`loc
 
 ## Docker-compose cheatsheet
 
-  * Démarrer les containers en y étant attaché : `docker-compose up`
+  * Démarrer les containers en voyant leurs logs : `docker-compose up`
   * Démarrer les containers en tâche de fond : `docker-compose up -d`
   * Arrêter les containers : `docker-compose stop`
   * Tuer les containers : `docker-compose kill`
