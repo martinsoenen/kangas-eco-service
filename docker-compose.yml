@@ -55,5 +55,4 @@ services:
     container_name: eco-service-composer
     volumes:
       - .:/app
-    command:  - config platform.php 7.3.14
-              - update
+    command: install --ignore-platform-reqs
