@@ -7,7 +7,7 @@ stages:
 docker build:
     stage: build
     before_script:
-        - RUN apk add --no-cache python py-pip python-dev && pip install docker-compose
+        - apk add --no-cache python py-pip python-dev && pip install docker-compose
         - docker-compose --version
     script:
         - docker-compose build    
@@ -15,7 +15,7 @@ docker build:
 composer install:
     stage: build
     before_script:
-        - RUN apk add --no-cache python py-pip python-dev && pip install docker-compose
+        - apk add --no-cache python py-pip python-dev && pip install docker-compose
         - docker-compose --version
     script:
         - composer install
@@ -27,7 +27,7 @@ composer install:
 cypress:
     stage: test
     before_script:
-        - RUN apk add --no-cache python py-pip python-dev && pip install docker-compose
+        - apk add --no-cache python py-pip python-dev && pip install docker-compose
         - docker-compose --version
     script:
         - docker-compose up --build
