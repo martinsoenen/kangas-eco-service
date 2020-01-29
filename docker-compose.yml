@@ -26,7 +26,7 @@ services:
       - "80:80"
 
   php-fpm:
-    build: .docker/php-fpm
+    image: php:fpm
     container_name: eco-service-php-fpm
     working_dir: /application
     volumes:
