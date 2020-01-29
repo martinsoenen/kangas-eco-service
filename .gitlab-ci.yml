@@ -1,0 +1,29 @@
+stages:
+    - build
+    - test
+  
+docker:
+    stage: build
+    script:
+        - docker-compose build
+    cache:
+        paths:
+        - vendor/
+
+composer install:
+    stage: build
+    script:
+        - docker-compose up --build
+        - sleep 120
+    cache:
+        paths:
+        - vendor/ 
+
+cypress:
+    stage: test
+    script:
+        - npm run cypress
+    cache:
+        paths:
+            -vendor
+            - node_modules/
