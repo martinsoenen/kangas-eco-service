@@ -6,9 +6,6 @@ docker:
     stage: build
     script:
         - docker-compose build
-    cache:
-        paths:
-        - vendor/
 
 composer install:
     stage: build
@@ -25,5 +22,5 @@ cypress:
         - npm run cypress
     cache:
         paths:
-            -vendor
+            - vendor
             - node_modules/
