@@ -9,7 +9,7 @@ Clonez le dépôt git et placez-vous sur la branche `develop`, ou sur la branche
 Ensuite, déplacez-vous dans le dossier du dépôt git puis construisez les containers Docker : `docker-compose build`.  
 Une fois cela effectué, vous pouvez lancer les containers : `docker-compose up -d`.
 
-Attendez une minute, le temps que toutes les dépendances de composer se téléchargent.
+Attendez une minute, le temps que toutes les dépendances de composer se téléchargent et que MySQL se lance.
 
 Le projet est maintenant disponible si vous aller sur l'URL `localhost` !  
 Si vous souhaitez avoir un plus bel URL, vous pouvez ajouter la ligne suivante à votre fichier de hosts `127.0.0.1 dev.eco-service.com` et le projet sera accessible sur l'URL `dev.eco-service.com` !
@@ -23,13 +23,14 @@ Pour accéder à PHPMyAdmin, il suffit d'aller sur le port 81 de votre URL (`loc
   * Arrêter les containers : `docker-compose stop`
   * Tuer les containers : `docker-compose kill`
   * Détruire les containers : `docker-compose rm`
+  * Arrêter et détruire les containers : `docker-compose down`
   * Voir le statut de ses containers : `docker-compose ps`
   * Voir les logs des containers : `docker-compose logs`
   * Faire une commande dans un container : `docker-compose exec SERVICE_NAME COMMAND` où `COMMAND` est la commande que l'on veut. Exemples :  
-    - Ouvrir une console dans le container php-fpm : `docker-compose exec php-fpm bash`  
-    - Ouvrir la console Symfony : `docker-compose exec php-fpm bin/console`
+    - Ouvrir une console dans le container php-fpm : `docker-compose exec php bash` (ne fonctionne pas sur Windows)  
+    - Ouvrir la console Symfony : `docker-compose exec php bin/console` (ne fonctionne pas sur Windows)
 
 ## Erreurs connues
 
 * La version de PHP demandée par composer est supérieure à la version existante.  
-  Pour corriger l'erreur, tapez `composer config platform.php 7.3.14`.
+  Pour corriger l'erreur, tapez `composer config platform.php 7.4.12`.
