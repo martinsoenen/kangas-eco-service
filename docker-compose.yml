@@ -46,7 +46,6 @@ services:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_USER: root
       MYSQL_PASSWORD: root
-    restart: always
     ports:
       - 81:80
 
