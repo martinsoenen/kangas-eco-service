@@ -5,7 +5,7 @@ stages:
     - test
 
 before_script:
-    - docker login -u msoenen --password-stdin 1c623a2a-919c-4df2-8a0c-fcf59863fd88
+    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
 
 build containers:
     stage: build
@@ -19,3 +19,16 @@ composer install:
     cache:
         paths:
         - vendor/
+
+
+cypress:
+    stage: test
+    script:
+        - docker-compose up --build
+        - sleep 120
+        - npm install
+        - npm run cypress
+    cache:
+        paths:
+            - vendor
+            - node_modules/
