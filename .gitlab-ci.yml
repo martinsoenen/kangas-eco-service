@@ -4,6 +4,9 @@ stages:
     - build
     - test
 
+before_script:
+    - docker login -u msoenen -p 1c623a2a-919c-4df2-8a0c-fcf59863fd88
+
 build containers:
     stage: build
     script:
