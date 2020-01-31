@@ -15,7 +15,8 @@ build containers:
 composer install:
     stage: build
     script:
-        - docker-compose up --build
+        - docker-compose up -d --build php nginx mysql phpmyadmin
+        - docker-compose up --build composer
     cache:
         paths:
         - vendor/
