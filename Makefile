@@ -2,13 +2,6 @@ EXEC_PHP        = php
 SYMFONY         = $(EXEC_PHP) bin/console
 COMPOSER        = composer
 
-##### RACCOURCIS #####
-dcp:
-	docker-compose
-
-pbc:
-	$(SYMFONY)
-
 ##### DOCTRINE #####
 database:
 	$(SYMFONY) doctrine:schema:drop --full-database --force
