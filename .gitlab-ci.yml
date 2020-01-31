@@ -16,6 +16,7 @@ composer install:
     stage: build
     script:
         - docker-compose up -d --build
+        - docker exec composer bash
         - composer install
     cache:
         paths:
