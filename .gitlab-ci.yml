@@ -15,9 +15,7 @@ build containers:
 composer install:
     stage: build
     script:
-        - docker-compose up -d --build
-        - docker exec composer bash
-        - composer install
+        - docker-compose up --build
     cache:
         paths:
         - vendor/
