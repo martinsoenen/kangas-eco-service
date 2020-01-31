@@ -8,6 +8,8 @@ help:
 	$(SYMFONY)
 cache :
 	$(SYMFONY) cache:warmup
+routes:
+	$(SYMFONY) debug:router --show-controllers
 
 ##### DOCTRINE #####
 database:
@@ -15,12 +17,9 @@ database:
 	$(SYMFONY) doctrine:schema:drop --full-database --force
 	$(SYMFONY) doctrine:schema:update --force
 	$(SYMFONY) doctrine:migrations:migrate --no-interaction --allow-no-migration
-
 migration:
 	$(SYMFONY) doctrine:migrations:diff
-
 entities:
 	$(SYMFONY) make:entity --regenerate App
-
 entity:
 	$(SYMFONY) make:entity

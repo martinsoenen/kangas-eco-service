@@ -30,6 +30,15 @@ Pour accéder à PHPMyAdmin, il suffit d'aller sur le port 81 de votre URL (`loc
     - Ouvrir une console dans le container php-fpm : `docker-compose exec php bash` (ne fonctionne pas sur Windows)  
     - Ouvrir la console Symfony : `docker-compose exec php bin/console` (ne fonctionne pas sur Windows)
 
+
+## Symfony 
+
+* Vider le cache : `make cache`
+* Créer une nouvelle entité (et création auto du repo) : `make entity`
+* Regénérer les getters et setters (+ constructeur et autres) : `make entities`
+* Ajouter la base ou mettre à jour le schéma de la base : `make database`
+* Lister les routes crées : `make routes` 
+
 ## Erreurs connues
 
 * La version de PHP demandée par composer est supérieure à la version existante.  
