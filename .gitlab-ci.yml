@@ -7,9 +7,6 @@ stages:
     - build
     - test
 
-before_script:
-    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
-
 build containers:
     stage: build
     script:
@@ -18,6 +15,7 @@ build containers:
 composer install:
     stage: build
     script:
+        - docker-compose up -d --build
         - composer install
     cache:
         paths:
