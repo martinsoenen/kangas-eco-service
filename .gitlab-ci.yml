@@ -1,5 +1,8 @@
 image: tiangolo/docker-with-compose
 
+services:
+    - docker:dind
+
 stages:
     - build
     - test
@@ -19,16 +22,3 @@ composer install:
     cache:
         paths:
         - vendor/
-
-
-cypress:
-    stage: test
-    script:
-        - docker-compose up --build
-        - sleep 120
-        - npm install
-        - npm run cypress
-    cache:
-        paths:
-            - vendor
-            - node_modules/
