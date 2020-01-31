@@ -1,0 +1,22 @@
+image: tiangolo/docker-with-compose
+
+services:
+    - docker:dind
+
+stages:
+    - build
+    - test
+
+build containers:
+    stage: build
+    script:
+        - docker-compose build
+
+composer install:
+    stage: build
+    script:
+        - docker-compose up -d --build php nginx mysql phpmyadmin
+        - docker-compose up --build composer
+    cache:
+        paths:
+        - vendor/

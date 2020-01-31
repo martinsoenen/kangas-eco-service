@@ -9,7 +9,7 @@ services:
       - .:/application
     environment:
       - MYSQL_ROOT_PASSWORD=root
-      - MYSQL_DATABASE=ecoservice
+      - MYSQL_DATABASE=testdb
       - MYSQL_USER=ecoservice
       - MYSQL_PASSWORD=admin
     ports:
@@ -25,13 +25,13 @@ services:
     ports:
       - "80:80"
 
-  php-fpm:
-    build: .docker/php-fpm
-    container_name: eco-service-php-fpm
+  php:
+    build: .docker/php
+    container_name: eco-service-php
     working_dir: /application
     volumes:
       - .:/application
-      - ./.docker/php-fpm/php-ini-overrides.ini:/etc/php/7.2/fpm/conf.d/99-overrides.ini
+      - ./.docker/php/php-ini-overrides.ini:/etc/php/7.2/fpm/conf.d/99-overrides.ini
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
@@ -41,12 +41,11 @@ services:
     environment:
       PMA_HOST: mysql
       PMA_PORT: 3306
-      PMA_USER: ecoservice
-      PMA_PASSWORD: admin
+      PMA_USER: root
+      PMA_PASSWORD: root
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_USER: ecoservice
-      MYSQL_PASSWORD: admin
-    restart: always
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
     ports:
       - 81:80
 
@@ -55,4 +54,4 @@ services:
     container_name: eco-service-composer
     volumes:
       - .:/app
-    command: install
+    command: install --ignore-platform-reqs
