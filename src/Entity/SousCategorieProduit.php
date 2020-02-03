@@ -25,7 +25,7 @@ class SousCategorieProduit
      * @ORM\ManyToOne(targetEntity="App\Entity\CategorieProduit")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $idCategorieProduit;
+    private $CategorieProduit;
 
     public function getId(): ?int
     {
@@ -52,6 +52,18 @@ class SousCategorieProduit
     public function setIdCategorieProduit(?CategorieProduit $idCategorieProduit): self
     {
         $this->idCategorieProduit = $idCategorieProduit;
+
+        return $this;
+    }
+
+    public function getCategorieProduit(): ?CategorieProduit
+    {
+        return $this->CategorieProduit;
+    }
+
+    public function setCategorieProduit(?CategorieProduit $CategorieProduit): self
+    {
+        $this->CategorieProduit = $CategorieProduit;
 
         return $this;
     }

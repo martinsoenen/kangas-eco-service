@@ -37,4 +37,6 @@ class CategorieBlog
 
         return $this;
     }
+
+   
 }

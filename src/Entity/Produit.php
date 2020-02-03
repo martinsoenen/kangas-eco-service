@@ -45,13 +45,13 @@ class Produit
      * @ORM\ManyToOne(targetEntity="App\Entity\SousCategorieProduit")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $idSousCategorieProduit;
+    private $SousCategorieProduit;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\UtilisateurAdministration")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $idUtilisateurAdmin;
+    private $UtilisateurAdmin;
 
     public function getId(): ?int
     {
@@ -138,6 +138,30 @@ class Produit
     public function setIdUtilisateurAdmin(?UtilisateurAdministration $idUtilisateurAdmin): self
     {
         $this->idUtilisateurAdmin = $idUtilisateurAdmin;
+
+        return $this;
+    }
+
+    public function getSousCategorieProduit(): ?SousCategorieProduit
+    {
+        return $this->SousCategorieProduit;
+    }
+
+    public function setSousCategorieProduit(?SousCategorieProduit $SousCategorieProduit): self
+    {
+        $this->SousCategorieProduit = $SousCategorieProduit;
+
+        return $this;
+    }
+
+    public function getUtilisateurAdmin(): ?UtilisateurAdministration
+    {
+        return $this->UtilisateurAdmin;
+    }
+
+    public function setUtilisateurAdmin(?UtilisateurAdministration $UtilisateurAdmin): self
+    {
+        $this->UtilisateurAdmin = $UtilisateurAdmin;
 
         return $this;
     }

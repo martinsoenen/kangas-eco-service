@@ -30,13 +30,13 @@ class Article
      * @ORM\OneToOne(targetEntity="App\Entity\CategorieBlog")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $idCategorieBlog;
+    private $CategorieBlog;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\UtilisateurAdministration")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $idUtilisateurAdmin;
+    private $UtilisateurAdmin;
 
     public function getId(): ?int
     {
@@ -67,27 +67,29 @@ class Article
         return $this;
     }
 
-    public function getIdCategorieBlog(): ?CategorieBlog
+    public function getCategorieBlog(): ?CategorieBlog
     {
-        return $this->idCategorieBlog;
+        return $this->CategorieBlog;
     }
 
-    public function setIdCategorieBlog(CategorieBlog $idCategorieBlog): self
+    public function setCategorieBlog(CategorieBlog $CategorieBlog): self
     {
-        $this->idCategorieBlog = $idCategorieBlog;
+        $this->CategorieBlog = $CategorieBlog;
 
         return $this;
     }
 
-    public function getIdUtilisateurAdmin(): ?UtilisateurAdministration
+    public function getUtilisateurAdmin(): ?UtilisateurAdministration
     {
-        return $this->idUtilisateurAdmin;
+        return $this->UtilisateurAdmin;
     }
 
-    public function setIdUtilisateurAdmin(?UtilisateurAdministration $idUtilisateurAdmin): self
+    public function setUtilisateurAdmin(?UtilisateurAdministration $UtilisateurAdmin): self
     {
-        $this->idUtilisateurAdmin = $idUtilisateurAdmin;
+        $this->UtilisateurAdmin = $UtilisateurAdmin;
 
         return $this;
     }
+
+   
 }

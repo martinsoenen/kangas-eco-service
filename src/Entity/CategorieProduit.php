@@ -25,7 +25,7 @@ class CategorieProduit
      * @ORM\ManyToOne(targetEntity="App\Entity\UtilisateurAdministration")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $idUtilisateurAdmin;
+    private $UtilisateurAdmin;
 
     public function getId(): ?int
     {
@@ -52,6 +52,18 @@ class CategorieProduit
     public function setIdUtilisateurAdmin(?UtilisateurAdministration $idUtilisateurAdmin): self
     {
         $this->idUtilisateurAdmin = $idUtilisateurAdmin;
+
+        return $this;
+    }
+
+    public function getUtilisateurAdmin(): ?UtilisateurAdministration
+    {
+        return $this->UtilisateurAdmin;
+    }
+
+    public function setUtilisateurAdmin(?UtilisateurAdministration $UtilisateurAdmin): self
+    {
+        $this->UtilisateurAdmin = $UtilisateurAdmin;
 
         return $this;
     }

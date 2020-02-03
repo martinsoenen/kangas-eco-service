@@ -51,11 +51,12 @@ class Commande
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Produit")
      */
-    private $idProduit;
+    private $Produit;
 
     public function __construct()
     {
         $this->idProduit = new ArrayCollection();
+        $this->Produit = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -156,6 +157,32 @@ class Commande
     {
         if ($this->idProduit->contains($idProduit)) {
             $this->idProduit->removeElement($idProduit);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Produit[]
+     */
+    public function getProduit(): Collection
+    {
+        return $this->Produit;
+    }
+
+    public function addProduit(Produit $produit): self
+    {
+        if (!$this->Produit->contains($produit)) {
+            $this->Produit[] = $produit;
+        }
+
+        return $this;
+    }
+
+    public function removeProduit(Produit $produit): self
+    {
+        if ($this->Produit->contains($produit)) {
+            $this->Produit->removeElement($produit);
         }
 
         return $this;

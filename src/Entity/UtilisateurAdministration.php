@@ -40,7 +40,7 @@ class UtilisateurAdministration
      * @ORM\ManyToOne(targetEntity="App\Entity\Role")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $idRole;
+    private $Role;
 
     public function getId(): ?int
     {
@@ -103,6 +103,18 @@ class UtilisateurAdministration
     public function setIdRole(?Role $idRole): self
     {
         $this->idRole = $idRole;
+
+        return $this;
+    }
+
+    public function getRole(): ?Role
+    {
+        return $this->Role;
+    }
+
+    public function setRole(?Role $Role): self
+    {
+        $this->Role = $Role;
 
         return $this;
     }
