@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello EcoServiceController!{% endblock %}
+{% block title %}Accueil - {{ parent() }}{% endblock %}
 
 {% block body %}
 <style>
@@ -9,9 +9,9 @@
 </style>
 
 <div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    <h1>Page d'accueil</h1>
 
-    This friendly message is coming from:
+    A faire
     <ul>
         <li>Your controller at <code><a href="{{ '/application/src/Controller/EcoServiceController.php'|file_link(0) }}">src/Controller/EcoServiceController.php</a></code></li>
         <li>Your template at <code><a href="{{ '/application/templates/eco_service/index.html.twig'|file_link(0) }}">templates/eco_service/index.html.twig</a></code></li>
