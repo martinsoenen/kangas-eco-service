@@ -9,6 +9,7 @@ class BlogController extends AbstractController
 {
     /**
      * @Route("/blog", name="blog")
+     * @Route("/blog/index", name="blog_index")
      */
     public function index()
     {
