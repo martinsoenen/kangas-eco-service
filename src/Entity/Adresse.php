@@ -49,21 +49,16 @@ class Adresse
     private $Ville;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\UtilisateurEntreprise", mappedBy="idAdresse", orphanRemoval=true)
-     */
-    private $utilisateurEntreprises;
-
-    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\AdresseType", inversedBy="adresses")
      * @ORM\JoinColumn(nullable=false)
      */
     private $AdresseType;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\UtilisateurClient", inversedBy="idAdresse")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Utilisateur", inversedBy="idAdresse")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $UtilisateurClient;
+    private $Utilisateur;
 
     public function __construct()
     {
@@ -190,14 +185,14 @@ class Adresse
         return $this;
     }
 
-    public function getUtilisateurClient(): ?UtilisateurClient
+    public function getUtilisateur(): ?Utilisateur
     {
-        return $this->UtilisateurClient;
+        return $this->Utilisateur;
     }
 
-    public function setUtilisateurClient(?UtilisateurClient $UtilisateurClient): self
+    public function setUtilisateur(?Utilisateur $Utilisateur): self
     {
-        $this->UtilisateurClient = $UtilisateurClient;
+        $this->Utilisateur = $Utilisateur;
 
         return $this;
     }
