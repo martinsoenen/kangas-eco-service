@@ -8,13 +8,11 @@
     .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
 </style>
 
-<div class="example-wrapper">
-    <h1>Page du magasin</h1>
-
-    A faire
-    <ul>
-        <li>Your controller at <code><a href="{{ '/application/src/Controller/ProductController.php'|file_link(0) }}">src/Controller/ProductController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/application/templates/product/index.html.twig'|file_link(0) }}">templates/product/index.html.twig</a></code></li>
-    </ul>
+<div class="products">
+    {% for produit in produits %}
+        {{ produit.nomProduit }} - {{ produit.prixUnitaireHT }}€ - {{ produit.tauxTVA }}% - {{ produit.presentation }} - {{ produit.descriptionDetaillee }} - {{ produit.SousCategorieProduit }} - {{ produit.UtilisateurAdmin }}
+        <br><br>
+    {% endfor %}
 </div>
+
 {% endblock %}
