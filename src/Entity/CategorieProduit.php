@@ -2,8 +2,6 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -28,16 +26,6 @@ class CategorieProduit
      * @ORM\JoinColumn(nullable=false)
      */
     private $UtilisateurAdmin;
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\SousCategorieProduit", mappedBy="idCategorieProduit")
-     */
-    private $sousCategorieProduits;
-
-    public function __construct()
-    {
-        $this->sousCategorieProduits = new ArrayCollection();
-    }
 
     public function getId(): ?int
     {
@@ -76,37 +64,6 @@ class CategorieProduit
     public function setUtilisateurAdmin(?UtilisateurAdministration $UtilisateurAdmin): self
     {
         $this->UtilisateurAdmin = $UtilisateurAdmin;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|SousCategorieProduit[]
-     */
-    public function getSousCategorieProduits(): Collection
-    {
-        return $this->sousCategorieProduits;
-    }
-
-    public function addSousCategorieProduit(SousCategorieProduit $sousCategorieProduit): self
-    {
-        if (!$this->sousCategorieProduits->contains($sousCategorieProduit)) {
-            $this->sousCategorieProduits[] = $sousCategorieProduit;
-            $sousCategorieProduit->setIdCategorieProduit($this);
-        }
-
-        return $this;
-    }
-
-    public function removeSousCategorieProduit(SousCategorieProduit $sousCategorieProduit): self
-    {
-        if ($this->sousCategorieProduits->contains($sousCategorieProduit)) {
-            $this->sousCategorieProduits->removeElement($sousCategorieProduit);
-            // set the owning side to null (unless already changed)
-            if ($sousCategorieProduit->getIdCategorieProduit() === $this) {
-                $sousCategorieProduit->setIdCategorieProduit(null);
-            }
-        }
 
         return $this;
     }
