@@ -1,3 +1,26 @@
+/*=======================================================================
+                                  GENERAL
+  =======================================================================*/
+
+i { color: #EEEEEE; }
+
+h { font-family: "Roboto", sans-serif }
+
+p { font-family: "Lato", sans-serif }
+
+label { font-family: "Dosis Light", sans-serif }
+
+.underlined { text-decoration: underline}
+.bold { font-weight: bold }
+
+thead tr { border-bottom: solid 10px transparent }
+
+.gray-href { color: #EEEEEE}
+
+/*=======================================================================
+                                HEADER PART
+  =======================================================================*/
+
 .navbar
 {
     background-color: #8ed86e;
@@ -22,16 +45,6 @@
 
 /*=======================================*/
 
-i { color: #EEEEEE; }
-
-h { font-family: Roboto }
-
-p { font-family: Lato }
-
-label { font-family: "Dosis Light"}
-
-/*=======================================*/
-
 .dropdown-menu
 {
     margin: 0px 0px 0px -60px;
@@ -45,4 +58,67 @@ label { font-family: "Dosis Light"}
     background-color: #74d14c;
 }
 
-/*=======================================*/
+/*=======================================================================
+                                FOOTER PART
+  =======================================================================*/
+#footer
+{
+    text-align: center;
+    background-color: #244d11;
+    color: #EEEEEE;
+    padding: 0;
+}
+
+#subfooter
+{
+    flex-direction: column;
+}
+
+@media (min-width: 576px)
+{
+    #subfooter
+    {
+        flex-direction: row;
+    }
+}
+
+.footer-element
+{
+    flex-direction: row;
+    text-align: center;
+    margin: 10px;
+    padding-bottom: 10px;
+    border-bottom: solid 1px #555555;
+}
+@media (min-width: 576px)
+{
+    .footer-element
+    {
+        border-bottom: solid 0px transparent;
+        flex-direction: column;
+        margin: 10px;
+    }
+}
+
+#last-element
+{
+    border-bottom: solid 0px transparent;
+}
+
+.footer-element table
+{
+    margin-right: 30px;
+    width: 100%;
+}
+.footer-element td
+{
+    width: 33.3333%;
+}
+
+#copyright
+{
+    margin-top: -15px;
+    margin-bottom: -5px;
+    font-size: 8px;
+    horiz-align: center;
+}
