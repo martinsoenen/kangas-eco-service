@@ -18,6 +18,16 @@ class EcoServiceController extends AbstractController
     }
 
     /**
+     * @Route("/cgu-cgv", name="cgu-cgv")
+     */
+    public function cgu()
+    {
+        return $this->render('eco_service/CGU.html.twig', [
+            'controller_name' => 'EcoServiceController',
+        ]);
+    }
+
+    /**
      * @Route("/faq", name="faq")
      */
     public function faq()
@@ -55,6 +65,16 @@ class EcoServiceController extends AbstractController
     public function particulier_index()
     {
         return $this->render('eco_service/particulier_index.html.twig',[
+            'controller_name' => 'EcoServiceController',
+        ]);
+    }
+
+    /**
+     * @Route("/qui-sommes-nous", name="qui-sommes-nous")
+     */
+    public function qui_sommes_nous()
+    {
+        return $this->render('eco_service/qui_sommes_nous.html.twig', [
             'controller_name' => 'EcoServiceController',
         ]);
     }
