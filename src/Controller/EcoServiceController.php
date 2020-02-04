@@ -38,11 +38,34 @@ class EcoServiceController extends AbstractController
     }
 
     /**
-     * @Route("/admin/accueil", name="admin")
+     * @Route("/admin", name="admin")
+     * @Route("/admin/index", name="admin_index")
      */
     public function admin_index()
     {
         return $this->render('eco_service/admin_index.html.twig', [
+            'controller_name' => 'EcoServiceController',
+        ]);
+    }
+
+    /**
+     * @Route("/particulier", name="particulier")
+     * @Route("/particulier/index", name="particulier_index")
+     */
+    public function particulier_index()
+    {
+        return $this->render('eco_service/particulier_index.html.twig',[
+            'controller_name' => 'EcoServiceController',
+        ]);
+    }
+
+    /**
+     * @Route("/entreprise", name="entreprise")
+     * @Route("/entreprise/index", name="entreprise_index")
+     */
+    public function entreprise_index()
+    {
+        return $this->render('eco_service/entreprise_index.html.twig', [
             'controller_name' => 'EcoServiceController',
         ]);
     }
