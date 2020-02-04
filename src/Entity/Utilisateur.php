@@ -7,9 +7,9 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\UtilisateurClientRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\UtilisateurRepository")
  */
-class UtilisateurClient
+class Utilisateur
 {
     /**
      * @ORM\Id()
@@ -41,17 +41,33 @@ class UtilisateurClient
     /**
      * @ORM\Column(type="string", length=45, nullable=true)
      */
-    private $token_password;
+    private $tokenPassword;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Adresse", mappedBy="utilisateurClient", orphanRemoval=true)
+     * @ORM\Column(type="string", length=40, nullable=true)
+     */
+    private $raisonSociale;
+
+    /**
+     * @ORM\Column(type="string", length=40, nullable=true)
+     */
+    private $utilisateurType;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Adresse", mappedBy="utilisateur", orphanRemoval=true)
      */
     private $Adresse;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Devis", mappedBy="Utilisateur", orphanRemoval=true)
+     */
+    private $devis;
 
     public function __construct()
     {
         $this->idAdresse = new ArrayCollection();
         $this->Adresse = new ArrayCollection();
+        $this->devis = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -131,7 +147,7 @@ class UtilisateurClient
     {
         if (!$this->idAdresse->contains($idAdresse)) {
             $this->idAdresse[] = $idAdresse;
-            $idAdresse->setUtilisateurClient($this);
+            $idAdresse->setUtilisateur($this);
         }
 
         return $this;
@@ -142,8 +158,8 @@ class UtilisateurClient
         if ($this->idAdresse->contains($idAdresse)) {
             $this->idAdresse->removeElement($idAdresse);
             // set the owning side to null (unless already changed)
-            if ($idAdresse->getUtilisateurClient() === $this) {
-                $idAdresse->setUtilisateurClient(null);
+            if ($idAdresse->getUtilisateur() === $this) {
+                $idAdresse->setUtilisateur(null);
             }
         }
 
@@ -162,7 +178,7 @@ class UtilisateurClient
     {
         if (!$this->Adresse->contains($adresse)) {
             $this->Adresse[] = $adresse;
-            $adresse->setUtilisateurClient($this);
+            $adresse->setUtilisateur($this);
         }
 
         return $this;
@@ -173,8 +189,63 @@ class UtilisateurClient
         if ($this->Adresse->contains($adresse)) {
             $this->Adresse->removeElement($adresse);
             // set the owning side to null (unless already changed)
-            if ($adresse->getUtilisateurClient() === $this) {
-                $adresse->setUtilisateurClient(null);
+            if ($adresse->getUtilisateur() === $this) {
+                $adresse->setUtilisateur(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getRaisonSociale(): ?string
+    {
+        return $this->raisonSociale;
+    }
+
+    public function setRaisonSociale(?string $raisonSociale): self
+    {
+        $this->raisonSociale = $raisonSociale;
+
+        return $this;
+    }
+
+    public function getUtilisateurType(): ?string
+    {
+        return $this->utilisateurType;
+    }
+
+    public function setUtilisateurType(?string $utilisateurType): self
+    {
+        $this->utilisateurType = $utilisateurType;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Devis[]
+     */
+    public function getDevis(): Collection
+    {
+        return $this->devis;
+    }
+
+    public function addDevi(Devis $devi): self
+    {
+        if (!$this->devis->contains($devi)) {
+            $this->devis[] = $devi;
+            $devi->setUtilisateur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDevi(Devis $devi): self
+    {
+        if ($this->devis->contains($devi)) {
+            $this->devis->removeElement($devi);
+            // set the owning side to null (unless already changed)
+            if ($devi->getUtilisateur() === $this) {
+                $devi->setUtilisateur(null);
             }
         }
 
