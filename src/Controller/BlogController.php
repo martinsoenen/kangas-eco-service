@@ -13,17 +13,17 @@ class BlogController extends AbstractController
      */
     public function index()
     {
-        return $this->render('blog_controller/index.html.twig', [
+        return $this->render('blog/index.html.twig', [
             'controller_name' => 'BlogController',
         ]);
     }
 
     /**
-     * @Route("/blog/{id}", name="blog_articles", methods={"GET","HEAD"}))
+     * @Route("/blog/article/{id}", name="blog_articles", methods={"GET","HEAD"}))
      */
     public function showArticles()
     {
-        return $this->render('blog_controller/articles.html.twig', [
+        return $this->render('blog/articles.html.twig', [
             'controller_name' => 'BlogController',
         ]);
     }
@@ -33,7 +33,7 @@ class BlogController extends AbstractController
      */
     public function showAdminBlog()
     {
-        return $this->render('blog_controller/adminBlog.html.twig', [
+        return $this->render('blog/adminBlog.html.twig', [
             'controller_name' => 'BlogController',
         ]);
     }
@@ -42,7 +42,7 @@ class BlogController extends AbstractController
      */
     public function showAdminArticles()
     {
-        return $this->render('blog_controller/adminArticles.html.twig', [
+        return $this->render('blog/adminArticles.html.twig', [
             'controller_name' => 'BlogController',
         ]);
     }

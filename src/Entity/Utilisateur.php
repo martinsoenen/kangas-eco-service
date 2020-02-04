@@ -63,6 +63,8 @@ class Utilisateur
      */
     private $devis;
 
+    private $passwordConfirm;
+
     public function __construct()
     {
         $this->idAdresse = new ArrayCollection();
