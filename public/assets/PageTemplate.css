@@ -1,0 +1,44 @@
+.navbar
+{
+    background-color: #8ed86e;
+    justify-content: normal;
+    align-items: center;
+    -ms-flex-flow: row nowrap;
+    flex-flow: row nowrap;
+    -ms-flex-pack: start;
+    justify-content: flex-start;
+}
+
+.nav-link
+{
+    margin: 0px 10px;
+}
+
+.nav-link:hover
+{
+    background-color: #74d14c;
+    border: solid 1px #244d11;
+}
+
+/*=======================================*/
+
+i
+{
+    color: #EEEEEE;
+}
+
+.dropdown-menu
+{
+    margin: 0px;
+    background-color: #8ed86e;
+    border: solid 1px #244d11;
+    border-radius: 0px;
+}
+
+    /*=======================================*/
+.dropdown-item:hover
+{
+    background-color: #74d14c;
+}
+
+/*=======================================*/
