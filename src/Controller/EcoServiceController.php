@@ -17,7 +17,7 @@ class EcoServiceController extends AbstractController
         ]);
     }
     /**
-     * @Route("/CGU-CGV", name="CGU-CGV")
+     * @Route("/cgu-cgv", name="cgu-cgv")
      */
     public function CGU()
     {
