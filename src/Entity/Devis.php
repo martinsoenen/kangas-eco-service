@@ -26,7 +26,7 @@ class Devis
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\ObjetCollecte", mappedBy="devis")
      */
-    private $idObjectCollecte;
+    private $ObjectCollecte;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\CategorieCollecte", mappedBy="devis")
@@ -34,15 +34,17 @@ class Devis
     private $relation;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\UtilisateurEntreprise", inversedBy="devis")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Utilisateur", inversedBy="devis")
      * @ORM\JoinColumn(nullable=false)
      */
     private $Utilisateur;
+
 
     public function __construct()
     {
         $this->idObjectCollecte = new ArrayCollection();
         $this->relation = new ArrayCollection();
+        $this->ObjectCollecte = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -144,6 +146,37 @@ class Devis
     public function setUtilisateur(?UtilisateurEntreprise $Utilisateur): self
     {
         $this->Utilisateur = $Utilisateur;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ObjetCollecte[]
+     */
+    public function getObjectCollecte(): Collection
+    {
+        return $this->ObjectCollecte;
+    }
+
+    public function addObjectCollecte(ObjetCollecte $objectCollecte): self
+    {
+        if (!$this->ObjectCollecte->contains($objectCollecte)) {
+            $this->ObjectCollecte[] = $objectCollecte;
+            $objectCollecte->setDevis($this);
+        }
+
+        return $this;
+    }
+
+    public function removeObjectCollecte(ObjetCollecte $objectCollecte): self
+    {
+        if ($this->ObjectCollecte->contains($objectCollecte)) {
+            $this->ObjectCollecte->removeElement($objectCollecte);
+            // set the owning side to null (unless already changed)
+            if ($objectCollecte->getDevis() === $this) {
+                $objectCollecte->setDevis(null);
+            }
+        }
 
         return $this;
     }
