@@ -1,13 +1,37 @@
 security:
+    encoders:
+        App\Entity\Utilisateur:
+            algorithm: bcrypt
+        App\Entity\UtilisateurAdministration:
+            algorithm: bcrypt
+            
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
         in_memory: { memory: null }
+        in_bdd_user:
+            entity:
+                class: App\Entity\Utilisateur
+                property : email
+        # in_bdd_user_admin:
+        #     entity:
+        #         class: App\Entity\UtilisateurAdministration
+        #         property : email
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
-            anonymous: lazy
+            anonymous: true
+            provider : in_bdd_user
+            form_login: 
+                login_path : security_login
+                check_path: security_login
+        # admin:
+        #     anonymous: true
+        #     provider : in_bdd_user_admin
+        #     form_login: 
+        #         login_path : security_login_admin
+        #         check_path: security_login_admin
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#firewalls-authentication

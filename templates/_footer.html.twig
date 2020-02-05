@@ -23,18 +23,18 @@
                     <tbody>
                     <tr>
                         <td>
-                            <a href="#" title="Rejoignez-nous sur Facebook!">
-                                <i class="fa fa-facebook fa-2x"></i>
+                            <a href="https://www.facebook.com/" title="Rejoignez-nous sur Facebook!">
+                                <i class="social-link-icon fa fa-facebook fa-2x"></i>
                             </a>
                         </td>
                         <td>
-                            <a href="#" title="Rejoignez-nous sur LinkedIn!">
-                                <i class="fa fa-linkedin fa-2x"></i>
+                            <a href="https://www.linkedin.com" title="Rejoignez-nous sur LinkedIn!">
+                                <i class="social-link-icon fa fa-linkedin fa-2x"></i>
                             </a>
                         </td>
                         <td>
-                            <a href="#" title="Rejoignez-nous sur Instagram!">
-                                <i class="fa fa-instagram fa-2x"></i>
+                            <a href="https://www.instagram.com" title="Rejoignez-nous sur Instagram!">
+                                <i class="social-link-icon fa fa-instagram fa-2x"></i>
                             </a>
                         </td>
                     </tr>
@@ -46,17 +46,17 @@
             <!-- Qui sommes-nous ? (+ copyright) -->
             <div class="footer-element col">
                 <p class="underlined bold">Qui sommes-nous ?</p>
-                <a href="#" class="gray-href" title="Apprenez-en plus sur notre société!">Eco-Service</a><br/>
-                <a href="#" class="gray-href" title="Vous vous demandez qui a créé ce site ? Cliquez ici!">Kangas</a><br/>
-                <a href="#" class="gray-href" title="Apprenez-en plus sur nos conditions générales">Consulter les CGU et les CGV</a>
+                <a href="{{ path('qui-sommes-nous') }}" class="gray-href" title="Apprenez-en plus sur notre société!">Eco-Service</a><br/>
+                <a href="http://www.kangas.fr" class="gray-href" title="Vous vous demandez qui a créé ce site ? Cliquez ici!">Kangas</a><br/>
+                <a href="{{ path('cgu-cgv') }}" class="gray-href" title="Apprenez-en plus sur nos conditions générales d'utilisation et conditions générales de vente">Consulter les CGU et les CGV</a>
 
             </div>
 
             <!-- Contacts -->
             <div class="footer-element col" id="last-element">
                 <p class="underlined bold">Contacts</p>
-                <a href="#" class="gray-href" title="Contactez-nous directement ici.">Nous contacter</a><br/>
-                <a href="#" class="gray-href" title="Besoin d'aide ? Cliquez ici pour consulter notre FAQ.">Besoin d'aide ?</a>
+                <a href="{{ path('contact') }}" class="gray-href" title="Contactez-nous directement ici.">Nous contacter</a><br/>
+                <a href="{{ path('faq') }}" class="gray-href" title="Besoin d'aide ? Cliquez ici pour consulter notre FAQ.">Besoin d'aide ?</a>
             </div>
         </div>
 

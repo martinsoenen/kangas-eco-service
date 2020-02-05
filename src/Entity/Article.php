@@ -27,12 +27,6 @@ class Article
     private $text;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\CategorieBlog")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $CategorieBlog;
-
-    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\UtilisateurAdministration")
      * @ORM\JoinColumn(nullable=false)
      */
@@ -63,18 +57,6 @@ class Article
     public function setText(string $text): self
     {
         $this->text = $text;
-
-        return $this;
-    }
-
-    public function getCategorieBlog(): ?CategorieBlog
-    {
-        return $this->CategorieBlog;
-    }
-
-    public function setCategorieBlog(CategorieBlog $CategorieBlog): self
-    {
-        $this->CategorieBlog = $CategorieBlog;
 
         return $this;
     }
