@@ -11,7 +11,8 @@ class UserController extends AbstractController
      * @Route("/profil/client", name="profil_client")
      */
     public function profilClient()
-    {
+    {   
+        
         return $this->render('user/profilClient.html.twig', [
             'controller_name' => 'UserController',
         ]);

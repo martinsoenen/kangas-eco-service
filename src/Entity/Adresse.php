@@ -55,7 +55,7 @@ class Adresse
     private $AdresseType;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Utilisateur", inversedBy="idAdresse")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Utilisateur", inversedBy="Adresse")
      * @ORM\JoinColumn(nullable=false)
      */
     private $Utilisateur;
