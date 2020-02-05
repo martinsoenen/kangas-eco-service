@@ -33,24 +33,40 @@ thead tr { border-bottom: solid 10px transparent }
 }
 
 .nav-link
-{
-    margin: 0px 20px;
-}
+ {
+    padding: 15px 15px 15px 15px !important;
+ }
 
 .nav-link:hover
 {
     background-color: #74d14c;
+    padding: 15px 15px 15px 15px !important;
     border-radius: 5px;
 }
 
-/*=======================================*/
+@media (min-width: 576px)
+{
+    .nav-link
+    {
+        padding: 15px 15px 15px 15px !important;
+    }
 
+    .nav-link:hover
+    {
+        background-color: #74d14c;
+        padding: 15px 15px 15px 15px !important;
+        border-radius: 5px;
+    }
+}
+
+/*=======================================*/
 .dropdown-menu
 {
     margin: 0px 0px 0px -60px;
     background-color: #8ed86e;
     border: solid 1px #244d11;
     border-radius: 0px;
+    position:absolute !important;
 }
 
 .dropdown-item:hover
@@ -121,5 +137,5 @@ thead tr { border-bottom: solid 10px transparent }
     margin-top: -15px;
     margin-bottom: -5px;
     font-size: 8px;
-    horiz-align: center;
+    align: center;
 }
