@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\CategorieProduit;
 use App\Entity\Produit;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
@@ -14,10 +15,12 @@ class ProductController extends AbstractController
     public function index()
     {
         $produits = $this->getDoctrine()->getRepository(Produit::class)->findAll();
+        $categories = $this->getDoctrine()->getRepository(CategorieProduit::class)->findCategories();
 
         return $this->render('product/index.html.twig', [
             'controller_name' => 'ProductController',
-            'produits' => $produits
+            'produits' => $produits,
+            'categories' => $categories
         ]);
     }
 
