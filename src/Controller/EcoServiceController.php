@@ -22,7 +22,7 @@ class EcoServiceController extends AbstractController
      */
     public function cgu()
     {
-        return $this->render('eco_service/CGU.html.twig', [
+        return $this->render('eco_service/cgu.html.twig', [
             'controller_name' => 'EcoServiceController',
         ]);
     }
