@@ -47,3 +47,5 @@ Pour accéder à PHPMyAdmin, il suffit d'aller sur le port 81 de votre URL (`loc
 
 * La version de PHP demandée par composer est supérieure à la version existante.  
   Pour corriger l'erreur, tapez `composer config platform.php 7.4.12`.
+  
+Dernière mise en prod : 05/02/2020
