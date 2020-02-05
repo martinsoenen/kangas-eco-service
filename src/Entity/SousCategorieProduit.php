@@ -22,7 +22,7 @@ class SousCategorieProduit
     private $nom;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\CategorieProduit")
+     * @ORM\ManyToOne(targetEntity="App\Entity\CategorieProduit", inversedBy="sousCategorieProduits")
      * @ORM\JoinColumn(nullable=false)
      */
     private $CategorieProduit;
@@ -44,18 +44,6 @@ class SousCategorieProduit
         return $this;
     }
 
-    public function getIdCategorieProduit(): ?CategorieProduit
-    {
-        return $this->idCategorieProduit;
-    }
-
-    public function setIdCategorieProduit(?CategorieProduit $idCategorieProduit): self
-    {
-        $this->idCategorieProduit = $idCategorieProduit;
-
-        return $this;
-    }
-
     public function getCategorieProduit(): ?CategorieProduit
     {
         return $this->CategorieProduit;
@@ -67,4 +55,6 @@ class SousCategorieProduit
 
         return $this;
     }
+
+
 }

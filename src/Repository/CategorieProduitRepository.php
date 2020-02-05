@@ -19,6 +19,15 @@ class CategorieProduitRepository extends ServiceEntityRepository
         parent::__construct($registry, CategorieProduit::class);
     }
 
+    public function findCategories() {
+        return $this->createQueryBuilder('c')
+            ->innerJoin("c.sousCategorieProduits", "sc")
+            ->addSelect("sc")
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
     // /**
     //  * @return CategorieProduit[] Returns an array of CategorieProduit objects
     //  */
