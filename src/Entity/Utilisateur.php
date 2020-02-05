@@ -6,6 +6,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
+use Symfony\Component\Validator\Constraints as Assert;
+
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UtilisateurRepository")
  */
@@ -20,11 +22,27 @@ class Utilisateur
 
     /**
      * @ORM\Column(type="string", length=100)
+     * @Assert\Email(
+     *     message = "L'email '{{ value }}' n'est pas valide."
+     *   )
+     * @Assert\EqualTo(propertyPath="email")
      */
     private $email;
 
     /**
+     * @ORM\Column(type="string", length=3, nullable=true)
+     */
+    private $civilite;
+
+    /**
      * @ORM\Column(type="string", length=45)
+     * @Assert\Length(min="8", minMessage="Votre mot de pase doit faire minimum 8 caractères")
+     * @Assert\Regex(
+     *     pattern="^[a-zA-Z0-9]+$",
+     *     match=false,
+     *     message="Votre mot de passe doit contenir au moins une lettre et au moins 1 caractère"
+     * )
+     * Assert\EqualTo(propertyPath="passwordConfirm")
      */
     private $password;
 
@@ -54,7 +72,22 @@ class Utilisateur
     private $utilisateurType;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Adresse", mappedBy="utilisateur", orphanRemoval=true)
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $siret;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $telephone;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $fonctionRepresentant;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Adresse", mappedBy="Utilisateur", orphanRemoval=true)
      */
     private $Adresse;
 
@@ -63,11 +96,19 @@ class Utilisateur
      */
     private $devis;
 
+    private $conditions;
+
+    /**
+      * Assert\EqualTo(propertyPath="password") 
+    */
     private $passwordConfirm;
+    /**
+      * Assert\EqualTo(propertyPath=email) 
+    */
+    private $emailConfirm;
 
     public function __construct()
     {
-        $this->idAdresse = new ArrayCollection();
         $this->Adresse = new ArrayCollection();
         $this->devis = new ArrayCollection();
     }
@@ -85,6 +126,18 @@ class Utilisateur
     public function setEmail(string $email): self
     {
         $this->email = $email;
+
+        return $this;
+    }
+
+    public function getCivilite(): ?string
+    {
+        return $this->civilite;
+    }
+
+    public function setCivilite(?string $civilite): self
+    {
+        $this->civilite = $civilite;
 
         return $this;
     }
@@ -127,43 +180,72 @@ class Utilisateur
 
     public function getTokenPassword(): ?string
     {
-        return $this->token_password;
+        return $this->tokenPassword;
     }
 
-    public function setTokenPassword(?string $token_password): self
+    public function setTokenPassword(?string $tokenPassword): self
     {
-        $this->token_password = $token_password;
+        $this->tokenPassword = $tokenPassword;
 
         return $this;
     }
 
-    /**
-     * @return Collection|Adresse[]
-     */
-    public function getIdAdresse(): Collection
+    public function getRaisonSociale(): ?string
     {
-        return $this->idAdresse;
+        return $this->raisonSociale;
     }
 
-    public function addIdAdresse(Adresse $idAdresse): self
+    public function setRaisonSociale(?string $raisonSociale): self
     {
-        if (!$this->idAdresse->contains($idAdresse)) {
-            $this->idAdresse[] = $idAdresse;
-            $idAdresse->setUtilisateur($this);
-        }
+        $this->raisonSociale = $raisonSociale;
 
         return $this;
     }
 
-    public function removeIdAdresse(Adresse $idAdresse): self
+    public function getUtilisateurType(): ?string
     {
-        if ($this->idAdresse->contains($idAdresse)) {
-            $this->idAdresse->removeElement($idAdresse);
-            // set the owning side to null (unless already changed)
-            if ($idAdresse->getUtilisateur() === $this) {
-                $idAdresse->setUtilisateur(null);
-            }
-        }
+        return $this->utilisateurType;
+    }
+
+    public function setUtilisateurType(?string $utilisateurType): self
+    {
+        $this->utilisateurType = $utilisateurType;
+
+        return $this;
+    }
+
+    public function getSiret(): ?int
+    {
+        return $this->siret;
+    }
+
+    public function setSiret(?int $siret): self
+    {
+        $this->siret = $siret;
+
+        return $this;
+    }
+
+    public function getTelephone(): ?int
+    {
+        return $this->telephone;
+    }
+
+    public function setTelephone(int $telephone): self
+    {
+        $this->telephone = $telephone;
+
+        return $this;
+    }
+
+    public function getFonctionRepresentant(): ?int
+    {
+        return $this->fonctionRepresentant;
+    }
+
+    public function setFonctionRepresentant(?int $fonctionRepresentant): self
+    {
+        $this->fonctionRepresentant = $fonctionRepresentant;
 
         return $this;
     }
@@ -199,30 +281,6 @@ class Utilisateur
         return $this;
     }
 
-    public function getRaisonSociale(): ?string
-    {
-        return $this->raisonSociale;
-    }
-
-    public function setRaisonSociale(?string $raisonSociale): self
-    {
-        $this->raisonSociale = $raisonSociale;
-
-        return $this;
-    }
-
-    public function getUtilisateurType(): ?string
-    {
-        return $this->utilisateurType;
-    }
-
-    public function setUtilisateurType(?string $utilisateurType): self
-    {
-        $this->utilisateurType = $utilisateurType;
-
-        return $this;
-    }
-
     /**
      * @return Collection|Devis[]
      */
@@ -253,4 +311,41 @@ class Utilisateur
 
         return $this;
     }
+
+    public function getConditions(): ?string
+    {
+        return $this->conditions;
+    }
+
+    public function setConditions(string $conditions): self
+    {
+        $this->conditions = $conditions;
+
+        return $this;
+    }
+
+    public function getPasswordConfirm(): ?string
+    {
+        return $this->passwordConfirm;
+    }
+
+    public function setPasswordConfirm(string $passwordConfirm): self
+    {
+        $this->passwordConfirm = $passwordConfirm;
+
+        return $this;
+    }
+    
+    public function getEmailConfirm(): ?string
+    {
+        return $this->emailConfirm;
+    }
+
+    public function setEmailConfirm(string $emailConfirm): self
+    {
+        $this->emailConfirm = $emailConfirm;
+
+        return $this;
+    }
+   
 }

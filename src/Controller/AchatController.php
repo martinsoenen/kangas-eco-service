@@ -18,7 +18,7 @@ class AchatController extends AbstractController
     }
 
     /**
-     * @Route("/panier/paiement", name="panier")
+     * @Route("/panier/paiement", name="panier_paiement")
      */
     public function paiement()
     {
