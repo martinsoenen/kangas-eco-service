@@ -86,6 +86,7 @@ thead tr { border-bottom: solid 10px transparent }
 {
     flex-direction: row;
     text-align: center;
+    width:auto;
     margin: 10px;
     padding-bottom: 10px;
     border-bottom: solid 1px #555555;
