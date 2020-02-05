@@ -139,3 +139,18 @@ thead tr { border-bottom: solid 10px transparent }
     font-size: 8px;
     align: center;
 }
+
+.social-link-icon
+{
+    height: 50px;
+    width: 50px;
+    padding: 10px;
+}
+
+.social-link-icon:hover
+{
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #74d14c;
+    color: #222222;
+}
