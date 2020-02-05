@@ -25,6 +25,27 @@ class ProductController extends AbstractController
     }
 
     /**
+     * @Route("/magasin/categorie/{id}", name="categorie-produit")
+     */
+    public function categorie()
+    {
+        return $this->render('product/showByCategorie.html.twig', [
+            'controller_name' => 'ProductController',
+        ]);
+    }
+
+    /**
+     * @Route("/magasin/sous-categorie/{id}", name="sous-categorie-produit")
+     */
+    public function sous_categorie()
+    {
+        return $this->render('product/showBySousCategorie.html.twig', [
+            'controller_name' => 'ProductController',
+        ]);
+    }
+
+
+    /**
      * @Route("/magasin/produit_{id}", name="magasin-produit")
      */
     public function show()
