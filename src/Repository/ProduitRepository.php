@@ -39,6 +39,24 @@ class ProduitRepository extends ServiceEntityRepository
         return $stmt->fetchAll();
     }
 
+    /**
+     * @return Produit[] Returns an array of Produit objects
+     */
+    public function findSousCategories(int $id) {
+        $entityManager = $this->getEntityManager()->getConnection();
+        $sql ='
+            SELECT p.id, p.sous_categorie_produit_id, p.utilisateur_admin_id, p.nom_produit, p.prix_unitaire_ht, p.taux_tva, p.presentation, p.description_detaillee, scp.nom
+            FROM produit p
+            INNER JOIN sous_categorie_produit scp ON p.sous_categorie_produit_id = scp.id
+            WHERE scp.id = @id
+        ';
+        $sql = str_replace('@id', $id, $sql); // On remplace le @id par la valeur de $id en PHP
+
+        $stmt = $entityManager->prepare($sql);
+        $stmt->execute();
+
+        return $stmt->fetchAll();
+    }
 
     // /**
     //  * @return Produit[] Returns an array of Produit objects

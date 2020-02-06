@@ -3,18 +3,12 @@
 {% block title %}Sous-Catégorie - {{ parent() }}{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+    <div>
+        <h1>{{ souscategorie.nom }}</h1>
 
-<div class="example-wrapper">
-    <h1>Page d'une sous-catégorie</h1>
-
-    A faire
-    <ul>
-        <li>Your controller at <code><a href="{{ '/application/src/Controller/ProductController.php'|file_link(0) }}">src/Controller/ProductController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/application/templates/product/showBySousCategorie.html.twig'|file_link(0)}}">templates/product/showBySousCategorie.html.twig</a></code></li>
-    </ul>
-</div>
+        {% for produit in produits %}
+            <h4>{{ produit.nom_produit }}</h4>
+            <p>{{ produit.presentation }} - {{ produit.description_detaillee }}</p>
+        {% endfor %}
+    </div>
 {% endblock %}

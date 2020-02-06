@@ -34,7 +34,7 @@ class ProductController extends AbstractController
     {
         $id = $categorie->getId();
         $produits = $this->getDoctrine()->getRepository(Produit::class)->findCategories($id);
-dump($produits);
+
         return $this->render('product/showByCategorie.html.twig', [
             'controller_name' => 'ProductController',
             'categorie' => $categorie,
@@ -44,11 +44,17 @@ dump($produits);
 
     /**
      * @Route("/magasin/sous-categorie/{id}", name="sous-categorie-produit")
+     * @Entity("SousCategorieProduit", expr="repository.find(id)")
      */
-    public function sous_categorie()
+    public function sous_categorie(SousCategorieProduit $souscategorie)
     {
+        $id = $souscategorie->getId();
+        $produits = $this->getDoctrine()->getRepository(Produit::class)->findSousCategories($id);
+
         return $this->render('product/showBySousCategorie.html.twig', [
             'controller_name' => 'ProductController',
+            'souscategorie' => $souscategorie,
+            'produits' => $produits
         ]);
     }
 
