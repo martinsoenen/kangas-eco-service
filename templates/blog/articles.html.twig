@@ -2,5 +2,12 @@
 
 {% block title %}Blog - {{parent()}}{% endblock %}
 {% block body %}
-Détails de l'article du blog ici
+    <h1>ECO - SERVICE</h1>
+    <h3>Blog DIY</h3>
+        <section class="articles">
+            <div class="">
+                <h4 class="card-title">{{ article.titre }}</h4>
+                <p>{{ article.text }}</p>
+            </div>
+        </section>
 {% endblock %}

@@ -27,6 +27,15 @@ class Article
     private $text;
 
     /**
+     * @ORM\Column(type="datetime")
+     */
+    private $date;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $image;
+    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\UtilisateurAdministration")
      * @ORM\JoinColumn(nullable=false)
      */
@@ -69,6 +78,30 @@ class Article
     public function setUtilisateurAdmin(?UtilisateurAdministration $UtilisateurAdmin): self
     {
         $this->UtilisateurAdmin = $UtilisateurAdmin;
+
+        return $this;
+    }
+
+    public function getDate(): ?\DateTimeInterface
+    {
+        return $this->date;
+    }
+
+    public function setDate(\DateTimeInterface $date): self
+    {
+        $this->date = $date;
+
+        return $this;
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(string $image): self
+    {
+        $this->image = $image;
 
         return $this;
     }
