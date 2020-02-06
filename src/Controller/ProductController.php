@@ -61,11 +61,13 @@ class ProductController extends AbstractController
 
     /**
      * @Route("/magasin/produit_{id}", name="magasin-produit")
+     * @Entity("Produit", expr="repository.find(id)")
      */
-    public function show()
+    public function show(Produit $produit)
     {
         return $this->render('product/show.html.twig', [
             'controller_name' => 'ProductController',
+            'produit' => $produit
         ]);
     }
 
