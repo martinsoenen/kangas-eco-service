@@ -4,8 +4,10 @@ namespace App\Controller;
 
 use App\Entity\CategorieProduit;
 use App\Entity\Produit;
+use App\Entity\SousCategorieProduit;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 
 class ProductController extends AbstractController
 {
@@ -26,32 +28,46 @@ class ProductController extends AbstractController
 
     /**
      * @Route("/magasin/categorie/{id}", name="categorie-produit")
+     * @Entity("CategorieProduit", expr="repository.find(id)")
      */
-    public function categorie()
+    public function categorie(CategorieProduit $categorie)
     {
+        $id = $categorie->getId();
+        $produits = $this->getDoctrine()->getRepository(Produit::class)->findProduitsByCategorie($id);
+
         return $this->render('product/showByCategorie.html.twig', [
             'controller_name' => 'ProductController',
+            'categorie' => $categorie,
+            'produits' => $produits
         ]);
     }
 
     /**
      * @Route("/magasin/sous-categorie/{id}", name="sous-categorie-produit")
+     * @Entity("SousCategorieProduit", expr="repository.find(id)")
      */
-    public function sous_categorie()
+    public function sous_categorie(SousCategorieProduit $souscategorie)
     {
+        $id = $souscategorie->getId();
+        $produits = $this->getDoctrine()->getRepository(Produit::class)->findProduitsBySousCategorie($id);
+
         return $this->render('product/showBySousCategorie.html.twig', [
             'controller_name' => 'ProductController',
+            'souscategorie' => $souscategorie,
+            'produits' => $produits
         ]);
     }
 
 
     /**
      * @Route("/magasin/produit_{id}", name="magasin-produit")
+     * @Entity("Produit", expr="repository.find(id)")
      */
-    public function show()
+    public function show(Produit $produit)
     {
         return $this->render('product/show.html.twig', [
             'controller_name' => 'ProductController',
+            'produit' => $produit
         ]);
     }
 
