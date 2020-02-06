@@ -24,6 +24,12 @@ thead tr { border-bottom: solid 10px transparent }
                                 HEADER PART
   =======================================================================*/
 
+#header-logo
+{
+    height:60px;
+    margin-right: 20px;
+}
+
 .navbar
 {
     background-color: #8ed86e;
@@ -78,6 +84,9 @@ thead tr { border-bottom: solid 10px transparent }
 
     #shopping-cart-icon
     {
+        position: absolute;
+        right: 20px;
+        bottom: 10px;
         padding: .5rem 1rem !important;
     }
 }
