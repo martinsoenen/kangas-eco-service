@@ -33,7 +33,7 @@ class ProductController extends AbstractController
     public function categorie(CategorieProduit $categorie)
     {
         $id = $categorie->getId();
-        $produits = $this->getDoctrine()->getRepository(Produit::class)->findCategories($id);
+        $produits = $this->getDoctrine()->getRepository(Produit::class)->findProduitsByCategorie($id);
 
         return $this->render('product/showByCategorie.html.twig', [
             'controller_name' => 'ProductController',
