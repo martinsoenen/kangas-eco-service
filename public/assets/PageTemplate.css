@@ -48,11 +48,18 @@ thead tr { border-bottom: solid 10px transparent }
 
 .nav-link
 {
+    float: right;
+    display: inline-flex;
+    align-items: center;
     padding: .5rem 1rem !important;
     font-family: 'Roboto';
     font-size: larger;
     color: #EEEEEE;
-    text-align: right;
+}
+
+.link-icon
+{
+    margin-left:20px;
 }
 
 .nav-link:hover
@@ -61,6 +68,11 @@ thead tr { border-bottom: solid 10px transparent }
     color: #222222;
     padding: .5rem 1rem !important;
     border-radius: 5px;
+}
+
+.nav-link:hover i
+{
+    color: #222222;
 }
 
 #shopping-cart-icon
@@ -88,6 +100,17 @@ thead tr { border-bottom: solid 10px transparent }
         right: 20px;
         bottom: 10px;
         padding: .5rem 1rem !important;
+    }
+
+    #login-icon
+    {
+        display: non;
+
+    }
+
+    #help-icon
+    {
+        display: none;
     }
 }
 
