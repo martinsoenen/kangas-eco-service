@@ -4,10 +4,13 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
+
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UtilisateurAdministrationRepository")
  */
-class UtilisateurAdministration
+class UtilisateurAdministration implements UserInterface
 {
     /**
      * @ORM\Id()
@@ -18,11 +21,13 @@ class UtilisateurAdministration
 
     /**
      * @ORM\Column(type="string", length=100)
+     * @Assert\Email(checkMX=true,message="L'adresse mail n'est pas valide")
      */
     private $email;
 
     /**
      * @ORM\Column(type="string", length=45)
+     * @Assert\Length(min="8", minMessage="Le mot de passe doit faire 8 caractères minimun")
      */
     private $password;
 
@@ -118,4 +123,11 @@ class UtilisateurAdministration
 
         return $this;
     }
+
+    public function getSalt() {}
+    public function getRoles() {
+        return ['ROLE_USER'];
+    }
+    public function getUsername() {}
+    public function eraseCredentials() {}
 }
