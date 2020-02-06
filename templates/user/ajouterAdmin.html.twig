@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {{ form_start(formAdmin) }}
+
+        {{ form_row(formAdmin.Role, {'label' : 'Role d\'administration :'}) }}
+        {{ form_row(formAdmin.Nom, {'label' : 'Nom de l\'utilisateur :','attr' : {'placeholder' : "Nom"}}) }}
+        {{ form_row(formAdmin.Prenom, {'label' : 'Prenom de l\'utilisateur :','attr' : {'placeholder' : "Prénom"}}) }}
+        {{ form_row(formAdmin.Email, {'label' : 'Adresse mail de l\'utilisateur :','attr' : {'placeholder' :
+            "Adresse mail"}}) }}
+        {{ form_row(formAdmin.Password, {'label' : 'Mot de passe :','attr' : {'placeholder' : "Mot de passe"}}) }}
+        <button type="submit" class="btn btn-success ">Ajouter l'utilisateur</button>
+
+    {{ form(formAdmin) }}
+{% endblock %}
