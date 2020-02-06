@@ -4,8 +4,10 @@ namespace App\Controller;
 
 use App\Entity\CategorieProduit;
 use App\Entity\Produit;
+use App\Entity\SousCategorieProduit;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 
 class ProductController extends AbstractController
 {
@@ -26,11 +28,17 @@ class ProductController extends AbstractController
 
     /**
      * @Route("/magasin/categorie/{id}", name="categorie-produit")
+     * @Entity("CategorieProduit", expr="repository.find(id)")
      */
-    public function categorie()
+    public function categorie(CategorieProduit $categorie)
     {
+        $id = $categorie->getId();
+        $produits = $this->getDoctrine()->getRepository(Produit::class)->findCategories($id);
+dump($produits);
         return $this->render('product/showByCategorie.html.twig', [
             'controller_name' => 'ProductController',
+            'categorie' => $categorie,
+            'produits' => $produits
         ]);
     }
 
