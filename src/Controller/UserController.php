@@ -11,6 +11,7 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -47,11 +48,12 @@ class UserController extends AbstractController
         $form = $this->createFormBuilder($admin)
             ->add('Role',EntityType::class,[
                 'class' => Role::class,
-                'choice_label' => 'Nom'
+                'choice_label' => 'Nom',
+                'required'  => true,
             ])
-            ->add('Nom')
-            ->add('Prenom')
-            ->add('Email')
+            ->add('Nom', TextType::class,array('required'  => true))
+            ->add('Prenom', TextType::class,array('required'  => true))
+            ->add('Email', TextType::class,array('required'  => true))
             ->add('Password', PasswordType::class)
             ->getForm();
 
