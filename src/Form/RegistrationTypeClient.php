@@ -8,48 +8,37 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 
-class RegistrationType extends AbstractType
+class RegistrationTypeClient extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('email')
+            ->add('email', EmailType::class)
             ->add('emailConfirm', EmailType::class)
             ->add('civilite', ChoiceType::class, array(
                 'label' => false,
                 'placeholder' => 'Civilité',
                 'choices' => array(
-                    'Mr' => 'homme',
-                    'Mme' => 'femme',
+                    'Mr' => 'mr',
+                    'Mme' => 'mme',
                 ),
+                'required' => true
             ))
-            ->add('password')
-            ->add('passwordConfirm',TextType::class)
-            ->add('nom')
-            ->add('prenom')
-            ->add('Adresse')
-            ->add('raisonSociale')
-            ->add('utilisateurType', ChoiceType::class, array(
-                'label' => false,
-                'placeholder' => 'Type de compte',
-                'choices' => array(
-                    'Particulier' => 'client',
-                    'Professionnel' => 'pro',
-                ),
-            ))
-            ->add('siret')
+            ->add('password', PasswordType::class)
+            ->add('passwordConfirm',PasswordType::class)
+            ->add('nom',TextType::class)
+            ->add('prenom',TextType::class)
+            // ->add('Adresse')
+            
             ->add('telephone')
-            ->add('fonctionRepresentant')
             ->add('conditions', CheckboxType::class)
-            ->add('save', SubmitType::class, array(
-                'attr' => ['class' => 'save'],
-            ))
         ;
     }
 

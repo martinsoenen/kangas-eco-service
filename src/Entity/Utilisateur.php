@@ -6,12 +6,19 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Security\Core\User\UserInterface;
+
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UtilisateurRepository")
+ * @UniqueEntity(
+ *  fields={"email"},
+ *  message="L'email que vous avez indiqué est déja utilisé !"
+ * )
  */
-class Utilisateur
+class Utilisateur implements UserInterface
 {
     /**
      * @ORM\Id()
@@ -35,13 +42,8 @@ class Utilisateur
     private $civilite;
 
     /**
-     * @ORM\Column(type="string", length=45)
+     * @ORM\Column(type="string", length=255)
      * @Assert\Length(min="8", minMessage="Votre mot de pase doit faire minimum 8 caractères")
-     * @Assert\Regex(
-     *     pattern="^[a-zA-Z0-9]+$",
-     *     match=false,
-     *     message="Votre mot de passe doit contenir au moins une lettre et au moins 1 caractère"
-     * )
      * Assert\EqualTo(propertyPath="passwordConfirm")
      */
     private $password;
@@ -82,7 +84,7 @@ class Utilisateur
     private $telephone;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
+     * @ORM\Column(type="string", nullable=true)
      */
     private $fonctionRepresentant;
 
@@ -238,18 +240,7 @@ class Utilisateur
         return $this;
     }
 
-    public function getFonctionRepresentant(): ?int
-    {
-        return $this->fonctionRepresentant;
-    }
-
-    public function setFonctionRepresentant(?int $fonctionRepresentant): self
-    {
-        $this->fonctionRepresentant = $fonctionRepresentant;
-
-        return $this;
-    }
-
+  
     /**
      * @return Collection|Adresse[]
      */
@@ -344,6 +335,34 @@ class Utilisateur
     public function setEmailConfirm(string $emailConfirm): self
     {
         $this->emailConfirm = $emailConfirm;
+
+        return $this;
+    }
+
+    public function getUsername(): string
+    {
+        return (string) $this->email;
+    }
+    public function erasecredentials()
+    {
+    }
+    public function getSalt()
+    {
+        
+    }
+
+    public function getRoles(){
+        return ['ROLE_USER'];
+    }
+
+    public function getFonctionRepresentant(): ?string
+    {
+        return $this->fonctionRepresentant;
+    }
+
+    public function setFonctionRepresentant(?string $fonctionRepresentant): self
+    {
+        $this->fonctionRepresentant = $fonctionRepresentant;
 
         return $this;
     }

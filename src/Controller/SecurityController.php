@@ -5,32 +5,60 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+
 
 use App\Entity\Utilisateur;
-use App\Form\RegistrationType;
+use App\Form\RegistrationTypeClient;
+use App\Form\RegistrationTypeEntreprise;
 class SecurityController extends AbstractController
 {
     /**
-     * @Route("/connexion", name="security_login")
+     * @Route("/inscription", name="security_registration")
      */
-    public function loginSignIn(Request $request)
+    public function SignIn(Request $request, UserPasswordEncoderInterface $encoder)
     {   
         $Utilisateur = new Utilisateur;
         
-        $form = $this->createForm(RegistrationType::class, $Utilisateur);
+        $typeCompte = $this->createFormBuilder($Utilisateur)
+                    ->add('utilisateurType', ChoiceType::class, array(
+                'label' => false,
+                'placeholder' => 'Type de compte',
+                'choices' => array(
+                    'Particulier' => 'client',
+                    'Professionnel' => 'pro',
+                ),
+                'required' => true
+            ))
+            ->getForm();
+        $formClient = $this->createForm(RegistrationTypeClient::class, $Utilisateur);
+        $formEntreprise = $this->createForm(RegistrationTypeEntreprise::class, $Utilisateur);
+        $formClient->handleRequest($request);
+        $formEntreprise->handleRequest($request);
 
-        // $form->handleRequest($request);
-        // $entityManager = $this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getManager();
+        
+        if ($formClient->isSubmitted() && $formClient->isValid()) { 
+            $hash = $encoder->encodePassword($Utilisateur, $Utilisateur->getPassword());    
+            $Utilisateur->setPassword($hash);
+            $Utilisateur->setUtilisateurType("client");
+            $em->persist($Utilisateur);
+            $em->flush();
+        }
 
-        // if ($form->isSubmitted() && $form->isValid()) { 
-        //     $entityManager->persist($Utilisateur);
-        //     $Utilisateur->setUtilisateurType("client");
-        // }
+        if ($formEntreprise->isSubmitted() && $formEntreprise->isValid()) { 
+            $hash = $encoder->encodePassword($Utilisateur, $Utilisateur->getPassword());    
+            $Utilisateur->setPassword($hash);
+            $Utilisateur->setUtilisateurType("pro");
+            $em->persist($Utilisateur);
+            $em->flush();
+        }
 
-        // $entityManager->flush();
-
-        return $this->render('security/loginsignin.html.twig', [
-            'form' => $form->createView(),
+        return $this->render('security/signin.html.twig', [
+            'formClient' => $formClient->createView(),
+            'formEntreprise' =>$formEntreprise->createView(),
+            'typeCompte' => $typeCompte->createView(),
             'controller_name' => 'SecurityController',
         ]);
     }
@@ -40,6 +68,21 @@ class SecurityController extends AbstractController
     public function passwordForget()
     {
         return $this->render('security/passwordforget.html.twig', [
+            'controller_name' => 'SecurityController',
+        ]);
+    }
+    /**
+     * @Route("/deconnexion/", name="security_logout")
+     */
+    public function logout(){
+
+    }
+
+    /**
+     * @Route("/connexion/", name="security_login")
+     */
+    public function login(){
+        return $this->render('security/login.html.twig', [
             'controller_name' => 'SecurityController',
         ]);
     }
