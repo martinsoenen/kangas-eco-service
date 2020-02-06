@@ -14,51 +14,91 @@
 </ul>
 <div class="tab-content">
 	<div class="tab-pane active" id="tabs-1" role="tabpanel">
-		
+		<form action="{{path('security_login')}}" method="POST">
+			<div class="form-group">
+				<input type="text" placeholder="Adresse email" name="_username" class="form-control" required>
+				<input type="password" placeholder="Mot de passe" name="_password" class="form-control" required>
+			</div>
+			<div class="form-group">
+			<button type="submit" class="btn btn-success">Se connecter</button>
+			</div>
+		</form>
 	</div>
 	<div class="tab-pane" id="tabs-2" role="tabpanel">
-		{{ form_start(form) }}
-		{{form_row(form.utilisateurType, {'label' : false, 'attr' :{'placeholder' : 'Type de compte'}})}}
-
-		{# {% if condition %} #}
-			{# {{form_row(form.siret, {'label' : false, 'attr' :{'placeholder' : 'N° de SIRET'}})}}
-			{{form_row(form.raisonSociale, {'label' : false, 'attr' :{'placeholder' : 'Raison sociale'}})}}
-			{{form_row(form.nom, {'label' : false, 'attr' :{'placeholder' : 'Nom du représentant'}})}}
-			{{form_row(form.prenom, {'label' : false, 'attr' :{'placeholder' : 'Prénom du représentant'}})}} #}
-		{# {% endif %} #}
-		{{form_row(form.civilite, {'label' : false, 'attr' :{'placeholder' : 'Civilité'}})}}
-		{{form_row(form.nom, {'label' : false, 'attr' :{'placeholder' : 'Nom'}})}}
-		{{form_row(form.prenom, {'label' : false, 'attr' :{'placeholder' : 'Prénom'}})}}
-		{{form_row(form.Adresse)}}
-
-		TO DO :
+		{{ form_start(typeCompte) }}
+			{{form_row(typeCompte.utilisateurType, {'label' : false, 'attr' :{'placeholder' : 'Type de compte'}})}}
+		{{ form_end(typeCompte) }}
+		<div class="entreprise" style="display:none;">
+		{{ form_start(formEntreprise) }}
+			{{form_row(formEntreprise.siret, {'label' : false, 'attr' :{'placeholder' : 'N° de SIRET'}})}}
+			{{form_row(formEntreprise.raisonSociale, {'label' : false, 'attr' :{'placeholder' : 'Raison sociale'}})}}
+			{{form_row(formEntreprise.fonctionRepresentant, {'label' : false, 'attr' :{'placeholder' : 'Fonction du représentant'}})}}
+			{{form_row(formEntreprise.nom, {'label' : false, 'attr' :{'placeholder' : 'Nom'}})}}
+			{{form_row(formEntreprise.prenom, {'label' : false, 'attr' :{'placeholder' : 'Prénom'}})}}
+			{{form_row(formEntreprise.telephone, {'label' : false, 'attr' :{'placeholder' : 'Numéro de téléphone'}})}}
+			{{form_row(formEntreprise.email, {'label' : false, 'attr' :{'placeholder' : 'Email', 'name':'_username'}})}}
+			{{form_row(formEntreprise.emailConfirm, {'label' : false, 'attr' :{'placeholder' : 'Confirmez votre e-mail'}})}}
+			{{form_row(formEntreprise.password, {'label' : false, 'attr' :{'placeholder' : 'Mot de passe'}})}}
+			{{form_row(formEntreprise.passwordConfirm, {'label' : false, 'attr' :{'placeholder' : 'Confirmez mot de passe'}})}}
+			{{form_row(formEntreprise.conditions, {'label' : 'J\'accepte les CGU et les CGV d\'Eco-Service','attr' :{'class':'formClient-check-input'}})}}
+			<button type='submit' class="btn btn-success">S'inscrire</button>
+		{{ form_end(formEntreprise) }}
+		</div>
+		<div class="particulier" style="display:none;">
+			{{ form_start(formClient) }}
+				{{form_row(formClient.civilite, {'label' : false, 'attr' :{'placeholder' : 'Civilité'}})}}
+				{# {{form_row(formClient.Adresse)}} #}
+				{{form_row(formClient.nom, {'label' : false, 'attr' :{'placeholder' : 'Nom'}})}}
+				{{form_row(formClient.prenom, {'label' : false, 'attr' :{'placeholder' : 'Prénom'}})}}
+				{{form_row(formClient.telephone, {'label' : false, 'attr' :{'placeholder' : 'Numéro de téléphone'}})}}
+				{{form_row(formClient.email, {'label' : false, 'attr' :{'placeholder' : 'Email','name':'_username'}})}}
+				{{form_row(formClient.emailConfirm, {'label' : false, 'attr' :{'placeholder' : 'Confirmez votre e-mail'}})}}
+				{{form_row(formClient.password, {'label' : false, 'attr' :{'placeholder' : 'Mot de passe'}})}}
+				{{form_row(formClient.passwordConfirm, {'label' : false, 'attr' :{'placeholder' : 'Confirmez mot de passe'}})}}
+				{{form_row(formClient.conditions, {'label' : 'J\'accepte les CGU et les CGV d\'Eco-Service','attr' :{'class':'formClient-check-input'}})}}
+				<button type='submit' class="btn btn-success">S'inscrire</button>
+			{{ form_end(formClient) }}
+		</div>
+		{# TO DO :
 		-Ajouter la collection Adresse
-		-Ajouter Assert téléphone et SIRET
+		-Ajouter vérifs téléphone et SIRET
 		-Ajouter la condition 
 		-Ajouter la Connexion
-		-Modifier controlleur
-
-		{# {% else %} #}
-		{{form_row(form.telephone, {'label' : false, 'attr' :{'placeholder' : 'Numéro de téléphone'}})}}
-		{{form_row(form.email, {'label' : false, 'attr' :{'placeholder' : 'Email'}})}}
-		{{form_row(form.emailConfirm, {'label' : false, 'attr' :{'placeholder' : 'Confirmez votre e-mail'}})}}
-		{{form_row(form.password, {'label' : false, 'attr' :{'placeholder' : 'Mot de passe'}})}}
-		{{form_row(form.passwordConfirm, {'label' : false, 'attr' :{'placeholder' : 'Confirmez mot de passe'}})}}
-		{{form_row(form.conditions, {'label' : 'J\'accepte les CGU et les CGV d\'Eco-Service','attr' :{'class':'form-check-input'}})}}
-
-
-
-
-
-		{{form_row(form.save, {'label' : 'S\'inscrire'})}}
-
-
+		-Modifier controlleur #}
+		{# <div class="others" style="display:none;">
+			
+			{{ form_end(formClient) }}
+		</div> #}
 		
-
 	</div>
 </div>
 
-
-
 {% endblock %}
+{% block javascripts %}
+	{{parent()}}
+	<script>	
+		//Pour la création des profils (affiche le formulaire selon le type de compte choisi)
+$('select#form_utilisateurType').on('change', function (e) {
 
+		var typeCompte = $('select#form_utilisateurType').find(":selected").text();
+
+			if(typeCompte == "Particulier"){
+				$('div.particulier').css("display","block");
+				$('div.entreprise').css("display","none");
+				$('div.others').css("display","block");
+			}
+			else if(typeCompte =='Professionnel'){
+				$('div.particulier').css("display","none");
+				$('div.entreprise').css("display","block");
+				$('div.others').css("display","block");
+				$('input#registration_nom.formClient-control').attr("placeholder", "Nom du représentant");
+				$('input#registration_prenom.formClient-control').attr("placeholder", "Prénom du représentant");
+			}
+			else{
+				$('div.particulier').css("display","none");
+				$('div.entreprise').css("display","none");
+				$('div.others').css("display","none");
+			}
+		});
+</script>
+{% endblock %}

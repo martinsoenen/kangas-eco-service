@@ -24,7 +24,7 @@ class AdresseType
     private $nom;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Adresse", mappedBy="idAdresseType", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\Adresse", mappedBy="AdresseType", orphanRemoval=true)
      */
     private $adresses;
 

@@ -5,32 +5,52 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+
 
 use App\Entity\Utilisateur;
-use App\Form\RegistrationType;
+use App\Form\RegistrationTypeClient;
+use App\Form\RegistrationTypeEntreprise;
 class SecurityController extends AbstractController
 {
     /**
      * @Route("/connexion", name="security_login")
      */
-    public function loginSignIn(Request $request)
+    public function loginSignIn(Request $request, UserPasswordEncoderInterface $encoder)
     {   
         $Utilisateur = new Utilisateur;
         
-        $form = $this->createForm(RegistrationType::class, $Utilisateur);
+        $typeCompte = $this->createFormBuilder($Utilisateur)
+                    ->add('utilisateurType', ChoiceType::class, array(
+                'label' => false,
+                'placeholder' => 'Type de compte',
+                'choices' => array(
+                    'Particulier' => 'client',
+                    'Professionnel' => 'pro',
+                ),
+                'required' => true
+            ))
+            ->getForm();
+        $formClient = $this->createForm(RegistrationTypeClient::class, $Utilisateur);
+        $formEntreprise = $this->createForm(RegistrationTypeEntreprise::class, $Utilisateur);
+        $formClient->handleRequest($request);
+        $formEntreprise->handleRequest($request);
 
-        // $form->handleRequest($request);
-        // $entityManager = $this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getManager();
+        
+        if ($formClient->isSubmitted() && $formClient->isValid()) { 
+            $hash = $encoder->encodePassword($Utilisateur, $Utilisateur->getPassword());    
+            $Utilisateur->setPassword($hash);
 
-        // if ($form->isSubmitted() && $form->isValid()) { 
-        //     $entityManager->persist($Utilisateur);
-        //     $Utilisateur->setUtilisateurType("client");
-        // }
-
-        // $entityManager->flush();
+            $em->persist($Utilisateur);
+            $em->flush();
+        }
 
         return $this->render('security/loginsignin.html.twig', [
-            'form' => $form->createView(),
+            'formClient' => $formClient->createView(),
+            'formEntreprise' =>$formEntreprise->createView(),
+            'typeCompte' => $typeCompte->createView(),
             'controller_name' => 'SecurityController',
         ]);
     }
@@ -43,4 +63,5 @@ class SecurityController extends AbstractController
             'controller_name' => 'SecurityController',
         ]);
     }
+    
 }
