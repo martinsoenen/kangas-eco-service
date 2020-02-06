@@ -15,9 +15,9 @@ use App\Form\RegistrationTypeEntreprise;
 class SecurityController extends AbstractController
 {
     /**
-     * @Route("/connexion", name="security_login")
+     * @Route("/inscription", name="security_registration")
      */
-    public function loginSignIn(Request $request, UserPasswordEncoderInterface $encoder)
+    public function SignIn(Request $request, UserPasswordEncoderInterface $encoder)
     {   
         $Utilisateur = new Utilisateur;
         
@@ -42,12 +42,20 @@ class SecurityController extends AbstractController
         if ($formClient->isSubmitted() && $formClient->isValid()) { 
             $hash = $encoder->encodePassword($Utilisateur, $Utilisateur->getPassword());    
             $Utilisateur->setPassword($hash);
-
+            $Utilisateur->setUtilisateurType("client");
             $em->persist($Utilisateur);
             $em->flush();
         }
 
-        return $this->render('security/loginsignin.html.twig', [
+        if ($formEntreprise->isSubmitted() && $formEntreprise->isValid()) { 
+            $hash = $encoder->encodePassword($Utilisateur, $Utilisateur->getPassword());    
+            $Utilisateur->setPassword($hash);
+            $Utilisateur->setUtilisateurType("pro");
+            $em->persist($Utilisateur);
+            $em->flush();
+        }
+
+        return $this->render('security/signin.html.twig', [
             'formClient' => $formClient->createView(),
             'formEntreprise' =>$formEntreprise->createView(),
             'typeCompte' => $typeCompte->createView(),
@@ -63,5 +71,19 @@ class SecurityController extends AbstractController
             'controller_name' => 'SecurityController',
         ]);
     }
-    
+    /**
+     * @Route("/deconnexion/", name="security_logout")
+     */
+    public function logout(){
+
+    }
+
+    /**
+     * @Route("/connexion/", name="security_login")
+     */
+    public function login(){
+        return $this->render('security/login.html.twig', [
+            'controller_name' => 'SecurityController',
+        ]);
+    }
 }
