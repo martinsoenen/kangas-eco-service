@@ -49,7 +49,7 @@ class ProductController extends AbstractController
     public function sous_categorie(SousCategorieProduit $souscategorie)
     {
         $id = $souscategorie->getId();
-        $produits = $this->getDoctrine()->getRepository(Produit::class)->findSousCategories($id);
+        $produits = $this->getDoctrine()->getRepository(Produit::class)->findProduitsBySousCategorie($id);
 
         return $this->render('product/showBySousCategorie.html.twig', [
             'controller_name' => 'ProductController',
