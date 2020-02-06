@@ -41,10 +41,13 @@ class UserController extends AbstractController
 
     /**
      * @Route("/admin/ajouter-admin", name="ajouter_admin")
+     * @Route("/admin/{id}/edit", name="modifier_admin")
      */
-    public function ajouterUserAdministration(Request $request,EntityManagerInterface $manager, UserPasswordEncoderInterface $encoder)
+    public function ajouterUserAdministration(UtilisateurAdministration $admin = null,Request $request,EntityManagerInterface $manager, UserPasswordEncoderInterface $encoder)
     {
-        $admin = new UtilisateurAdministration();
+        if(!$admin) {
+            $admin = new UtilisateurAdministration();
+        }
         $form = $this->createFormBuilder($admin)
             ->add('Role',EntityType::class,[
                 'class' => Role::class,
@@ -76,6 +79,7 @@ class UserController extends AbstractController
         return $this->render('user/ajouterAdmin.html.twig', [
             'controller_name' => 'UserController',
             'formAdmin'=> $form->createView(),
+            'editMode'=>$admin->getId() !== null,
         ]);
     }
 }
