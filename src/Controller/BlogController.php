@@ -68,6 +68,7 @@ class BlogController extends AbstractController
 
     /**
      * @Route("/admin/article/add", name="add_article_admin"))
+     * @Route("/admin/{id}/edit", name="edit_article_admin"))
      */
     public function addAdminArticles(Article $article = null,Request $request,EntityManagerInterface $manager)
     {
@@ -99,5 +100,17 @@ class BlogController extends AbstractController
             'formArticle'=> $form->createView(),
             'editMode'=>$article->getId() !== null,
         ]);
+    }
+
+
+
+    /**
+     * @Route("/admin/{id}/delete", name="delete_article"))
+     */
+    public function deleteAdminArticles(Article $article,EntityManagerInterface $manager){
+        $manager->remove($article);
+        $manager->flush();
+
+        return $this->redirectToRoute('blog_admin');
     }
 }
