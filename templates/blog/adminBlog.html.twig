@@ -1,9 +1,30 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Admin -
-	{{parent()}}
-{% endblock %}
 {% block body %}
-	Détails du back office du blog ici
+	<table class="table" >
+		<thead class="thead-light">
+		<tr>
+			<th scope="col">Nom Article</th>
+			<th scope="col">Date Article</th>
+			<th scope="col">Options</th>
+		</tr>
+		</thead>
+		<tbody>
+		{% for article in articles %}
+			<tr>
+				<td>{{article.titre}}</td>
+				<td>{{article.date|date("d/m/Y")}}</td>
+				<td>
+					<bouton onclick="">
+						<i class="fa fa-pencil fa-2x"></i>
+					</bouton>
+					<bouton onclick="">
+						<i class="fa fa-trash fa-2x"></i>
+					</bouton>
+				</td>
+			</tr>
+		{% endfor %}
+		</tbody>
+	</table>
 {% endblock %}
 
