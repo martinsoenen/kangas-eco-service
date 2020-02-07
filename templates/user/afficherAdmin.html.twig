@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <table class="table" >
+        <thead class="thead-light">
+        <tr>
+            <th scope="col">Nom</th>
+            <th scope="col">Prénom</th>
+            <th scope="col">Role</th>
+            <th scope="col">Options</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for admin in admins %}
+        <tr>
+            <td>{{admin.nom}}</td>
+            <td>{{admin.prenom}}</td>
+            <td>{{admin.role.nom}}</td>
+            <td>
+                <bouton onclick="window.location.href = '/admin/{{admin.id}}/edit';">
+                    <i class="fa fa-pencil fa-2x"></i>
+                </bouton>
+                <bouton onclick="window.location.href = '/admin/{{admin.id}}/delete';">
+                    <i class="fa fa-trash fa-2x"></i>
+                </bouton>
+            </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}
