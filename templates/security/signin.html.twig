@@ -35,10 +35,10 @@
 		</div>
 		<div class="particulier" style="display:none;">
 			{{ form_start(formClient) }}
-				{{form_row(formClient.civilite, {'label' : false, 'attr' :{'placeholder' : 'Civilité'}})}}
-				{# {{form_row(formClient.Adresse)}} #}
+				{{form_row(formClient.civilite, {'label' : false, 'attr' :{'placeholder' : 'Civilité'}})}}				
 				{{form_row(formClient.nom, {'label' : false, 'attr' :{'placeholder' : 'Nom'}})}}
 				{{form_row(formClient.prenom, {'label' : false, 'attr' :{'placeholder' : 'Prénom'}})}}
+				{{form_row(formAdresse, {'label' : false})}}
 				{{form_row(formClient.telephone, {'label' : false, 'attr' :{'placeholder' : 'Numéro de téléphone'}})}}
 				{{form_row(formClient.email, {'label' : false, 'attr' :{'placeholder' : 'Email'}})}}
 				{{form_row(formClient.emailConfirm, {'label' : false, 'attr' :{'placeholder' : 'Confirmez votre e-mail'}})}}

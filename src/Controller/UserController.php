@@ -17,6 +17,9 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
+
+use App\Entity\Utilisateur;
+
 class UserController extends AbstractController
 {
      /**
@@ -25,7 +28,13 @@ class UserController extends AbstractController
     public function profilClient()
     {   
         
+        $UtilisateurId = $this->getUser()->getId();
+        $userDetails = $this->getDoctrine()
+                             ->getRepository(Utilisateur::class)
+                             ->getUtilisateurClientById($UtilisateurId);
+
         return $this->render('user/profilClient.html.twig', [
+            'usersDetails' => $userDetails,
             'controller_name' => 'UserController',
         ]);
     }
@@ -35,7 +44,14 @@ class UserController extends AbstractController
      */
     public function profilEnteprise()
     {
+        
+        $UtilisateurId = $this->getUser()->getId();
+        $userDetails = $this->getDoctrine()
+                             ->getRepository(Utilisateur::class)
+                             ->getUtilisateurProById($UtilisateurId);
+                             
         return $this->render('user/profilEntreprise.html.twig', [
+            'usersDetails' => $userDetails,
             'controller_name' => 'UserController',
         ]);
     }
