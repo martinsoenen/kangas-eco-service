@@ -1,6 +1,11 @@
 {% extends 'base.html.twig' %}
 
+
 {% block title %}Accueil - {{ parent() }}{% endblock %}
+
+{% block additional_stylesheets %}
+    <link rel="stylesheet" type="text/css" href="{{asset('../assets/eco_service/Accueil.css')}}">
+{% endblock %}
 
 {% block body %}
 
@@ -31,7 +36,7 @@
         </a>
     </div>
 
-    <div id="textPageAcccueil" class="container">
+    <div id="textPageAccueil" class="container">
         <div class="row">
             <div class="col-sm-12">
                 <h4 align="center">Bienvenue chez Eco-Service</h4>
@@ -40,26 +45,33 @@
                     <br/>
                     <br/>
                     Si vous êtes un professionnel, vous pouvez faire une demande de recyclage et
-                    nos équipes viennent directement à votre entreprise récupérer vo.
+                    nos équipes viennent directement à votre entreprise récupérer votre matériel.
                 </p>
 
-                <hr width="50%" color="black">
+                <hr width="50%" color="#222222">
                 <p align="center">NOUS REJOINDRE</p>
             </div>
         </div>
     </div>
-    <div id="boutonParticulier" class="container" align="center">
+    <div id="boutonParticulier" class="container bouton-accueil" align="center">
         <div class="row">
             <div class="col-sm-12">
-                <button type="button" class="btn btn-outline-secondary">Je suis un Particulier</button>
-                <p> </p>
+                <button class="btn btn-outline-secondary" data-toggle="collapse" data-target="#text-client">Je suis un Particulier</button>
+
+                <div id="text-client" class="collapse bouton-accueil-container">
+                    <p> Hey !</p>
+                </div>
             </div>
         </div>
     </div>
-    <div id="boutonEntreprise" class="container" align="center">
+    <div id="boutonEntreprise" class="container bouton-accueil" align="center">
     <div class="row">
         <div class="col-sm-12">
-            <button type="button" class="btn btn-outline-secondary">Je représente une Entreprise</button>
+            <button class="btn btn-outline-secondary" data-toggle="collapse" data-target="#text-company">Je suis un Professionel</button>
+
+            <div id="text-company" class="collapse bouton-accueil-container">
+                <p> Hey there! </p>
+            </div>
         </div>
     </div>
 </div>

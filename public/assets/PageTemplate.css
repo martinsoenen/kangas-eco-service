@@ -2,7 +2,9 @@
                                   GENERAL
   =======================================================================*/
 
-i { color: #EEEEEE; }
+i {
+    color: #EEEEEE;
+}
 
 h { font-family: "Roboto", sans-serif }
 
@@ -12,6 +14,7 @@ label { font-family: "Dosis Light", sans-serif }
 
 .underlined { text-decoration: underline}
 .bold { font-weight: bold }
+.absolute-centered { position: center}
 
 thead tr { border-bottom: solid 10px transparent }
 
@@ -20,63 +23,109 @@ thead tr { border-bottom: solid 10px transparent }
 /*=======================================================================
                                 HEADER PART
   =======================================================================*/
+#header
+{
+    background-color: #8ed86e;
+}
+
+#header-logo
+{
+    height:60px;
+    margin-right: 20px;
+}
 
 .navbar
 {
-    background-color: #8ed86e;
     justify-content: space-between;
 }
 
 .navbar-nav
 {
+    flex-direction: column;
+}
+
+.navbar-nav-container
+{
     flex-direction: row;
 }
 
 .nav-link
- {
-    padding: 15px 15px 15px 15px !important;
- }
+{
+    float: right;
+    display: inline-flex;
+    align-items: center;
+    padding: .5rem 1rem !important;
+    font-family: 'Roboto';
+    font-size: larger;
+    color: #EEEEEE;
+}
+
+.link-icon
+{
+    margin-left:20px;
+}
 
 .nav-link:hover
 {
     background-color: #74d14c;
-    padding: 15px 15px 15px 15px !important;
+    color: #222222;
+    padding: .5rem 1rem !important;
     border-radius: 5px;
 }
 
-@media (min-width: 576px)
+.nav-link:hover i
 {
+    color: #222222;
+}
+
+#shopping-cart-icon
+{
+    padding: .75rem 1rem !important;
+}
+
+@media (min-width: 768px)
+{
+
     .nav-link
     {
-        padding: 15px 15px 15px 15px !important;
+        padding: .5rem 1rem !important;
     }
 
     .nav-link:hover
     {
         background-color: #74d14c;
-        padding: 15px 15px 15px 15px !important;
+        padding: .5rem 1rem !important;
         border-radius: 5px;
+    }
+
+    #shopping-cart-icon
+    {
+        position: absolute;
+        right: 20px;
+        bottom: 10px;
+        padding: .5rem 1rem !important;
+    }
+
+    #login-icon
+    {
+        display: none;
+
+    }
+
+    #help-icon
+    {
+        display: none;
     }
 }
 
-/*=======================================*/
-.dropdown-menu
+.h1
 {
-    margin: 0px 0px 0px -60px;
-    background-color: #8ed86e;
-    border: solid 1px #244d11;
-    border-radius: 0px;
-    position:absolute !important;
+    text-align: center;
 }
-
-.dropdown-item:hover
-{
-    background-color: #74d14c;
-}
-
 /*=======================================================================
                                 FOOTER PART
   =======================================================================*/
+
 #footer
 {
     text-align: center;
@@ -89,32 +138,14 @@ thead tr { border-bottom: solid 10px transparent }
 {
     flex-direction: column;
 }
-
-@media (min-width: 576px)
-{
-    #subfooter
-    {
-        flex-direction: row;
-    }
-}
-
 .footer-element
 {
-    flex-direction: row;
+    flex-direction: column;
     text-align: center;
     width:auto;
     margin: 10px;
     padding-bottom: 10px;
     border-bottom: solid 1px #555555;
-}
-@media (min-width: 576px)
-{
-    .footer-element
-    {
-        border-bottom: solid 0px transparent;
-        flex-direction: column;
-        margin: 10px;
-    }
 }
 
 #last-element
@@ -122,22 +153,15 @@ thead tr { border-bottom: solid 10px transparent }
     border-bottom: solid 0px transparent;
 }
 
-.footer-element table
+.social-table
 {
-    margin-right: 30px;
-    width: 100%;
+    align: center;
+    margin-left: 25%;
+    margin-right: 25%;
 }
-.footer-element td
+.social-table td
 {
     width: 33.3333%;
-}
-
-#copyright
-{
-    margin-top: -15px;
-    margin-bottom: -5px;
-    font-size: 8px;
-    align: center;
 }
 
 .social-link-icon
@@ -153,4 +177,34 @@ thead tr { border-bottom: solid 10px transparent }
     border-radius: 5px;
     background-color: #74d14c;
     color: #222222;
+}
+
+#copyright
+{
+    margin-top: -30px;
+    margin-bottom: -5px;
+    font-size: 8px;
+    align: center;
+}
+
+@media (min-width: 768px)
+{
+    #subfooter
+    {
+        flex-direction: row;
+    }
+
+    .footer-element
+    {
+        border-bottom: solid 0px transparent;
+        margin: 10px;
+    }
+
+    #copyright
+    {
+        margin-top: -60px;
+        margin-bottom: -5px;
+        font-size: 8px;
+        align: center;
+    }
 }

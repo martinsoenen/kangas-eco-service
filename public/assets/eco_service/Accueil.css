@@ -1,0 +1,27 @@
+#textPageAccueil
+{
+    padding: 15px;
+}
+
+.btn-outline-secondary
+{
+    z-index: 2 !important;
+    border-radius: 20px;
+    background-color: #f7cf9b;
+}
+
+.bouton-accueil
+{
+    margin-bottom: 20px;
+}
+
+.bouton-accueil-container
+{
+    z-index: 1 !important;
+    margin-top: -20px;
+    margin-left: 25%;
+    margin-right: 25%;
+    padding-top: 25px;
+    border: solid 1px #CCCCCC;
+    border-radius: 15px;
+}
