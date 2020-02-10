@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Sous-Catégorie - {{ parent() }}{% endblock %}
+
+{% block body %}
+    <div>
+        <h1>{{ souscategorie.nom }}</h1>
+
+        {% for produit in produits %}
+            <h4>{{ produit.nom_produit }}</h4>
+            <p>{{ produit.presentation }} - {{ produit.description_detaillee }}</p>
+        {% endfor %}
+    </div>
+{% endblock %}

@@ -21,7 +21,7 @@ class CategorieProduitRepository extends ServiceEntityRepository
 
     public function findCategories() {
         return $this->createQueryBuilder('c')
-            ->innerJoin("c.sousCategorieProduits", "sc")
+            ->leftJoin("c.sousCategorieProduits", "sc")
             ->addSelect("sc")
             ->getQuery()
             ->getResult()

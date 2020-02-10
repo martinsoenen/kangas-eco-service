@@ -10,7 +10,10 @@ cache :
 	$(SYMFONY) cache:warmup
 routes:
 	$(SYMFONY) debug:router --show-controllers
-
+controller:
+$(SYMFONY) make:controller
+form:
+$(SYMFONY) make:form
 ##### DOCTRINE #####
 database:
 	$(SYMFONY) doctrine:database:create --if-not-exists

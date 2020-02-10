@@ -27,11 +27,14 @@ class Article
     private $text;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\CategorieBlog")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\Column(type="datetime")
      */
-    private $CategorieBlog;
+    private $date;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $image;
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\UtilisateurAdministration")
      * @ORM\JoinColumn(nullable=false)
@@ -67,18 +70,6 @@ class Article
         return $this;
     }
 
-    public function getCategorieBlog(): ?CategorieBlog
-    {
-        return $this->CategorieBlog;
-    }
-
-    public function setCategorieBlog(CategorieBlog $CategorieBlog): self
-    {
-        $this->CategorieBlog = $CategorieBlog;
-
-        return $this;
-    }
-
     public function getUtilisateurAdmin(): ?UtilisateurAdministration
     {
         return $this->UtilisateurAdmin;
@@ -87,6 +78,30 @@ class Article
     public function setUtilisateurAdmin(?UtilisateurAdministration $UtilisateurAdmin): self
     {
         $this->UtilisateurAdmin = $UtilisateurAdmin;
+
+        return $this;
+    }
+
+    public function getDate(): ?\DateTimeInterface
+    {
+        return $this->date;
+    }
+
+    public function setDate(\DateTimeInterface $date): self
+    {
+        $this->date = $date;
+
+        return $this;
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(string $image): self
+    {
+        $this->image = $image;
 
         return $this;
     }
