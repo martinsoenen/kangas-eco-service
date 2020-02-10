@@ -15,6 +15,13 @@ Le projet est maintenant disponible si vous aller sur l'URL `localhost` !
 Si vous souhaitez avoir un plus bel URL, vous pouvez ajouter la ligne suivante à votre fichier de hosts `127.0.0.1 dev.eco-service.com` et le projet sera accessible sur l'URL `dev.eco-service.com` !
 
 Pour accéder à PHPMyAdmin, il suffit d'aller sur le port 81 de votre URL (`localhost:81` ou `dev.eco-service.com:81`).
+  
+## Site de production
+Dernière mise en prod : 10/02/2020
+
+Pour accéder au site internet en production, vous pouvez aller sur eco-service.martinsoenen.com ou ajouter la ligne
+ `37.44.237.133 eco-service.com www.eco-service.com` à votre fichier de hosts pour pouvoir ensuite accéder au site
+  directement depuis l'URL www.eco-service.com !
 
 ## Docker-compose cheatsheet
 
