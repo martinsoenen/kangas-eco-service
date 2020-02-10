@@ -35,8 +35,7 @@ class RegistrationTypeClient extends AbstractType
             ->add('passwordConfirm',PasswordType::class)
             ->add('nom',TextType::class)
             ->add('prenom',TextType::class)
-            // ->add('Adresse')
-            
+                        
             ->add('telephone')
             ->add('conditions', CheckboxType::class)
         ;

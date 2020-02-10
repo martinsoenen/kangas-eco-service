@@ -47,4 +47,23 @@ class UtilisateurRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function getUtilisateurClientById($id){
+        return $this->createQueryBuilder('c') 
+            ->leftJoin('c.Adresse','adr')
+            ->addSelect('adr')           
+            ->andWhere('c.id = :val')
+            ->setParameter('val', $id)           
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
+     public function getUtilisateurProById($id){
+            return $this->createQueryBuilder('c')
+            ->andWhere('c.id = :val')
+            ->setParameter('val', $id)            
+            ->getQuery()
+            ->getOneOrNullResult();
+        
+    }
 }

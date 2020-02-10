@@ -2,6 +2,9 @@ security:
     encoders:
         App\Entity\Utilisateur:
             algorithm: bcrypt
+
+        App\Entity\UtilisateurAdministration:
+            algorithm: bcrypt
             
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:

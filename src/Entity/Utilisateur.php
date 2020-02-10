@@ -42,8 +42,12 @@ class Utilisateur implements UserInterface
     private $civilite;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     * @Assert\Length(min="8", minMessage="Votre mot de pase doit faire minimum 8 caractères")
+    * @ORM\Column(type="string", length=255)
+    * @Assert\Regex(
+    *   pattern = "/^(?=.*\d)(?=.*[A-Z])(?=.*[@#$%])(?!.*(.)\1{2}).*[a-z]/m",
+    *   match=true,
+    *   message="Votre mot de passe doit comporter au moins huit caractères, dont des lettres majuscules et minuscules, un chiffre et un symbole."
+    * )
      * Assert\EqualTo(propertyPath="passwordConfirm")
      */
     private $password;

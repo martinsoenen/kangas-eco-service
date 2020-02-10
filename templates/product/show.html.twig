@@ -10,5 +10,6 @@
         Présentation : {{ produit.presentation }}<br/>
         Description : {{ produit.descriptionDetaillee }}
     </p>
+    <a href="{{ path('panier_add', {'id' : produit.id}) }}" class="btn btn-success"><i class="fa fa-shopping-cart mr-1"> Ajouter au panier</i></a>
 </div>
 {% endblock %}

@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Role;
 use App\Entity\UtilisateurAdministration;
 
+use App\Repository\UtilisateurAdministrationRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -16,6 +17,9 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
+
+use App\Entity\Utilisateur;
+
 class UserController extends AbstractController
 {
      /**
@@ -24,7 +28,13 @@ class UserController extends AbstractController
     public function profilClient()
     {   
         
+        $UtilisateurId = $this->getUser()->getId();
+        $userDetails = $this->getDoctrine()
+                             ->getRepository(Utilisateur::class)
+                             ->getUtilisateurClientById($UtilisateurId);
+
         return $this->render('user/profilClient.html.twig', [
+            'usersDetails' => $userDetails,
             'controller_name' => 'UserController',
         ]);
     }
@@ -34,7 +44,14 @@ class UserController extends AbstractController
      */
     public function profilEnteprise()
     {
+        
+        $UtilisateurId = $this->getUser()->getId();
+        $userDetails = $this->getDoctrine()
+                             ->getRepository(Utilisateur::class)
+                             ->getUtilisateurProById($UtilisateurId);
+                             
         return $this->render('user/profilEntreprise.html.twig', [
+            'usersDetails' => $userDetails,
             'controller_name' => 'UserController',
         ]);
     }
@@ -71,7 +88,7 @@ class UserController extends AbstractController
             $manager->persist($admin);
             $manager->flush();
 
-            return $this->redirectToRoute('ajouter_admin');
+            return $this->redirectToRoute('afficher_admin');
         }
 
 
@@ -81,5 +98,30 @@ class UserController extends AbstractController
             'formAdmin'=> $form->createView(),
             'editMode'=>$admin->getId() !== null,
         ]);
+    }
+
+    /**
+     * @Route("/admin/afficher-admin", name="afficher_admin")
+     */
+    public function afficherUserAdministration()
+    {
+        $repo = $this->getDoctrine()->getRepository(UtilisateurAdministration::class);
+        $admins = $repo->findAll();
+
+
+        return $this->render('user/afficherAdmin.html.twig', [
+            'controller_name' => 'UserController',
+            'admins' => $admins,
+        ]);
+    }
+
+    /**
+     *  @Route("/admin/{id}/delete", name="delete_admin")
+     */
+    public function deleteUserAdministration(UtilisateurAdministration $admin, EntityManagerInterface $manager){
+        $manager->remove($admin);
+        $manager->flush();
+
+        return $this->redirectToRoute('afficher_admin');
     }
 }

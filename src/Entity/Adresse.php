@@ -47,13 +47,6 @@ class Adresse
      * @ORM\Column(type="string", length=50)
      */
     private $Ville;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\AdresseType", inversedBy="adresses")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $AdresseType;
-
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Utilisateur", inversedBy="Adresse")
      * @ORM\JoinColumn(nullable=false)
@@ -169,18 +162,6 @@ class Adresse
                 $utilisateurEntreprise->setIdAdresse(null);
             }
         }
-
-        return $this;
-    }
-
-    public function getAdresseType(): ?AdresseType
-    {
-        return $this->AdresseType;
-    }
-
-    public function setAdresseType(?AdresseType $AdresseType): self
-    {
-        $this->AdresseType = $AdresseType;
 
         return $this;
     }
