@@ -8,8 +8,11 @@
 
     <p>
         Présentation : {{ produit.presentation }}<br/>
-        Description : {{ produit.descriptionDetaillee }}
+        Prix HT : {{ produit.prixUnitaireHT }}€ - TVA : {{ produit.tauxTVA }}% <br/>
+        Prix TTC : {{ (produit.prixUnitaireHT * (1 + produit.tauxTVA)) }}€ <br/>
+        Description : {{ produit.descriptionDetaillee }} <br/>
     </p>
+    {# TODO: champ de sélection de quantité qu'on veut ajouter au panier#}
     <a href="{{ path('panier_add', {'id' : produit.id}) }}" class="btn btn-success"><i class="fa fa-shopping-cart mr-1"> Ajouter au panier</i></a>
 </div>
 {% endblock %}
