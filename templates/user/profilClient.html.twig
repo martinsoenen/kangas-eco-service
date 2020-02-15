@@ -2,7 +2,34 @@
 
 {% block title %}Profil -{{parent()}}{% endblock %}
 {% block body %}
-	Profil client ici
+<p>Compte Particulier<p>
+<hr>
+<div class="user-info">
+	<div class="perso">
+		<label >Civilité</label>{{ form_widget(form.civilite, {'disabled':'disabled'}) }}
+		<label>Nom</label>{{ form_widget(form.nom, { 'disabled':'disabled'}) }}
+		<label>Prénom</label>{{form_widget(form.prenom, {'disabled':'disabled'}) }}
+		<label>Téléphone</label>{{form_widget(form.telephone, {'disabled':'disabled'}) }}
+		<label>E-mail</label>{{form_widget(form.email, {'disabled':'disabled'}) }}
+		<button type='button' class="btn btn-outline-success">Modifier mes informations</button>
+	</div>
+	<hr>
+	<p><i class="fa fa-address-book"></i> Mes adresses</p>
+	<div class="table-responsive">
+		<table class="table">
+			<tbody>
+			{% for adresse in Adresse %}
+				<tr>
+					<td>{{adresse.nom}}</td>
+					<td>{{adresse.numeroRue ~ ' '~ adresse.typeRue ~ ' '
+						~ adresse.nomRue ~ ' '~ adresse.CP ~ ' '~ adresse.Ville}}</td>
+					<td><i class="fa fa-pencil"></i><a href="#"> Modifier</a><td> {# utiliser adresse.id pour l'adresse #}
+				</tr>
+			{% endfor %}
+			</tbody>
+		</table>
+	</div>
+</div>
 {% endblock %}
 
 

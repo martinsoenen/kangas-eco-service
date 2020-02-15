@@ -17,8 +17,12 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
-
 use App\Entity\Utilisateur;
+use App\Entity\Adresse;
+use App\Form\RegistrationTypeClient;
+use App\Form\RegistrationTypeEntreprise;
+use App\Form\AdresseType;
+
 
 class UserController extends AbstractController
 {
@@ -27,16 +31,28 @@ class UserController extends AbstractController
      */
     public function profilClient()
     {   
+        if($this->getUser() != null){
+            $UtilisateurId = $this->getUser()->getId();
         
-        $UtilisateurId = $this->getUser()->getId();
-        $userDetails = $this->getDoctrine()
-                             ->getRepository(Utilisateur::class)
-                             ->getUtilisateurClientById($UtilisateurId);
+            $userDetails = $this->getDoctrine()
+                                ->getRepository(Utilisateur::class)
+                                ->getUtilisateurClientById($UtilisateurId);
+            $Adresse =$this->getDoctrine()
+                                ->getRepository(Adresse::class)
+                                ->getAdresseById($UtilisateurId);
 
-        return $this->render('user/profilClient.html.twig', [
-            'usersDetails' => $userDetails,
-            'controller_name' => 'UserController',
-        ]);
+            $form = $this->createForm(RegistrationTypeClient::class, $userDetails);
+
+            
+            return $this->render('user/profilClient.html.twig', [
+                'form' => $form->createView(),
+                'Adresse' => $Adresse,
+                'controller_name' => 'UserController',
+            ]);
+        }
+        else {
+            return $this->redirectToRoute('security_login');
+        }
     }
 
      /**
@@ -44,16 +60,23 @@ class UserController extends AbstractController
      */
     public function profilEnteprise()
     {
-        
-        $UtilisateurId = $this->getUser()->getId();
-        $userDetails = $this->getDoctrine()
-                             ->getRepository(Utilisateur::class)
-                             ->getUtilisateurProById($UtilisateurId);
-                             
-        return $this->render('user/profilEntreprise.html.twig', [
-            'usersDetails' => $userDetails,
-            'controller_name' => 'UserController',
-        ]);
+        if($this->getUser() != null){
+            $UtilisateurId = $this->getUser()->getId();
+            $userDetails = $this->getDoctrine()
+                                ->getRepository(Utilisateur::class)
+                                ->getUtilisateurProById($UtilisateurId);
+
+            $form = $this->createForm(RegistrationTypeEntreprise::class, $userDetails);
+
+                                
+            return $this->render('user/profilEntreprise.html.twig', [
+                'form' => $form->createView(),
+                'controller_name' => 'UserController',
+            ]);
+        }
+        else {
+            return $this->redirectToRoute('security_login');
+        }
     }
 
     /**
