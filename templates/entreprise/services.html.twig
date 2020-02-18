@@ -3,24 +3,15 @@
 {% block title %}Nos services - {{ parent() }}{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+    <ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" role="tab" >Nos Services</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{path('entreprise_devis')}}">Devis</a>
+        </li>
+    </ul>
 
-    <div class="example-wrapper">
-        <h1>Nos services</h1>
-        <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
-            <li class="nav-item">
-                <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="{{ path('entreprise_services') }}" role="tab" aria-controls="pills-home" aria-selected="true">Nos Services </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="{{ path('entreprise_devis') }}" role="tab" aria-controls="pills-profile" aria-selected="false">Devis en ligne</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="{{ path('entreprise_contact') }}" role="tab" aria-controls="pills-contact" aria-selected="false">Contact</a>
-            </li>
-        </ul>
 
         <div class="text-center">
             <h2>Eco Service propose de nombreuses solutions</h2>
