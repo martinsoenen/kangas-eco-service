@@ -2,8 +2,6 @@
 
 namespace App\Controller;
 
-require '../vendor/autoload.php';
-
 use App\Service\Panier\PanierService;
 use PayPal\Api\Amount;
 use PayPal\Api\Details;
