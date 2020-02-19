@@ -14,6 +14,7 @@ use PayPal\Api\Payer;
 use PayPal\Api\Payment;
 use PayPal\Api\RedirectUrls;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGenerator;
 
@@ -96,11 +97,15 @@ class AchatController extends AbstractController
     }
 
     /**
-     * @Route("/panier/add/{id}", name="panier_add")
+     * @Route("/panier/add/{id}", name="panier_add", methods={"GET","HEAD"})
      */
-    public function add($id, PanierService $panierService)
+    public function add(Request $request, $id, PanierService $panierService)
     {
-        $panierService->add($id);
+        $quantite = $request->get('quantite');
+
+        for ($i = 0; $i < $quantite; $i++) {
+            $panierService->add($id);
+        }
 
         return $this->redirectToRoute("panier");
     }
