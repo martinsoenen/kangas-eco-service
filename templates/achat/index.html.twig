@@ -41,6 +41,14 @@
             </tr>
             </tfoot>
         </table>
+
+        <a href="{{ path('panier_paiement') }}" class="btn btn-success"><i class="fa fa-paypal"> Payer</i></a>
+
+        {% if app.environment == 'dev' %}
+            <p>Le faux compte client à utiliser sur PayPal est : <code>sb-nnod81071114@personal.example.com</code> / <code>)f;xy-R2</code></p>
+            <p>Le faux compte boutique à utiliser sur PayPal est : <code>sb-5ex4471058141@business.example.com</code> / <code>6QM3eHy<</code> (accès sur le site <a href="https://www.sandbox.paypal.com">www.sandbox.paypal.com</a>)</p>
+            <p>Svp ne faites pas de grosse commande et surtout NE METTEZ PAS DE VRAI COMPTE CLIENT</p>
+        {% endif %}
     {% else %}
         <p>Votre panier est vide.</p>
     {% endif %}
