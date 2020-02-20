@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Service\Panier\PanierService;
 use PayPal\Api\Amount;
 use PayPal\Api\Details;
+use PayPal\Api\PaymentExecution;
 use PayPal\Api\Transaction;
 use PayPal\Rest\ApiContext;
 use PayPal\Api\Item;
@@ -15,11 +16,14 @@ use PayPal\Api\Payment;
 use PayPal\Api\RedirectUrls;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGenerator;
 
 class AchatController extends AbstractController
 {
+    protected $session;
+
     /**
      * @Route("/panier", name="panier")
      */
@@ -64,6 +68,7 @@ class AchatController extends AbstractController
         $details = (new Details())
             ->setSubtotal($totalPrice);
 //            TODO:Ajouter la TVA
+//            ->setTax();
 
         $amount = (new Amount())
             ->setTotal($totalPrice)
@@ -79,7 +84,7 @@ class AchatController extends AbstractController
         $payment->setTransactions([$transaction]);
         $payment->setIntent('sale');
         $redirectUrls = (new RedirectUrls())
-            ->setReturnUrl($this->generateUrl('panier_paiement', [], UrlGenerator::ABSOLUTE_URL))
+            ->setReturnUrl($this->generateUrl('panier_paiement_termine', [], UrlGenerator::ABSOLUTE_URL))
             ->setCancelUrl($this->generateUrl('panier', [], UrlGenerator::ABSOLUTE_URL));
         $payment->setRedirectUrls($redirectUrls);
         $payment->setPayer((new Payer())->setPaymentMethod('paypal'));
@@ -90,6 +95,37 @@ class AchatController extends AbstractController
         } catch (\PayPal\Exception\PayPalConnectionException $e) {
             dump(json_decode($e->getData()));
         }
+
+        return $this->render('achat/paiement_termine.html.twig', [
+            'controller_name' => 'AchatController',
+        ]);
+    }
+
+    /**
+     * @Route("/panier/paiement_termine", name="panier_paiement_termine")
+     */
+    public function paiementTermine(Request $request, PanierService $panier)
+    {
+        $credentials = [
+            'id' => 'Ae0q9Y6VL5tsv0vcBvzBMv3kjg7mM50yooD8C9u2nm1HmVa5pcCa9GH-Ov7swbpl1CHru_D2G_GXCQ4O',
+            'secret' => 'EFN_usuuBumAEyMgasVcamuZCaimCZ7JJzCWqsFbYKZ08HhQ6y43jENMHLJrk8qHhYfQRzXnt2SBYVHI'
+        ];
+        $apiContext = new ApiContext(
+            new OAuthTokenCredential($credentials['id'],$credentials['secret']
+            )
+        );
+        $payment = Payment::get($quantite = $request->get('paymentId'), $apiContext);
+
+        $execution = (new PaymentExecution())
+            ->setPayerId($request->get('PayerID'))
+            ->setTransactions($payment->getTransactions());
+        try {
+            $payment->execute($execution, $apiContext);
+        } catch (\PayPal\Exception\PayPalConnectionException $e) {
+            dump(json_decode($e->getData()));
+        }
+
+        $panier->reset();
 
         return $this->render('achat/paiement.html.twig', [
             'controller_name' => 'AchatController',
