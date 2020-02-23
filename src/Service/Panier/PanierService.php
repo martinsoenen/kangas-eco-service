@@ -60,4 +60,14 @@ class PanierService {
 
         return $total;
     }
+
+    public function reset() {
+        $panier = $this->session->get('panier', []);
+
+        if(!empty($panier)) {
+            unset($panier);
+        }
+
+        $this->session->set('panier', []);
+    }
 }

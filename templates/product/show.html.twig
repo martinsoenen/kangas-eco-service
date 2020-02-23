@@ -8,8 +8,36 @@
 
     <p>
         Présentation : {{ produit.presentation }}<br/>
-        Description : {{ produit.descriptionDetaillee }}
+        Prix HT : {{ produit.prixUnitaireHT }}€ - TVA : {{ produit.tauxTVA }}% <br/>
+        Prix TTC : {{ (produit.prixUnitaireHT * (1 + produit.tauxTVA)) }}€ <br/>
+        Description : {{ produit.descriptionDetaillee }} <br/>
     </p>
-    <a href="{{ path('panier_add', {'id' : produit.id}) }}" class="btn btn-success"><i class="fa fa-shopping-cart mr-1"> Ajouter au panier</i></a>
+    {# TODO: champ de sélection de quantité qu'on veut ajouter au panier#}
+    <input id="{{ produit.id }}" type="number" name="quantite" value=1 >
+    <a id="{{ produit.id }}" class="btn btn-success"><i class="fa fa-shopping-cart mr-1"> Ajouter au panier</i></a>
 </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent()}}
+    <script>
+        $('.btn.btn-success').click(function() {
+            let id = $(this).attr('id');
+            let value = $("#"+id+"[name='quantite']").val();
+
+            $.ajax({
+                url : '/panier/add/'+ id,
+                type : 'GET',
+                data : {
+                    quantite: value
+                },
+                dataType: "integer",
+                success: function(response) {
+                    console.log(response);
+                }
+            });
+            alert('Vous avez ajouté ' + value + ' au panier'); // TODO: récupérer le nom du produit et l'afficher ici
+        });
+
+    </script>
 {% endblock %}

@@ -33,14 +33,10 @@ Pour accéder au site internet en production, vous pouvez aller sur eco-service.
   * Arrêter et détruire les containers : `docker-compose down`
   * Voir le statut de ses containers : `docker-compose ps`
   * Voir les logs des containers : `docker-compose logs`
-  * Faire une commande dans un container :
-    - Sur Linux : `docker-compose exec SERVICE_NAME COMMAND` où `COMMAND` est la commande que l'on veut. Exemples :  
-      - Ouvrir une console dans le container php-fpm : `docker-compose exec php bash` (ne fonctionne pas sur Windows)  
-      - Ouvrir la console Symfony : `docker-compose exec php bin/console` (ne fonctionne pas sur Windows)
-    - Sur Windows : il existe 2 principales possiblités :
-      - Cliquer sur l'icône `Docker Desktop` en bas à droite, puis `Dashboard`, et l'icône de commande concernant le container de votre souhait
-      - Installer un plugin Docker sur votre IDE (`Docker` sur VS Code), sélectionner votre container qui devrait être visible dans ce plugin et l'attacher au shell de votre IDE
-
+  * Faire une commande dans un container : `docker-compose exec CONTAINER_NAME COMMAND` où `COMMAND` est la commande que l'on veut. Exemples :  
+      - Ouvrir une console dans le container php-fpm : `docker-compose exec php bash`  
+      - Ouvrir la console Symfony : `docker-compose exec php bin/console`
+     
 
 ## Symfony 
 
