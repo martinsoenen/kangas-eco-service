@@ -7,9 +7,11 @@ i {
 }
 
 
-h1, h2, h3, h4, h5, h6 {
+body {
     font-family: "Roboto", sans-serif;
-    text-align: center;
+}
+
+h1, h2, h3, h4, h5, h6 {
     margin: 20px 0;
 }
     
@@ -20,7 +22,6 @@ h1 {
 
 p { 
     font-family: "Lato", sans-serif;
-    text-align: center;
 }
 
 label { 
@@ -81,8 +82,7 @@ thead tr {
     display: inline-flex;
     align-items: center;
     padding: .5rem 1rem !important;
-    font-family: 'Roboto';
-    font-size: larger;
+    font-size: 400;
     color: #EEEEEE;
 }
 
@@ -156,10 +156,6 @@ thead tr {
     padding: 0;
 }
 
-#subfooter
-{
-    flex-direction: column;
-}
 .footer-element
 {
     flex-direction: column;
@@ -177,7 +173,6 @@ thead tr {
 
 .social-table
 {
-    align: center;
     margin-left: 25%;
     margin-right: 25%;
 }
@@ -203,10 +198,7 @@ thead tr {
 
 #copyright
 {
-    margin-top: -30px;
-    margin-bottom: -5px;
-    font-size: 8px;
-    align: center;
+    font-size: 10px;
 }
 
 @media (min-width: 768px)
@@ -224,9 +216,6 @@ thead tr {
 
     #copyright
     {
-        margin-top: -60px;
-        margin-bottom: -5px;
-        font-size: 8px;
-        align: center;
+        font-size: 10px;
     }
 }
