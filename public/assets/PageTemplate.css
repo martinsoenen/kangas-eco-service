@@ -6,19 +6,45 @@ i {
     color: #EEEEEE;
 }
 
-h { font-family: "Roboto", sans-serif }
 
-p { font-family: "Lato", sans-serif }
+h1, h2, h3, h4, h5, h6 {
+    font-family: "Roboto", sans-serif;
+    text-align: center;
+    margin: 20px 0;
+}
+    
+h1 { 
+    font-size: 48px;
+}
 
-label { font-family: "Dosis Light", sans-serif }
 
-.underlined { text-decoration: underline}
-.bold { font-weight: bold }
-.absolute-centered { position: center}
+p { 
+    font-family: "Lato", sans-serif;
+    text-align: center;
+}
 
-thead tr { border-bottom: solid 10px transparent }
+label { 
+    font-family: "Dosis Light", sans-serif;
+}
 
-.gray-href { color: #EEEEEE}
+.underlined { 
+    text-decoration: underline;
+}
+
+.bold { 
+    font-weight: bold ;
+}
+.absolute-centered { 
+    position: center;
+}
+
+thead tr { 
+    border-bottom: solid 10px transparent ;
+}
+
+.gray-href { 
+    color: #EEEEEE;
+}
 
 /*=======================================================================
                                 HEADER PART
@@ -118,10 +144,6 @@ thead tr { border-bottom: solid 10px transparent }
     }
 }
 
-.h1
-{
-    text-align: center;
-}
 /*=======================================================================
                                 FOOTER PART
   =======================================================================*/
