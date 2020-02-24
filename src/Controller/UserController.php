@@ -26,6 +26,9 @@ use App\Form\AdresseType;
 
 class UserController extends AbstractController
 {
+
+        ////////////////////CLIENT////////////////////////////////
+
      /**
      * @Route("/profil/client", name="profil_client")
      */
@@ -33,27 +36,86 @@ class UserController extends AbstractController
     {   
         if($this->getUser() != null){
             $UtilisateurId = $this->getUser()->getId();
-        
-            $userDetails = $this->getDoctrine()
-                                ->getRepository(Utilisateur::class)
-                                ->getUtilisateurClientById($UtilisateurId);
-            $Adresse =$this->getDoctrine()
-                                ->getRepository(Adresse::class)
-                                ->getAdresseById($UtilisateurId);
 
-            $form = $this->createForm(RegistrationTypeClient::class, $userDetails);
+            //Aiguillage particulier/entreprise
+            if($this->getUser()->getUtilisateurType()=="client"){
+                $userDetails = $this->getDoctrine()
+                                    ->getRepository(Utilisateur::class)
+                                    ->getUtilisateurClientById($UtilisateurId);
+                $Adresse =$this->getDoctrine()
+                                    ->getRepository(Adresse::class)
+                                    ->getAdresseById($UtilisateurId);
 
-            
-            return $this->render('user/profilClient.html.twig', [
-                'form' => $form->createView(),
-                'Adresse' => $Adresse,
-                'controller_name' => 'UserController',
-            ]);
+                $form = $this->createForm(RegistrationTypeClient::class, $userDetails);
+
+                
+                return $this->render('user/profilClient.html.twig', [
+                    'form' => $form->createView(),
+                    'Adresse' => $Adresse,
+                    'controller_name' => 'UserController',
+                ]);
+            }
+            else {
+                 return $this->redirectToRoute('profil_entreprise');
+            }
         }
         else {
             return $this->redirectToRoute('security_login');
         }
     }
+
+    /**
+     * @Route("/profil/client/edit", name="client_edit")
+     */
+    public function ClientEdit(Request $request, UserPasswordEncoderInterface $encoder)
+    {   
+        if($this->getUser() != null){
+            $UtilisateurId = $this->getUser()->getId();
+
+            //Aiguillage particulier/entreprise
+            if($this->getUser()->getUtilisateurType()=="client"){
+                $userDetails = $this->getDoctrine()
+                                    ->getRepository(Utilisateur::class)
+                                    ->getUtilisateurClientById($UtilisateurId);
+                $Adresse =$this->getDoctrine()
+                                    ->getRepository(Adresse::class)
+                                    ->getAdresseById($UtilisateurId);
+
+                $form = $this->createForm(RegistrationTypeClient::class, $userDetails);
+                $form->handleRequest($request);
+
+
+                if ($form->isSubmitted() && $form->isValid()) {
+                    $Utilisateur= $this->getUser();
+                    $data = $form->getData();
+                    $hash = $encoder->encodePassword($Utilisateur, $Utilisateur->getPassword());    
+                    $Utilisateur->setPassword($hash);
+                    $em = $this->getDoctrine()->getManager();
+                    $em->persist($data);
+                    $em->flush();
+                    $this->addFlash('success', 'Vos données ont été modifiées !');
+
+                    return $this->redirectToRoute('profil_client');
+                }
+                
+                return $this->render('user/ClientEdit.html.twig', [
+                    'form' => $form->createView(),
+                    'Adresse' => $Adresse,
+                    'controller_name' => 'UserController',
+                ]);
+            }
+            else {
+                 return $this->redirectToRoute('profil_entreprise');
+            }
+        }
+        else {
+            return $this->redirectToRoute('security_login');
+        }
+    }
+
+
+
+    ////////////////////ENTREPRISE////////////////////////////////
 
      /**
      * @Route("/profil/entreprise", name="profil_entreprise")
@@ -61,23 +123,81 @@ class UserController extends AbstractController
     public function profilEnteprise()
     {
         if($this->getUser() != null){
-            $UtilisateurId = $this->getUser()->getId();
-            $userDetails = $this->getDoctrine()
-                                ->getRepository(Utilisateur::class)
-                                ->getUtilisateurProById($UtilisateurId);
+            
+            //Aiguillage particulier/entreprise
+            if($this->getUser()->getUtilisateurType()=="pro"){
 
-            $form = $this->createForm(RegistrationTypeEntreprise::class, $userDetails);
+                $UtilisateurId = $this->getUser()->getId();
+                $userDetails = $this->getDoctrine()
+                                    ->getRepository(Utilisateur::class)
+                                    ->getUtilisateurProById($UtilisateurId);
 
-                                
-            return $this->render('user/profilEntreprise.html.twig', [
-                'form' => $form->createView(),
-                'controller_name' => 'UserController',
-            ]);
+                $form = $this->createForm(RegistrationTypeEntreprise::class, $userDetails);
+                                    
+                return $this->render('user/profilEntreprise.html.twig', [
+                    'form' => $form->createView(),
+                    'controller_name' => 'UserController',
+                ]);
+            }
+            else {
+                return $this->redirectToRoute('profil_client');
+            }
         }
         else {
             return $this->redirectToRoute('security_login');
         }
     }
+
+    /**
+     * @Route("/profil/entreprise/edit", name="entreprise_edit")
+     */
+    public function EntrepriseEdit(Request $request, UserPasswordEncoderInterface $encoder)
+    {   
+        if($this->getUser() != null){
+            $UtilisateurId = $this->getUser()->getId();
+
+            //Aiguillage particulier/entreprise
+            if($this->getUser()->getUtilisateurType()=="pro"){
+                $userDetails = $this->getDoctrine()
+                                    ->getRepository(Utilisateur::class)
+                                    ->getUtilisateurProById($UtilisateurId);
+
+                $form = $this->createForm(RegistrationTypeEntreprise::class, $userDetails);
+                $form->handleRequest($request);
+
+
+                if ($form->isSubmitted() && $form->isValid()) {
+                    $Utilisateur= $this->getUser();
+                    $data = $form->getData();
+                    $hash = $encoder->encodePassword($Utilisateur, $Utilisateur->getPassword());    
+                    $Utilisateur->setPassword($hash);
+                    $em = $this->getDoctrine()->getManager();
+                    $em->persist($data);
+                    $em->flush();
+                    $this->addFlash('success', 'Vos données ont été modifiées !');
+
+                    return $this->redirectToRoute('profil_entreprise');
+                }
+                
+                return $this->render('user/EntrepriseEdit.html.twig', [
+                    'form' => $form->createView(),
+                    'controller_name' => 'UserController',
+                ]);
+            }
+            else {
+                 return $this->redirectToRoute('profil_entreprise');
+            }
+        }
+        else {
+            return $this->redirectToRoute('security_login');
+        }
+    }
+
+
+
+
+    ////////////////////ADMIN////////////////////////////////
+
 
     /**
      * @Route("/admin/ajouter-admin", name="ajouter_admin")

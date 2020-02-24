@@ -5,8 +5,8 @@
 {% block body %}
 
 <p>Compte Entreprise</p>
-	<hr>
-	<div class="user-info">
+<hr>
+<div class="user-info">
         <label>Numéro de siret</label>
         {{ form_widget(form.siret, {'disabled':'disabled'}) }}
         <label>Raison sociale</label>
@@ -21,7 +21,8 @@
         {{form_widget(form.telephone, {'disabled':'disabled'}) }}
         <label>E-mail</label>
         {{form_widget(form.email, {'disabled':'disabled'}) }}
-        <button type='button' class="btn btn-outline-success">Modifier mes informations</button>
-	</div>
+        <a class="btn btn-outline-success" href="{{ path('entreprise_edit') }}">Modifier mes informations</a>
+
+</div>
 </p>
 {% endblock %}

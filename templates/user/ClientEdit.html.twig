@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Profil -{{parent()}}
+{% endblock %}
+{% block body %}
+	<p>Compte Particulier</p>
+    <hr>
+    <div class="user-info">
+        <div class="perso">
+            {{form_start(form)}}
+                <label>Civilité</label>
+                {{ form_widget(form.civilite) }}
+                <label>Nom</label>
+                {{ form_widget(form.nom ) }}
+                <label>Prénom</label>
+                {{form_widget(form.prenom) }}
+                <label>Téléphone</label>
+                {{form_widget(form.telephone) }}
+                {<label>E-mail</label>
+                {{form_widget(form.email) }} 
+                <label>Mot de passe</label>
+                {{form_widget(form.password) }}
+                {{ form_row(form._token) }}
+                {{form_widget(form.save) }}
+            {{ form_end(form, {'render_rest': false}) }}
+        </div>
+        <hr>
+        <p>
+            <i class="fa fa-address-book"></i>
+            Mes adresses</p>
+        <div class="table-responsive">
+            <table class="table">
+                <tbody>
+                    {% for adresse in Adresse %}
+                        <tr>
+                            <td>{{adresse.nom}}</td>
+                            <td>{{adresse.numeroRue ~ ' '~ adresse.typeRue ~ ' '
+                    ~ adresse.nomRue ~ ' '~ adresse.CP ~ ' '~ adresse.Ville}}</td>
+                            <td>
+                                <i class="fa fa-pencil"></i>
+                                <a href="#">
+                                    Modifier</a>
+                            </td>
+                            <td>
+                                {# utiliser adresse.id pour l'adresse #}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+	{% endblock %}
+

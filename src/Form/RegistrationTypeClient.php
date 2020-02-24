@@ -14,13 +14,16 @@ use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class RegistrationTypeClient extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('email', EmailType::class)
+            ->add('email', EmailType::class, array(
+                //  'empty_data' => '',
+            ))
             ->add('emailConfirm', EmailType::class)
             ->add('civilite', ChoiceType::class, array(
                 'label' => false,
@@ -31,13 +34,18 @@ class RegistrationTypeClient extends AbstractType
                 ),
                 'required' => true
             ))
-            ->add('password', PasswordType::class)
+            ->add('password', PasswordType::class,array(
+            ))
             ->add('passwordConfirm',PasswordType::class)
             ->add('nom',TextType::class)
             ->add('prenom',TextType::class)
-                        
             ->add('telephone')
             ->add('conditions', CheckboxType::class)
+            ->add('save', SubmitType::class, array(
+                'label' => 'Valider',
+                'attr' => array('title' => 'Valider les modifications' ,'class' => 'btn btn-outline-success'
+                ),
+           ))
         ;
     }
 

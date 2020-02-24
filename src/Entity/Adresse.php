@@ -48,7 +48,7 @@ class Adresse
      */
     private $Ville;
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Utilisateur", inversedBy="Adresse")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Utilisateur", inversedBy="Adresse",cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $Utilisateur;

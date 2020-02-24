@@ -11,7 +11,7 @@
 		<label>Prénom</label>{{form_widget(form.prenom, {'disabled':'disabled'}) }}
 		<label>Téléphone</label>{{form_widget(form.telephone, {'disabled':'disabled'}) }}
 		<label>E-mail</label>{{form_widget(form.email, {'disabled':'disabled'}) }}
-		<button type='button' class="btn btn-outline-success">Modifier mes informations</button>
+		<a  class="btn btn-outline-success" href="{{ path('client_edit') }}">Modifier mes informations</a>
 	</div>
 	<hr>
 	<p><i class="fa fa-address-book"></i> Mes adresses</p>
