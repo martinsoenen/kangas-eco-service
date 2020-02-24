@@ -29,3 +29,10 @@ p {
     border: solid 1px #CCCCCC;
     border-radius: 15px;
 }
+
+@media (max-width: 767px)
+{
+    h1 {
+        font-size: 35px;
+    }
+}

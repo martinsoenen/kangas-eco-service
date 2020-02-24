@@ -58,7 +58,6 @@ thead tr {
 #header-logo
 {
     height:60px;
-    margin-right: 20px;
 }
 
 .navbar
@@ -82,7 +81,7 @@ thead tr {
     display: inline-flex;
     align-items: center;
     padding: .5rem 1rem !important;
-    font-size: 400;
+    font-size: 16px;
     color: #EEEEEE;
 }
 
@@ -108,42 +107,6 @@ thead tr {
 {
     padding: .75rem 1rem !important;
 }
-
-@media (min-width: 768px)
-{
-
-    .nav-link
-    {
-        padding: .5rem 1rem !important;
-    }
-
-    .nav-link:hover
-    {
-        background-color: #74d14c;
-        padding: .5rem 1rem !important;
-        border-radius: 5px;
-    }
-
-    #shopping-cart-icon
-    {
-        position: absolute;
-        right: 20px;
-        bottom: 10px;
-        padding: .5rem 1rem !important;
-    }
-
-    #login-icon
-    {
-        display: none;
-
-    }
-
-    #help-icon
-    {
-        display: none;
-    }
-}
-
 /*=======================================================================
                                 FOOTER PART
   =======================================================================*/
@@ -201,11 +164,56 @@ thead tr {
     font-size: 10px;
 }
 
+@media (max-width: 767px)
+{
+    #header-logo {
+        height: 45px;
+    }
+
+    .nav-link {
+        font-size: 14px;
+    }
+
+    #footer {
+        font-size: 14px;
+    }
+
+    .d-flex{
+        flex-direction: column !important;
+    }
+}
+
 @media (min-width: 768px)
 {
-    #subfooter
+    .nav-link
     {
-        flex-direction: row;
+        padding: .5rem 1rem !important;
+    }
+
+    .nav-link:hover
+    {
+        background-color: #74d14c;
+        padding: .5rem 1rem !important;
+        border-radius: 5px;
+    }
+
+    #shopping-cart-icon
+    {
+        position: absolute;
+        right: 20px;
+        bottom: 10px;
+        padding: .5rem 1rem !important;
+    }
+
+    #login-icon
+    {
+        display: none;
+
+    }
+
+    #help-icon
+    {
+        display: none;
     }
 
     .footer-element
@@ -214,8 +222,4 @@ thead tr {
         margin: 10px;
     }
 
-    #copyright
-    {
-        font-size: 10px;
-    }
 }
