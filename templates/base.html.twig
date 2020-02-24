@@ -17,12 +17,12 @@
     </head>
 
 
-    <body style="background-color: #8ed86e22;">
+    <body>
         {% include '_header.html.twig' %}
 
-        <div class="container-md" style="padding: 0px; background-color: #ffffffCC;">
-            {% block body %}{% endblock %}
-        </div>
+        
+        {% block body %}{% endblock %}
+        
 
         {% include '_footer.html.twig' %}
 
