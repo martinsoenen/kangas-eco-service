@@ -8,7 +8,7 @@
 {% endblock %}
 
 {% block body %}
-
+<div class="container">
     <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
         <ol class="carousel-indicators">
             <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
@@ -36,44 +36,30 @@
         </a>
     </div>
 
-    <div id="textPageAccueil" class="container">
+    <div id="textPageAccueil">
         <div class="row">
             <div class="col-sm-12">
-                <h4 align="center">Bienvenue chez Eco-Service</h4>
-                <p align="center">Sur ce site, vous trouverez des centaines d'articles fabriqués à base de produits
-                    recyclés par nos soins.
-                    <br/>
-                    <br/>
+                <h1>Bienvenue chez Eco-Service</h1>
+                <p>Eco-Service est une entreprise spécialisée dans 
+                la revente de produits recyclés (appareils électriques et électroniques usagés, outils industriels, déchets organiques) 
+                à partir de déchets que nous récupérons dans les centres relais ou dans nos entreprises partenaires.
+                Nous nous engageons au quotidien dans la création de produits eco-responsables et zéro déchet dans le but d'avoir une consommation plus respectueuse de l'environnement.
+                </p>
+                <p>
                     Si vous êtes un professionnel, vous pouvez faire une demande de recyclage et
                     nos équipes viennent directement à votre entreprise récupérer votre matériel.
                 </p>
 
                 <hr width="50%" color="#222222">
-                <p align="center">NOUS REJOINDRE</p>
+                <h2>Nous rejoindre</h2>
             </div>
         </div>
     </div>
-    <div id="boutonParticulier" class="container bouton-accueil" align="center">
-        <div class="row">
-            <div class="col-sm-12">
-                <button class="btn btn-outline-secondary" data-toggle="collapse" data-target="#text-client">Je suis un Particulier</button>
-
-                <div id="text-client" class="collapse bouton-accueil-container">
-                    <p> Hey !</p>
-                </div>
-            </div>
-        </div>
+    <div id="boutonParticulier" class="bouton-accueil" align="center">
+            <a class="btn btn-outline-secondary" href="/magasin/">Je suis un particulier</a>
     </div>
-    <div id="boutonEntreprise" class="container bouton-accueil" align="center">
-    <div class="row">
-        <div class="col-sm-12">
-            <button class="btn btn-outline-secondary" data-toggle="collapse" data-target="#text-company">Je suis un Professionel</button>
-
-            <div id="text-company" class="collapse bouton-accueil-container">
-                <p> Hey there! </p>
-            </div>
-        </div>
+    <div id="boutonEntreprise" class="bouton-accueil" align="center">
+            <a class="btn btn-outline-secondary" href="/entreprise/">Je suis un professionel</a>
     </div>
 </div>
-
 {% endblock %}
