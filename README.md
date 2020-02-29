@@ -52,7 +52,7 @@ Pour accéder au site internet en production, vous pouvez aller sur eco-service.
   Pour corriger l'erreur, tapez `composer config platform.php 7.4.12`.
   
 ## Site de production
-Dernière mise en prod : 10/02/2020
+Dernière mise en prod : 29/02/2020
 
 Pour accéder au site internet en production, vous pouvez aller sur eco-service.martinsoenen.com ou ajouter la ligne
  `33.44.237.133 eco-service.com www.eco-service.com` à votre fichier de hosts pour pouvoir ensuite accéder au site
