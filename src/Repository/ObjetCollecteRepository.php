@@ -20,7 +20,7 @@ class ObjetCollecteRepository extends ServiceEntityRepository
     }
 
     // /**
-    //  * @return ObjetCollecte[] Returns an array of ObjetCollecte objects
+    //  * @return ObjetCollecteType[] Returns an array of ObjetCollecteType objects
     //  */
     /*
     public function findByExampleField($value)
@@ -37,7 +37,7 @@ class ObjetCollecteRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?ObjetCollecte
+    public function findOneBySomeField($value): ?ObjetCollecteType
     {
         return $this->createQueryBuilder('o')
             ->andWhere('o.exampleField = :val')

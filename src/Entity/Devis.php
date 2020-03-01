@@ -24,7 +24,7 @@ class Devis
     private $localite;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\ObjetCollecte", mappedBy="devis")
+     * @ORM\OneToMany(targetEntity="App\Entity\ObjetCollecteType", mappedBy="devis")
      */
     private $ObjectCollecte;
 
