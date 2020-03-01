@@ -3,78 +3,41 @@
 {% block title %}Devis en ligne - {{ parent()}}
 {% endblock %}
 {% block body %}
-
-<ul class="nav nav-tabs" role="tablist">
-        <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" role="tab" >Nos Services</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="{{path('entreprise_devis')}}">Devis</a>
-        </li>
-</ul>
-<div class="tab-content">
-    <div class="tab-pane active" id="tabs-1" role="tabpanel">
-        {{ form_start(formDevis) }}
-            {{ form_row(formDevis.relation, {'select' : false, 'attr' :{'placeholder' :'Categorie d\'Objets collectés' }})}}
-            {{ form_row(formDevis.ObjectCollecte, {'select' : false, 'attr' :{'placeholder' :'Objets collectés' }})}}
-            {{ form_row(formDevis.ObjectCollecte.quantite, {'select' : false, 'attr' :{'placeholder' :'Quantité' }})}}
-            <button type='submit' name="devis" class="btn btn-success">Recycler cet objet</button>
-        {{ form_end(formDevis) }}
-
-    </div>
+<div class="objects">
+    {% for objetCollecte in objetsCollectes %}
+        {{  objetCollecte.quantite }}
+        <br>
+        <input id="{{ objetCollecte.id }}" type="number" name="quantite" value="1" >
+        <a id="{{ objetCollecte }}" class="btn btn-success"><i class="fa fa-shopping-cart mr-1">Collecter cet objet</i></a>
+        <br>
+    {% endfor %}
 </div>
-{% endblock %}
-{% block javascript %}
-            {{ parent }}
+    {% for categ in categories  %}
+        <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <a class="dropdown-item" href="{{ path('categorie-produit', {'id': categ.id }) }}">{{ categ.nom }}</a>  {# TODO front : vérifier si le lien est fonctionnel car je ne peux pas#}
+            </button>
+        </div>
+        <br>{% endfor %}
+{% endblock %}{% block javascripts %}
+    {{ parent()}}
     <script>
-        $('select#form_devisType').on('change', function (e) {
-        var $devis = $('#categorieCollecte');
-        // When category gets selected ...
-            // ... retrieve the corresponding form.
-            var $form = $(this).closest('form');
-            // Simulate form data, but only include the selected Category value.
-            var data = {};
-            data[$devis.attr('name')] = $devis.val();
-            // Submit data via AJAX to the form's action path.
+        $('.btn.btn-success').click(function() {
+            let id = $(this).attr('id');
+            let value = $("#"+id+"[name='quantite']").val();
+
             $.ajax({
-                url : $form.attr('action'),
-                type: $form.attr('method'),
-                data : data,
-                success: function(html) {
-                    // Replace current position field ...
-                    $('#categorie').replaceWith(
-                        // ... with the returned one from the AJAX response.
-                        $(html).find('#categorieCollecte')
-                    );
-                    // Position field now displays the appropriate category.
+                url : '/devis/add/'+ id,
+                type : 'GET',
+                data : {
+                    quantite: value
+                },
+                dataType: "integer",
+                success: function(response) {
+                    console.log(response);
                 }
             });
-        });
-        var $devis = $('#ObjetCollecte');
-        // When category gets selected ...
-        $devis.change(function() {
-            // ... retrieve the corresponding form.
-            var $form = $(this).closest('form');
-            // Simulate form data, but only include the selected Category value.
-            var data = {};
-            data[$devis.attr('name')] = $devis.val();
-            // Submit data via AJAX to the form's action path.
-            $.ajax({
-                url : $form.attr('action'),
-                type: $form.attr('method'),
-                data : data,
-                success: function(html) {
-                    // Replace current position field ...
-                    $('#objectCollecte').replaceWith(
-                        // ... with the returned one from the AJAX response.
-                        $(html).find('#objectCollecte')
-                    );
-                    // Position field now displays the appropriate positions.
-                }
-            });
+            alert('Vous avez ajouté ' + value + ' au devis');
         });
 
-    </script>
-
-
-    
+    </script>{% endblock %}
