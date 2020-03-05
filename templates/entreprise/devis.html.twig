@@ -4,23 +4,9 @@
 {% endblock %}
 {% block body %}
 <div class="objects">
-    {% for objetCollecte in objetsCollectes %}
-        {{  objetCollecte.quantite }}
-        <br>
-        <input id="{{ objetCollecte.id }}" type="number" name="quantite" value="1" >
-        <a id="{{ objetCollecte }}" class="btn btn-success"><i class="fa fa-shopping-cart mr-1">Collecter cet objet</i></a>
-        <br>
-    {% endfor %}
-</div>
-    {% for categ in categories  %}
-        <div class="dropdown">
-            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <a class="dropdown-item" href="{{ path('categorie-produit', {'id': categ.id }) }}">{{ categ.nom }}</a>  {# TODO front : vérifier si le lien est fonctionnel car je ne peux pas#}
-            </button>
-        </div>
-        <br>{% endfor %}
-{% endblock %}{% block javascripts %}
-    {{ parent()}}
+    {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+    {{ form_widget(form) }}
+    {{ form_end(form) }}
     <script>
         $('.btn.btn-success').click(function() {
             let id = $(this).attr('id');

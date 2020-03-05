@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Form\CategorieCollecteType;
 use App\Entity\CategorieCollecte;
 use App\Entity\ObjetCollecte;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -24,6 +25,13 @@ class EntrepriseController extends AbstractController
      */
     public function devis()
     {
+        // creates a task object
+        $task = new Task();
+        $task->setTask('Write a blog post');
+        $task->setDueDate(new \DateTime('tomorrow'));
+
+        $form = $this->createForm(TaskType::class, $task);
+
         $objetCollectes = $this->getDoctrine()->getRepository(ObjetCollecte::class)->findAll();
         $categories = $this->getDoctrine()->getRepository(CategorieCollecte::class)->findAll();
 

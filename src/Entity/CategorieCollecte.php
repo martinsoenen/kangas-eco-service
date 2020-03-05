@@ -24,7 +24,7 @@ class CategorieCollecte
     private $nom;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\ObjetCollecteType", mappedBy="idcategorieCollecte")
+     * @ORM\OneToMany(targetEntity="App\Entity\ObjetCollecte", mappedBy="CategorieCollecte")
      */
     private $objetCollectes;
 
