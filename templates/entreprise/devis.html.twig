@@ -1,29 +1,27 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Devis en ligne - {{ parent()}}
+{% block title %} Devis en ligne - {{ parent()}}
 {% endblock %}
 {% block body %}
 <div class="objects">
-    {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
-    {{ form_widget(form) }}
+    {{ form_start(form) }}
+    <div class="row">
+        {{ form(form) }}
+    </div>
+</div>
     {{ form_end(form) }}
+{% endblock body %}
+
+{% block javascripts %}
     <script>
-        $('.btn.btn-success').click(function() {
-            let id = $(this).attr('id');
-            let value = $("#"+id+"[name='quantite']").val();
+    //à récupérer la valueur selected sur la select des catégories.
 
-            $.ajax({
-                url : '/devis/add/'+ id,
-                type : 'GET',
-                data : {
-                    quantite: value
-                },
-                dataType: "integer",
-                success: function(response) {
-                    console.log(response);
-                }
-            });
-            alert('Vous avez ajouté ' + value + ' au devis');
-        });
+    $.ajax({
+    url: '/entreprise/devis',
+    type: "GET",
+    data: data , //mettre ta variable contennant la value de l'objet selectionné,
+    });
 
-    </script>{% endblock %}
+    </script>
+
+{% endblock %}

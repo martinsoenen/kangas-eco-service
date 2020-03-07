@@ -2,10 +2,13 @@
 
 namespace App\Controller;
 
-use App\Form\CategorieCollecteType;
-use App\Entity\CategorieCollecte;
 use App\Entity\ObjetCollecte;
+use App\Form\CategorieCollecteType;
+
+use Doctrine\ORM\EntityRepository;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 class EntrepriseController extends AbstractController
@@ -23,22 +26,35 @@ class EntrepriseController extends AbstractController
     /**
      * @Route("/entreprise/devis", name="entreprise_devis")
      */
-    public function devis()
+    public function devis(Request $request)
     {
-        // creates a task object
-        $task = new Task();
-        $task->setTask('Write a blog post');
-        $task->setDueDate(new \DateTime('tomorrow'));
+        $form = $this->createForm(CategorieCollecteType::class);
 
-        $form = $this->createForm(TaskType::class, $task);
+        $formObjet =  $this->createForm(ObjetCollecteType::class)
+        ->add('nom', EntityType::class, [
+        'class' => ObjetCollecte::class,
+        'choice_label' => 'nom',
+        'label' => 'Objets collectés',
+        'query_builder' => function(EntityRepository $er) {
+            return $er->createQueryBuilder('')
 
-        $objetCollectes = $this->getDoctrine()->getRepository(ObjetCollecte::class)->findAll();
-        $categories = $this->getDoctrine()->getRepository(CategorieCollecte::class)->findAll();
+            ;
+        }
+    ]);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $categ = $form->getData();
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($categ);
+            $entityManager->flush();
+        }
 
         return $this->render('entreprise/devis.html.twig', [
             'controller_name' => 'EntrepriseController',
-            'objetCollectes' => $objetCollectes,
-            'categories' => $categories
+            //'objetCollectes' => $objetCollectes,
+            'form' => $form->createView(),
+            'formObjet' => $formObjet->createView(),
         ]);
     }
 

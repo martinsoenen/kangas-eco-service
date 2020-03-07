@@ -19,6 +19,15 @@ class CategorieCollecteRepository extends ServiceEntityRepository
         parent::__construct($registry, CategorieCollecte::class);
     }
 
+    public function findCategories() {
+        return $this->createQueryBuilder('c')
+            ->leftJoin("c.ObjetCollecte", "oc")
+            ->addSelect("oc")
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
     // /**
     //  * @return CategorieCollecte[] Returns an array of CategorieCollecte objects
     //  */
