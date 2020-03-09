@@ -1,49 +1,29 @@
 {% block footer %}
     <div id="footer">
 
-        <div id="subfooter" class="container-md d-flex">
+        <div class="container-md container-sm d-flex">
             <!-- Logo et Réseaux -->
-            <div class="footer-element d-flex col">
-                <a class="footer-element-item flex-fill" href="{{ path("home") }}" title="Retour à l'accueil" >
-                    <img src="{{asset('../assets/img/Logo_Eco-Service_Line.png')}}"  height="60" border="0">
-                </a>
+            <div class="footer-element col">
 
-                <table class="footer-element-item social-table flex-fill">
-                    <thead>
-                    <tr>
-                        <th colspan="3" class="underlined absolute-centered">Réseaux Sociaux</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td>
-                            <a href="https://www.facebook.com/" title="Rejoignez-nous sur Facebook!">
-                                <i class="social-link-icon fa fa-facebook fa-2x"></i>
-                            </a>
-                        </td>
-                        <td>
-                            <a href="https://www.linkedin.com" title="Rejoignez-nous sur LinkedIn!">
-                                <i class="social-link-icon fa fa-linkedin fa-2x"></i>
-                            </a>
-                        </td>
-                        <td>
-                            <a href="https://www.instagram.com" title="Rejoignez-nous sur Instagram!">
-                                <i class="social-link-icon fa fa-instagram fa-2x"></i>
-                            </a>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
+                <p class="underlined bold">Qui sommes-nous ?</p>
+                <a href="https://www.facebook.com/" title="Rejoignez-nous sur Facebook !">
+                    <i class="social-link-icon fa fa-facebook fa-2x"></i>
+                </a>
+                <a href="https://www.linkedin.com" title="Rejoignez-nous sur LinkedIn !">
+                    <i class="social-link-icon fa fa-linkedin fa-2x"></i>
+                </a>
+                <a href="https://www.instagram.com" title="Rejoignez-nous sur Instagram !">
+                    <i class="social-link-icon fa fa-instagram fa-2x"></i>
+                </a>
 
             </div>
 
             <!-- Qui sommes-nous ? (+ copyright) -->
             <div class="footer-element col">
                 <p class="underlined bold">Qui sommes-nous ?</p>
-                <a href="{{ path('qui-sommes-nous') }}" class="gray-href" title="Apprenez-en plus sur notre société!">Eco-Service</a><br/>
+                <a href="{{ path('qui-sommes-nous') }}" class="gray-href" title="Apprenez-en plus sur notre société">Eco-Service</a><br/>
                 <a href="http://www.kangas.fr" class="gray-href" title="Vous vous demandez qui a créé ce site ? Cliquez ici!">Kangas</a><br/>
                 <a href="{{ path('cgu-cgv') }}" class="gray-href" title="Apprenez-en plus sur nos conditions générales d'utilisation et conditions générales de vente">Consulter les CGU et les CGV</a>
-
             </div>
 
             <!-- Contacts -->
@@ -53,8 +33,9 @@
                 <a href="{{ path('faq') }}" class="gray-href" title="Besoin d'aide ? Cliquez ici pour consulter notre FAQ.">Besoin d'aide ?</a>
             </div>
         </div>
-
-        <br/>
+        <a class="footer-element-item flex-fill" href="{{ path("home") }}" title="Retour à l'accueil" >
+            <img src="{{asset('../assets/img/Logo_Eco-Service_Line.png')}}"  height="40" border="0">
+        </a>
         <div id="copyright">
             <i class="fa fa-copyright"></i>  <label>Kangas, 2019 - 2020</label>
         </div>
