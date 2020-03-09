@@ -55,6 +55,7 @@ class BlogController extends AbstractController
             'controller_name' => 'BlogController',
             'articles' => $articles,
         ]);
+
     }
       /**
      * @Route("/admin/articles", name="articles_admin"))
@@ -79,7 +80,23 @@ class BlogController extends AbstractController
 
             ->add('Titre', TextType::class,array('required'  => true))
             ->add('Text', TextareaType::class,array('required'  => true))
-            ->add('Image', FileType::class,array('required'  => true))
+            ->add('Image', FileType::class, [
+                'label' => 'Image',
+                'mapped' => false,
+                'required' => true,
+                'constraints' => [
+                    new \Symfony\Component\Validator\Constraints\File([
+                        'maxSize' => '2048k',
+                        'mimeTypes' => [
+                            "image/png",
+                            "image/jpeg",
+                            "image/jpg",
+                            "image/gif",
+                        ],
+                        'mimeTypesMessage' => 'Uploadez un format d\'image valide (jpg, jped, png ou gif)'
+                    ])
+                ],
+            ])
             ->getForm();
 
 
@@ -87,6 +104,14 @@ class BlogController extends AbstractController
 
 
         if($form->isSubmitted()&& $form->isValid()) {
+            $ImageFile = $form->get('Image')->getData();
+            $originalFilename = pathinfo($ImageFile->getClientOriginalName(), PATHINFO_FILENAME);
+            $newFilename = $originalFilename.'-'.uniqid().'.'.$ImageFile->guessExtension();
+            $ImageFile->move(
+                $this->getParameter('image_article_directory'),
+                $newFilename
+            );
+            $article->setImage($newFilename);
             $article->setDate(new \DateTime());
             $article->setUtilisateurAdmin(null);
             $manager->persist($article);
@@ -105,7 +130,7 @@ class BlogController extends AbstractController
 
 
     /**
-     * @Route("/admin/{id}/delete", name="delete_article"))
+     * @Route("/admin/article/{id}/delete", name="delete_article"))
      */
     public function deleteAdminArticles(Article $article,EntityManagerInterface $manager){
         $manager->remove($article);

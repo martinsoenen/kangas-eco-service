@@ -2,12 +2,22 @@
 
 namespace App\Controller;
 
+use App\Entity\Article;
 use App\Entity\CategorieProduit;
 use App\Entity\Produit;
+use App\Entity\UtilisateurAdministration;
 use App\Entity\SousCategorieProduit;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Validator\Constraints\File;
 
 class ProductController extends AbstractController
 {
@@ -76,8 +86,91 @@ class ProductController extends AbstractController
      */
     public function admin_show()
     {
+        $repo = $this->getDoctrine()->getRepository(Produit::class);
+        $produits = $repo->findAll();
         return $this->render('product/admin_show.html.twig', [
             'controller_name' => 'ProductController',
+            'produits' => $produits
         ]);
+    }
+
+    /**
+     * @Route("/admin/ajouter-produit", name="ajouter_produit")
+     * @Route("/admin/produit/{id}/edit", name="modifier_produit")
+     */
+    public function ajouterProduit(Produit $produit = null,Request $request,EntityManagerInterface $manager)
+    {
+        $editmode = true;
+        if(!$produit) {
+            $produit = new Produit();
+            $editmode = false;
+        }
+        $form = $this->createFormBuilder($produit)
+            ->add('Nomproduit',TextType::class,array('required'  => true))
+            ->add('PrixunitaireHT',NumberType::class,array('required'  => true))
+            ->add('TauxTVA',NumberType::class,array('required'  => true))
+            ->add('Presentation',TextType::class,array('required'  => true))
+            ->add('Descriptiondetaillee',TextareaType::class,array('required'  => true))
+            ->add('SousCategorieProduit',EntityType::class,[
+                'class' => SousCategorieProduit::class,
+                'choice_label' => 'Nom',
+                'required'  => true,
+            ])
+            ->add('UtilisateurAdmin',EntityType::class,[
+                'class' => UtilisateurAdministration::class,
+                'choice_label' => 'Nom',
+                'required'  => true,
+            ])
+            ->add('Image', FileType::class, [
+                'label' => 'Image',
+                'mapped' => false,
+                'required' => true,
+                'constraints' => [
+                    new File([
+                        'maxSize' => '2048k',
+                        'mimeTypes' => [
+                            "image/png",
+                            "image/jpeg",
+                            "image/jpg",
+                            "image/gif",
+                        ],
+                        'mimeTypesMessage' => 'Uploadez un format d\'image valide (jpg, jped, png ou gif)'
+                    ])
+                ],
+            ])
+            ->getForm();
+
+        $form->handleRequest($request);
+
+        if($form->isSubmitted()&& $form->isValid()) {
+            $ImageFile = $form->get('Image')->getData();
+            $originalFilename = pathinfo($ImageFile->getClientOriginalName(), PATHINFO_FILENAME);
+            $newFilename = $originalFilename.'-'.uniqid().'.'.$ImageFile->guessExtension();
+            $ImageFile->move(
+                $this->getParameter('image_produit_directory'),
+                $newFilename
+            );
+            $produit->setImage($newFilename);
+
+            $manager->persist($produit);
+            $manager->flush();
+            return $this->redirectToRoute('admin-produits');
+        }
+
+        return $this->render('product/ajouterProduit.html.twig', [
+            'controller_name' => 'ProductController',
+            'formProduit'=> $form->createView(),
+            'editMode'=>$editmode,
+        ]);
+    }
+
+    /**
+     *  @Route("/admin/produit/{id}/delete", name="delete_produit")
+     */
+    public function deleteProduit(Produit $produit, EntityManagerInterface $manager){
+        $manager->remove($produit);
+        $manager->flush();
+
+        return $this->redirectToRoute('admin-produits');
     }
 }
