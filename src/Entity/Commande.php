@@ -53,6 +53,11 @@ class Commande
      */
     private $Produit;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $PayPalID;
+
     public function __construct()
     {
         $this->idProduit = new ArrayCollection();
@@ -184,6 +189,18 @@ class Commande
         if ($this->Produit->contains($produit)) {
             $this->Produit->removeElement($produit);
         }
+
+        return $this;
+    }
+
+    public function getPayPalID(): ?string
+    {
+        return $this->PayPalID;
+    }
+
+    public function setPayPalID(string $PayPalID): self
+    {
+        $this->PayPalID = $PayPalID;
 
         return $this;
     }
