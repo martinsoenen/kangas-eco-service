@@ -16,7 +16,7 @@
                         <p class="card-text">{{ article.text}}</p>
                     </div>
                     <div class="card-footer">
-                        <small class="text-muted">Last updated 3 mins ago</small>
+                        <small class="text-muted">L'article a été mis à jour le {{ article.date }}</small>
                         <a href="{{ path('blog_articles', {'id' : article.id}) }}" class="btn btn-primary">Voir l'article</a>
                     </div>
                 </div>

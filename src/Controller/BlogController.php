@@ -11,7 +11,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class BlogController extends AbstractController
 {
-    const NB_BLOGS_PER_PAGE = 5;
+    const NB_BLOGS_PER_PAGE = 2;
     /**
      * @Route("/blog", name="blog")
      * @Route("/blog/index", name="blog_index")
@@ -19,7 +19,6 @@ class BlogController extends AbstractController
     public function index(ArticleRepository $repo, PaginatorInterface $paginator, Request $request)
     {
         $articles = $repo->findAll();
-
         $pagination = $paginator->paginate(
             $articles,
             $request->query->getInt('page', 1),
