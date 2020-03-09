@@ -6,19 +6,46 @@ i {
     color: #EEEEEE;
 }
 
-h { font-family: "Roboto", sans-serif }
 
-p { font-family: "Lato", sans-serif }
+body {
+    font-family: "Roboto", sans-serif;
+}
 
-label { font-family: "Dosis Light", sans-serif }
+h1, h2, h3, h4, h5, h6 {
+    margin: 20px 0;
+}
+    
+h1 { 
+    font-size: 48px;
+}
 
-.underlined { text-decoration: underline}
-.bold { font-weight: bold }
-.absolute-centered { position: center}
 
-thead tr { border-bottom: solid 10px transparent }
+p { 
+    font-family: "Lato", sans-serif;
+}
 
-.gray-href { color: #EEEEEE}
+label { 
+    font-family: "Dosis Light", sans-serif;
+}
+
+.underlined { 
+    text-decoration: underline;
+}
+
+.bold { 
+    font-weight: bold ;
+}
+.absolute-centered { 
+    position: center;
+}
+
+thead tr { 
+    border-bottom: solid 10px transparent ;
+}
+
+.gray-href { 
+    color: #EEEEEE;
+}
 
 /*=======================================================================
                                 HEADER PART
@@ -31,7 +58,6 @@ thead tr { border-bottom: solid 10px transparent }
 #header-logo
 {
     height:60px;
-    margin-right: 20px;
 }
 
 .navbar
@@ -55,8 +81,7 @@ thead tr { border-bottom: solid 10px transparent }
     display: inline-flex;
     align-items: center;
     padding: .5rem 1rem !important;
-    font-family: 'Roboto';
-    font-size: larger;
+    font-size: 16px;
     color: #EEEEEE;
 }
 
@@ -82,10 +107,89 @@ thead tr { border-bottom: solid 10px transparent }
 {
     padding: .75rem 1rem !important;
 }
+/*=======================================================================
+                                FOOTER PART
+  =======================================================================*/
+
+#footer
+{
+    text-align: center;
+    background-color: #244d11;
+    color: #EEEEEE;
+    padding: 0;
+}
+
+#footer div a
+{
+    text-decoration: none;
+}
+
+.footer-element
+{
+    flex-direction: column;
+    text-align: center;
+    width:auto;
+    margin: 10px;
+    padding-bottom: 10px;
+    border-bottom: solid 1px #555555;
+}
+
+#last-element
+{
+    border-bottom: solid 0px transparent;
+}
+
+.social-table
+{
+    margin-left: 25%;
+    margin-right: 25%;
+}
+.social-table td
+{
+    width: 33.3333%;
+}
+
+.social-link-icon
+{
+    height: 50px;
+    width: 50px;
+    padding: 10px;
+}
+
+.social-link-icon:hover
+{
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #74d14c;
+    color: #222222;
+}
+
+#copyright
+{
+    font-size: 10px;
+}
+
+@media (max-width: 767px)
+{
+    #header-logo {
+        height: 45px;
+    }
+
+    .nav-link {
+        font-size: 14px;
+    }
+
+    #footer {
+        font-size: 14px;
+    }
+
+    .d-flex{
+        flex-direction: column !important;
+    }
+}
 
 @media (min-width: 768px)
 {
-
     .nav-link
     {
         padding: .5rem 1rem !important;
@@ -116,83 +220,6 @@ thead tr { border-bottom: solid 10px transparent }
     {
         display: none;
     }
-}
-
-.h1
-{
-    text-align: center;
-}
-/*=======================================================================
-                                FOOTER PART
-  =======================================================================*/
-
-#footer
-{
-    text-align: center;
-    background-color: #244d11;
-    color: #EEEEEE;
-    padding: 0;
-}
-
-#subfooter
-{
-    flex-direction: column;
-}
-.footer-element
-{
-    flex-direction: column;
-    text-align: center;
-    width:auto;
-    margin: 10px;
-    padding-bottom: 10px;
-    border-bottom: solid 1px #555555;
-}
-
-#last-element
-{
-    border-bottom: solid 0px transparent;
-}
-
-.social-table
-{
-    align: center;
-    margin-left: 25%;
-    margin-right: 25%;
-}
-.social-table td
-{
-    width: 33.3333%;
-}
-
-.social-link-icon
-{
-    height: 50px;
-    width: 50px;
-    padding: 10px;
-}
-
-.social-link-icon:hover
-{
-    padding: 10px;
-    border-radius: 5px;
-    background-color: #74d14c;
-    color: #222222;
-}
-
-#copyright
-{
-    margin-top: -30px;
-    margin-bottom: -5px;
-    font-size: 8px;
-    align: center;
-}
-
-@media (min-width: 768px)
-{
-    #subfooter
-    {
-        flex-direction: row;
-    }
 
     .footer-element
     {
@@ -200,11 +227,4 @@ thead tr { border-bottom: solid 10px transparent }
         margin: 10px;
     }
 
-    #copyright
-    {
-        margin-top: -60px;
-        margin-bottom: -5px;
-        font-size: 8px;
-        align: center;
-    }
 }

@@ -48,15 +48,10 @@ class Adresse
      */
     private $Ville;
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Utilisateur", inversedBy="Adresse")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Utilisateur", inversedBy="Adresse",cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $Utilisateur;
-
-    public function __construct()
-    {
-        $this->utilisateurEntreprises = new ArrayCollection();
-    }
 
     public function getId(): ?int
     {
@@ -131,37 +126,6 @@ class Adresse
     public function setVille(string $Ville): self
     {
         $this->Ville = $Ville;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|UtilisateurEntreprise[]
-     */
-    public function getUtilisateurEntreprises(): Collection
-    {
-        return $this->utilisateurEntreprises;
-    }
-
-    public function addUtilisateurEntreprise(UtilisateurEntreprise $utilisateurEntreprise): self
-    {
-        if (!$this->utilisateurEntreprises->contains($utilisateurEntreprise)) {
-            $this->utilisateurEntreprises[] = $utilisateurEntreprise;
-            $utilisateurEntreprise->setIdAdresse($this);
-        }
-
-        return $this;
-    }
-
-    public function removeUtilisateurEntreprise(UtilisateurEntreprise $utilisateurEntreprise): self
-    {
-        if ($this->utilisateurEntreprises->contains($utilisateurEntreprise)) {
-            $this->utilisateurEntreprises->removeElement($utilisateurEntreprise);
-            // set the owning side to null (unless already changed)
-            if ($utilisateurEntreprise->getIdAdresse() === $this) {
-                $utilisateurEntreprise->setIdAdresse(null);
-            }
-        }
 
         return $this;
     }
