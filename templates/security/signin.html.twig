@@ -50,8 +50,6 @@
 				<button type='submit' name="client" class="btn btn-success">S'inscrire</button>
 			{{ form_end(formClient, {'render_rest': false}) }}
 		</div>
-	<div class="tab-pane" id="tabs-2" role="tabpanel">				
-	</div>
 </div>
 
 {% endblock %}
@@ -63,20 +61,23 @@ $('select#form_utilisateurType').on('change', function (e) {
 
 		var typeCompte = $('select#form_utilisateurType').find(":selected").text();
 
-			if(typeCompte == "Particulier"){
-				$('div.particulier').css("display","block");
-				$('div.entreprise').css("display","none");
-			}
-			else if(typeCompte =='Professionnel'){
-				$('div.particulier').css("display","none");
-				$('div.entreprise').css("display","block");
-				$('input#registration_nom.formClient-control').attr("placeholder", "Nom du représentant");
-				$('input#registration_prenom.formClient-control').attr("placeholder", "Prénom du représentant");
-			}
-			else{
-				$('div.particulier').css("display","none");
-				$('div.entreprise').css("display","none");
-			}
+		if(typeCompte == "Particulier"){
+			$('div.particulier').css("display","block");
+			$('div.entreprise').css("display","none");
+		}
+		else if(typeCompte =='Professionnel'){
+			$('div.particulier').css("display","none");
+			$('div.entreprise').css("display","block");
+			$('input#registration_nom.formClient-control').attr("placeholder", "Nom du représentant");
+			$('input#registration_prenom.formClient-control').attr("placeholder", "Prénom du représentant");
+		}
+		else{
+			$('div.particulier').css("display","none");
+			$('div.entreprise').css("display","none");
+		}
+
+		$('fieldset.form-group').css('margin','0'); // Mise en forme entre le form Adresse et Registration
+
 		});
 </script>
 {% endblock %}

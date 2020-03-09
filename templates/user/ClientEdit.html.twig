@@ -16,7 +16,7 @@
                 {{form_widget(form.prenom) }}
                 <label>Téléphone</label>
                 {{form_widget(form.telephone) }}
-                {<label>E-mail</label>
+                <label>E-mail</label>
                 {{form_widget(form.email) }} 
                 <label>Mot de passe</label>
                 {{form_widget(form.password) }}
@@ -27,7 +27,9 @@
         <hr>
         <p>
             <i class="fa fa-address-book"></i>
-            Mes adresses</p>
+            Mes adresses 
+            <a href="{{path('adresse_new')}}" class="btn btn-secondary">Ajouter une adresse</a>
+        </p>
         <div class="table-responsive">
             <table class="table">
                 <tbody>
@@ -38,11 +40,8 @@
                     ~ adresse.nomRue ~ ' '~ adresse.CP ~ ' '~ adresse.Ville}}</td>
                             <td>
                                 <i class="fa fa-pencil"></i>
-                                <a href="#">
+                                <a href="/profil/adresse/{{adresse.id}}/edit">
                                     Modifier</a>
-                            </td>
-                            <td>
-                                {# utiliser adresse.id pour l'adresse #}
                             </td>
                         </tr>
                     {% endfor %}
