@@ -11,7 +11,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class BlogController extends AbstractController
 {
-    const NB_BLOGS_PER_PAGE = 2;
+    const NB_BLOGS_PER_PAGE = 6;
     /**
      * @Route("/blog", name="blog")
      * @Route("/blog/index", name="blog_index")
