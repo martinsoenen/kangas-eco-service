@@ -6,5 +6,10 @@
 
 
 {% block body %}
-Gestion des adresses du profil ici
+	Modifier mon adresse
+	<hr>
+	{{form_start(form)}}
+		{{form(form)}}
+		<a href="{{path('profil_client')}}" class="btn btn-danger">Abandonner</a>
+	{{form_end(form)}}
 {% endblock %}

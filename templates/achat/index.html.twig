@@ -1,9 +1,55 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Panier -
-	{{parent()}}
-{% endblock %}
+{% block title %}Panier - {{parent()}}{% endblock %}
 
 {% block body %}
-    Pour le panier
+    <div class="p-3">
+        <h1>Votre panier</h1>
+    </div>
+
+    {% if items | length > 0 %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Produit</th>
+                    <th>Prix</th>
+                    <th>Quantité</th>
+                    <th>Total</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in items %}
+                    <tr>
+                        <td>{{ item.product.nomProduit }}</td>
+                        <td>{{ item.product.prixUnitaireHT * (1 + item.product.tauxTVA) }}€</td>
+                        <td>{{ item.quantity }}</td>
+                        <td>{{ (item.product.prixUnitaireHT * (1 + item.product.tauxTVA)) * item.quantity }}€</td>
+                        <td>
+                            <a href="{{ path('panier_remove', {'id': item.product.id}) }}" class="btn btn-danger btn-sm">
+                                <i class="fa fa-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+            <tfoot>
+            <tr>
+                <td colspan="3" class="text-right"> Total :</td>
+                <td>{{ total }}€</td>
+                <td></td>
+            </tr>
+            </tfoot>
+        </table>
+
+        <a href="{{ path('panier_paiement') }}" class="btn btn-success"><i class="fa fa-paypal"> Payer</i></a>
+
+        {% if app.environment == 'dev' %}
+            <p>Le faux compte client à utiliser sur PayPal est : <code>sb-nnod81071114@personal.example.com</code> / <code>)f;xy-R2</code></p>
+            <p>Le faux compte boutique à utiliser sur PayPal est : <code>sb-5ex4471058141@business.example.com</code> / <code>6QM3eHy<</code> (accès sur le site <a href="https://www.sandbox.paypal.com">www.sandbox.paypal.com</a>)</p>
+            <p>Svp ne faites pas de grosse commande et surtout NE METTEZ PAS DE VRAI COMPTE CLIENT</p>
+        {% endif %}
+    {% else %}
+        <p>Votre panier est vide.</p>
+    {% endif %}
 {% endblock %}

@@ -2,69 +2,119 @@
                                   GENERAL
   =======================================================================*/
 
-i { color: #EEEEEE; }
+i {
+    color: #EEEEEE;
+}
 
-h { font-family: "Roboto", sans-serif }
+a:hover{
+    text-decoration: none;
+}
 
-p { font-family: "Lato", sans-serif }
 
-label { font-family: "Dosis Light", sans-serif }
+body {
+    font-family: "Roboto", sans-serif;
+}
 
-.underlined { text-decoration: underline}
-.bold { font-weight: bold }
+h1, h2, h3, h4, h5, h6 {
+    margin: 20px 0;
+}
+    
+h1 { 
+    font-size: 48px;
+}
 
-thead tr { border-bottom: solid 10px transparent }
 
-.gray-href { color: #EEEEEE}
+p { 
+    font-family: "Lato", sans-serif;
+}
+
+label { 
+    font-family: "Dosis Light", sans-serif;
+}
+
+.underlined { 
+    text-decoration: underline;
+}
+
+.bold { 
+    font-weight: bold ;
+}
+.absolute-centered { 
+    position: center;
+}
+
+thead tr { 
+    border-bottom: solid 10px transparent ;
+}
+
+.gray-href { 
+    color: #EEEEEE;
+}
 
 /*=======================================================================
                                 HEADER PART
   =======================================================================*/
+#header
+{
+    background-color: #8ed86e;
+}
+
+#header-logo
+{
+    height:60px;
+}
 
 .navbar
 {
-    background-color: #8ed86e;
     justify-content: space-between;
 }
 
 .navbar-nav
+{
+    flex-direction: column;
+}
+
+.navbar-nav-container
 {
     flex-direction: row;
 }
 
 .nav-link
 {
-    margin: 0px 20px;
+    float: right;
+    display: inline-flex;
+    align-items: center;
+    padding: .5rem 1rem !important;
+    font-size: 16px;
+    color: #EEEEEE;
+}
+
+.link-icon
+{
+    margin-left:20px;
 }
 
 .nav-link:hover
 {
     background-color: #74d14c;
+    color: #222222;
+    padding: .5rem 1rem !important;
     border-radius: 5px;
 }
 
-/*=======================================*/
-
-.dropdown-menu
+.nav-link:hover i
 {
-    margin: 0px 0px 0px -60px;
-    background-color: #8ed86e;
-    border: solid 1px #244d11;
-    border-radius: 0px;
+    color: #222222;
 }
 
-.dropdown-item:hover
+#shopping-cart-icon
 {
-    background-color: #74d14c;
-}
-
-.h1
-{
-    text-align: center;
+    padding: .75rem 1rem !important;
 }
 /*=======================================================================
                                 FOOTER PART
   =======================================================================*/
+
 #footer
 {
     text-align: center;
@@ -73,35 +123,19 @@ thead tr { border-bottom: solid 10px transparent }
     padding: 0;
 }
 
-#subfooter
+#footer div a
 {
-    flex-direction: column;
-}
-
-@media (min-width: 576px)
-{
-    #subfooter
-    {
-        flex-direction: row;
-    }
+    text-decoration: none;
 }
 
 .footer-element
 {
-    flex-direction: row;
+    flex-direction: column;
     text-align: center;
+    width:auto;
     margin: 10px;
     padding-bottom: 10px;
     border-bottom: solid 1px #555555;
-}
-@media (min-width: 576px)
-{
-    .footer-element
-    {
-        border-bottom: solid 0px transparent;
-        flex-direction: column;
-        margin: 10px;
-    }
 }
 
 #last-element
@@ -109,20 +143,138 @@ thead tr { border-bottom: solid 10px transparent }
     border-bottom: solid 0px transparent;
 }
 
-.footer-element table
+.social-table
 {
-    margin-right: 30px;
-    width: 100%;
+    margin-left: 25%;
+    margin-right: 25%;
 }
-.footer-element td
+.social-table td
 {
     width: 33.3333%;
 }
 
+.social-link-icon
+{
+    height: 50px;
+    width: 50px;
+    padding: 10px;
+}
+
+.social-link-icon:hover
+{
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #74d14c;
+    color: #222222;
+}
+
 #copyright
 {
-    margin-top: -15px;
-    margin-bottom: -5px;
-    font-size: 8px;
-    horiz-align: center;
+    font-size: 10px;
+}
+
+@media (max-width: 767px)
+{
+    #header-logo {
+        height: 45px;
+    }
+
+    .nav-link {
+        font-size: 14px;
+    }
+
+    #footer {
+        font-size: 14px;
+    }
+
+    .d-flex{
+        flex-direction: column !important;
+    }
+}
+
+@media (min-width: 768px)
+{
+    .nav-link
+    {
+        padding: .5rem 1rem !important;
+    }
+
+    .nav-link:hover
+    {
+        background-color: #74d14c;
+        padding: .5rem 1rem !important;
+        border-radius: 5px;
+    }
+
+    #shopping-cart-icon
+    {
+        position: absolute;
+        right: 20px;
+        bottom: 10px;
+        padding: .5rem 1rem !important;
+    }
+
+    #login-icon
+    {
+        display: none;
+
+    }
+
+    #help-icon
+    {
+        display: none;
+    }
+
+    .footer-element
+    {
+        border-bottom: solid 0px transparent;
+        margin: 10px;
+    }
+
+}
+
+
+/*=======================================================================
+                                BOUTON DIY PART
+  =======================================================================*/
+
+.diy-button-container {
+    z-index: 10;
+    margin-left: 5px;
+    margin-top: 400px;
+    position: fixed;
+}
+.diy-button-icon
+{
+    height: 50px;
+    width: 50px;
+    padding: 10px;
+    border-radius: 50px;
+    background-color: #74d14c;
+    color: #222222;
+    box-shadow: 0 0 3px 1px #555;
+}
+
+.diy-button-icon:hover
+{
+    padding: 10px;
+    border-radius: 50px;
+    background-color: #f7cf9b;
+    text-decoration: none;
+    box-shadow: 0 0 5px 3px #555;
+}
+
+.diy-button-text
+{
+    color: #222222;
+    margin-left: 10px;
+    font-weight: bolder;
+    font-size: 18px;
+    text-decoration: none;
+    text-shadow: 0 0 1px #fff;
+}
+
+.diy-button-text:hover
+{
+    text-decoration: none;
 }

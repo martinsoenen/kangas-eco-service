@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Profil -{{parent()}}
+{% endblock %}
+{% block body %}
+	<p>Compte Entreprise</p>
+	<hr>		
+	<div class="pro">
+	{{form_start(form)}}
+		<label>Numéro de siret</label>
+		{{ form_widget(form.siret) }}
+		<label>Raison sociale</label>
+		{{ form_widget(form.raisonSociale) }}
+		<label>Fontion du représentant</label>
+		{{form_widget(form.fonctionRepresentant) }}
+		<label>Nom du représentant</label>
+		{{form_widget(form.nom) }}
+		<label>Prénom du représentant</label>
+		{{form_widget(form.prenom) }}
+		<label>Téléphone</label>
+		{{form_widget(form.telephone) }}
+		<label>E-mail</label>
+		{{form_widget(form.email) }}
+		<label>Mot de passe</label>
+		{{form_widget(form.password) }}
+		{{ form_row(form._token) }}
+		{{form_widget(form.save) }}
+	{{ form_end(form, {'render_rest': false}) }}
+	</div>
+			
+	{% endblock %}
+

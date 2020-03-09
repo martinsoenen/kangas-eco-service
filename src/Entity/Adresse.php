@@ -47,23 +47,11 @@ class Adresse
      * @ORM\Column(type="string", length=50)
      */
     private $Ville;
-
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\AdresseType", inversedBy="adresses")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $AdresseType;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Utilisateur", inversedBy="idAdresse")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Utilisateur", inversedBy="Adresse",cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $Utilisateur;
-
-    public function __construct()
-    {
-        $this->utilisateurEntreprises = new ArrayCollection();
-    }
 
     public function getId(): ?int
     {
@@ -138,49 +126,6 @@ class Adresse
     public function setVille(string $Ville): self
     {
         $this->Ville = $Ville;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|UtilisateurEntreprise[]
-     */
-    public function getUtilisateurEntreprises(): Collection
-    {
-        return $this->utilisateurEntreprises;
-    }
-
-    public function addUtilisateurEntreprise(UtilisateurEntreprise $utilisateurEntreprise): self
-    {
-        if (!$this->utilisateurEntreprises->contains($utilisateurEntreprise)) {
-            $this->utilisateurEntreprises[] = $utilisateurEntreprise;
-            $utilisateurEntreprise->setIdAdresse($this);
-        }
-
-        return $this;
-    }
-
-    public function removeUtilisateurEntreprise(UtilisateurEntreprise $utilisateurEntreprise): self
-    {
-        if ($this->utilisateurEntreprises->contains($utilisateurEntreprise)) {
-            $this->utilisateurEntreprises->removeElement($utilisateurEntreprise);
-            // set the owning side to null (unless already changed)
-            if ($utilisateurEntreprise->getIdAdresse() === $this) {
-                $utilisateurEntreprise->setIdAdresse(null);
-            }
-        }
-
-        return $this;
-    }
-
-    public function getAdresseType(): ?AdresseType
-    {
-        return $this->AdresseType;
-    }
-
-    public function setAdresseType(?AdresseType $AdresseType): self
-    {
-        $this->AdresseType = $AdresseType;
 
         return $this;
     }

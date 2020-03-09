@@ -1,0 +1,9 @@
+swiftmailer:
+  transport: 'smtp'
+  host: 'mailhog'
+  username: 'null'
+  password: 'null'
+  port: '1025'
+  url: 'smtp://mailhog'
+  spool: { type: 'memory' }
+  sender_address: 'contact@kangas.fr'

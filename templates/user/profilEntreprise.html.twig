@@ -3,5 +3,26 @@
 {% block title %}Profil -{{parent()}}
 {% endblock %}
 {% block body %}
-Profil entreprise
+
+<p>Compte Entreprise</p>
+<hr>
+<div class="user-info">
+        <label>Numéro de siret</label>
+        {{ form_widget(form.siret, {'disabled':'disabled'}) }}
+        <label>Raison sociale</label>
+        {{ form_widget(form.raisonSociale, { 'disabled':'disabled'}) }}
+        <label>Fontion du représentant</label>
+        {{form_widget(form.fonctionRepresentant, {'disabled':'disabled'}) }}
+        <label>Nom du représentant</label>
+        {{form_widget(form.nom, {'disabled':'disabled'}) }}
+        <label>Prénom du représentant</label>
+        {{form_widget(form.prenom, {'disabled':'disabled'}) }}
+        <label>Téléphone</label>
+        {{form_widget(form.telephone, {'disabled':'disabled'}) }}
+        <label>E-mail</label>
+        {{form_widget(form.email, {'disabled':'disabled'}) }}
+        <a class="btn btn-outline-success" href="{{ path('entreprise_edit') }}">Modifier mes informations</a>
+
+</div>
+</p>
 {% endblock %}
