@@ -19,6 +19,11 @@ class ObjetCollecte
     /**
      * @ORM\Column(type="integer")
      */
+    private $nom;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
     private $quantite;
 
     /**
@@ -80,6 +85,18 @@ class ObjetCollecte
     public function setCategorieCollecte(?CategorieCollecte $CategorieCollecte): self
     {
         $this->CategorieCollecte = $CategorieCollecte;
+
+        return $this;
+    }
+
+    public function getNom(): ?int
+    {
+        return $this->nom;
+    }
+
+    public function setNom(int $nom): self
+    {
+        $this->nom = $nom;
 
         return $this;
     }

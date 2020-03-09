@@ -13,24 +13,20 @@
 {% endblock body %}
 
 {% block javascripts %}
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script>
-        // $('.btn.btn-success').click(function() {
-        //     let id = $(this).attr('id');
-        //     let value = $("#"+id+"[name='quantite']").val();
-        //
-        //     $.ajax({
-        //         url : '/entreprise/devis/'+ id,
-        //         type : 'GET',
-        //         data : {
-        //             quantite: value
-        //         },
-        //         dataType: "integer",
-        //         success: function(response) {
-        //             console.log(response);
-        //         }
-        //     });
-        //     alert('Vous avez ajouté ' + value + ' au panier'); //à récupérer la valeur selected sur la select des catégories
-        // });
+        $('select#categorie_collecte_nom.form-control').change(function() {
+
+             let value = $('select#categorie_collecte_nom.form-control :selected').text();
+            console.log(value);
+             $.ajax({
+                 url : '/entreprise/devis?categorie='+ value,
+                 type : 'GET',
+                 dataType: "integer",
+                 success: function(response) {
+                     console.log(response);}
+            });
+         });
 
 
     </script>
