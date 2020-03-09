@@ -14,13 +14,24 @@
 
 {% block javascripts %}
     <script>
-    //à récupérer la valueur selected sur la select des catégories.
+        $('.btn.btn-success').click(function() {
+            let id = $(this).attr('id');
+            let value = $("#"+id+"[name='quantite']").val();
 
-    $.ajax({
-    url: '/entreprise/devis',
-    type: "GET",
-    data: data , //mettre ta variable contennant la value de l'objet selectionné,
-    });
+            $.ajax({
+                url : '/entreprise/devis/'+ id,
+                type : 'GET',
+                data : {
+                    quantite: value
+                },
+                dataType: "integer",
+                success: function(response) {
+                    console.log(response);
+                }
+            });
+            alert('Vous avez ajouté ' + value + ' au panier'); //à récupérer la valeur selected sur la select des catégories
+        });
+
 
     </script>
 
