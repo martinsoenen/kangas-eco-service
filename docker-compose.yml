@@ -47,7 +47,7 @@ services:
       MYSQL_USER: root
       MYSQL_PASSWORD: root
     ports:
-      - 81:80
+      - "81:80"
 
   composer:
     image: composer
@@ -55,3 +55,10 @@ services:
     volumes:
       - .:/app
     command: install --ignore-platform-reqs
+
+  mailhog:
+    image: mailhog/mailhog
+    container_name: eco-service_mailhog
+    ports:
+      - "82:8025"
+      - "1025:1025"
