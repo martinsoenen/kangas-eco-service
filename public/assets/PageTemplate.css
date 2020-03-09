@@ -119,6 +119,11 @@ thead tr {
     padding: 0;
 }
 
+#footer div a
+{
+    text-decoration: none;
+}
+
 .footer-element
 {
     flex-direction: column;
