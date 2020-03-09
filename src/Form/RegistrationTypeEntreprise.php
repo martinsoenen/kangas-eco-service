@@ -14,6 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class RegistrationTypeEntreprise extends AbstractType
 {
@@ -38,6 +39,11 @@ class RegistrationTypeEntreprise extends AbstractType
                 'required' => true
             ))
             ->add('conditions', CheckboxType::class)
+            ->add('save', SubmitType::class, array(
+                'label' => 'Valider',
+                'attr' => array('title' => 'Valider les modifications' ,'class' => 'btn btn-outline-success'
+                ),
+           ))
         ;
     }
     public function configureOptions(OptionsResolver $resolver)

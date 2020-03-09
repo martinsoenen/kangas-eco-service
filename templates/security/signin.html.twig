@@ -30,8 +30,9 @@
 				{{form_row(formEntreprise.password, {'label' : false, 'attr' :{'placeholder' : 'Mot de passe'}})}}
 				{{form_row(formEntreprise.passwordConfirm, {'label' : false, 'attr' :{'placeholder' : 'Confirmez mot de passe'}})}}
 				{{form_row(formEntreprise.conditions, {'label' : 'J\'accepte les CGU et les CGV d\'Eco-Service','attr' :{'class':'formClient-check-input'}})}}
+				{{ form_row(formEntreprise._token) }}
 				<button type='submit' name="client" class="btn btn-success">S'inscrire</button>
-			{{ form_end(formEntreprise) }}
+			{{ form_end(formEntreprise, {'render_rest': false}) }}
 		</div>
 		<div class="particulier" style="display:none;">
 			{{ form_start(formClient) }}
@@ -45,8 +46,9 @@
 				{{form_row(formClient.password, {'label' : false, 'attr' :{'placeholder' : 'Mot de passe'}})}}
 				{{form_row(formClient.passwordConfirm, {'label' : false, 'attr' :{'placeholder' : 'Confirmez mot de passe'}})}}
 				{{form_row(formClient.conditions, {'label' : 'J\'accepte les CGU et les CGV d\'Eco-Service','attr' :{'class':'formClient-check-input'}})}}
+				{{ form_row(formClient._token) }}
 				<button type='submit' name="client" class="btn btn-success">S'inscrire</button>
-			{{ form_end(formClient) }}
+			{{ form_end(formClient, {'render_rest': false}) }}
 		</div>
 		<div class="tab-pane" id="tabs-2" role="tabpanel"></div>
 	</div>
@@ -61,20 +63,23 @@ $('select#form_utilisateurType').on('change', function (e) {
 
 		var typeCompte = $('select#form_utilisateurType').find(":selected").text();
 
-			if(typeCompte == "Particulier"){
-				$('div.particulier').css("display","block");
-				$('div.entreprise').css("display","none");
-			}
-			else if(typeCompte =='Professionnel'){
-				$('div.particulier').css("display","none");
-				$('div.entreprise').css("display","block");
-				$('input#registration_nom.formClient-control').attr("placeholder", "Nom du représentant");
-				$('input#registration_prenom.formClient-control').attr("placeholder", "Prénom du représentant");
-			}
-			else{
-				$('div.particulier').css("display","none");
-				$('div.entreprise').css("display","none");
-			}
+		if(typeCompte == "Particulier"){
+			$('div.particulier').css("display","block");
+			$('div.entreprise').css("display","none");
+		}
+		else if(typeCompte =='Professionnel'){
+			$('div.particulier').css("display","none");
+			$('div.entreprise').css("display","block");
+			$('input#registration_nom.formClient-control').attr("placeholder", "Nom du représentant");
+			$('input#registration_prenom.formClient-control').attr("placeholder", "Prénom du représentant");
+		}
+		else{
+			$('div.particulier').css("display","none");
+			$('div.entreprise').css("display","none");
+		}
+
+		$('fieldset.form-group').css('margin','0'); // Mise en forme entre le form Adresse et Registration
+
 		});
 </script>
 {% endblock %}

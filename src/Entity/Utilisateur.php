@@ -93,7 +93,7 @@ class Utilisateur implements UserInterface
     private $fonctionRepresentant;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Adresse", mappedBy="Utilisateur", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\Adresse", mappedBy="Utilisateur")
      */
     private $Adresse;
 
