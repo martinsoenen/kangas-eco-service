@@ -17,6 +17,8 @@ h1, h2, h3, h4, h5, h6 {
     
 h1 { 
     font-size: 48px;
+    text-align: center;
+    width: 100%;
 }
 
 
@@ -185,6 +187,10 @@ thead tr {
 
     .d-flex{
         flex-direction: column !important;
+    }
+
+    h1 {
+        font-size: 25px;
     }
 }
 
