@@ -21,6 +21,8 @@ h1, h2, h3, h4, h5, h6 {
     
 h1 { 
     font-size: 48px;
+    text-align: center;
+    width: 100%;
 }
 
 
@@ -190,6 +192,10 @@ thead tr {
     .d-flex{
         flex-direction: column !important;
     }
+
+    h1 {
+        font-size: 25px;
+    }
 }
 
 @media (min-width: 768px)
@@ -240,8 +246,8 @@ thead tr {
 
 .diy-button-container {
     z-index: 10;
-    margin-left: 5px;
-    margin-top: 400px;
+    margin-left: 15px;
+    bottom: 10px;
     position: fixed;
 }
 .diy-button-icon
