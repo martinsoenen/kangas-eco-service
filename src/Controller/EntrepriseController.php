@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\CategorieCollecte;
 use App\Entity\ObjetCollecte;
 use App\Form\CategorieCollecteType;
 
@@ -28,19 +29,20 @@ class EntrepriseController extends AbstractController
      */
     public function devis(Request $request)
     {
-        $form = $this->createForm(CategorieCollecteType::class);
-
-        $formObjet =  $this->createForm(ObjetCollecteType::class)
-        ->add('nom', EntityType::class, [
-        'class' => ObjetCollecte::class,
-        'choice_label' => 'nom',
-        'label' => 'Objets collectés',
-        'query_builder' => function(EntityRepository $er) {
-            return $er->createQueryBuilder('')
-
-            ;
-        }
+        $form = $this->createForm(CategorieCollecteType::class)
+            ->add('nom', EntityType::class, [
+            'class' => CategorieCollecte::class,
+            'choice_label' => 'nom',
+            'label' => 'Catégorie collectés',
+            'query_builder' => $this->getDoctrine()->getRepository()->findAll()
     ]);
+        $formObjet =  $this->createForm(ObjetCollecteType::class)
+            ->add('nom', EntityType::class, [
+                'class' => ObjetCollecte::class,
+                'choice_label' => 'nom',
+                'label' => 'Objets collectés',
+                'query_builder' => $this->getDoctrine()->getRepository()->findAll()
+            ]);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
