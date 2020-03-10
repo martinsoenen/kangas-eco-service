@@ -26,7 +26,10 @@
         "symfony/twig-pack": "*",
         "symfony/validator": "4.4.*",
         "symfony/web-link": "4.4.*",
-        "symfony/yaml": "4.4.*"
+        "symfony/yaml": "4.4.*",
+        "knplabs/knp-paginator-bundle": "*",
+        "paypal/rest-api-sdk-php": "1.14.*",
+        "symfony/swiftmailer-bundle": "*"
     },
     "require-dev": {
         "symfony/debug-pack": "*",

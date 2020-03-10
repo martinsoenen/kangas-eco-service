@@ -26,7 +26,7 @@ class UtilisateurAdministration implements UserInterface
     private $email;
 
     /**
-     * @ORM\Column(type="string", length=45)
+     * @ORM\Column(type="string", length=255)
      * @Assert\Length(min="8", minMessage="Le mot de passe doit faire 8 caractères minimun")
      */
     private $password;

@@ -32,7 +32,7 @@ class ObjetCollecte
     private $CategorieCollecte;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Devis", inversedBy="idObjectCollecte")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Devis", inversedBy="ObjectCollecte")
      */
     private $devis;
 
