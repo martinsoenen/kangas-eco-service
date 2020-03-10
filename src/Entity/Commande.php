@@ -58,6 +58,12 @@ class Commande
      */
     private $PayPalID;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Utilisateur", inversedBy="commandes")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $UserID;
+
     public function __construct()
     {
         $this->idProduit = new ArrayCollection();
@@ -144,32 +150,6 @@ class Commande
     /**
      * @return Collection|Produit[]
      */
-    public function getIdProduit(): Collection
-    {
-        return $this->idProduit;
-    }
-
-    public function addIdProduit(Produit $idProduit): self
-    {
-        if (!$this->idProduit->contains($idProduit)) {
-            $this->idProduit[] = $idProduit;
-        }
-
-        return $this;
-    }
-
-    public function removeIdProduit(Produit $idProduit): self
-    {
-        if ($this->idProduit->contains($idProduit)) {
-            $this->idProduit->removeElement($idProduit);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Produit[]
-     */
     public function getProduit(): Collection
     {
         return $this->Produit;
@@ -201,6 +181,18 @@ class Commande
     public function setPayPalID(string $PayPalID): self
     {
         $this->PayPalID = $PayPalID;
+
+        return $this;
+    }
+
+    public function getUserID(): ?Utilisateur
+    {
+        return $this->UserID;
+    }
+
+    public function setUserID(?Utilisateur $UserID): self
+    {
+        $this->UserID = $UserID;
 
         return $this;
     }
