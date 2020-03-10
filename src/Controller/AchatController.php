@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\Commande;
+use App\Repository\CommandeRepository;
 use App\Service\Panier\PanierService;
 use PayPal\Api\Amount;
 use PayPal\Api\Details;
@@ -106,6 +108,8 @@ class AchatController extends AbstractController
      */
     public function paiementTermine(Request $request, PanierService $panier)
     {
+        ///////////// Exécution du paiement PayPal
+
         $credentials = [
             'id' => 'Ae0q9Y6VL5tsv0vcBvzBMv3kjg7mM50yooD8C9u2nm1HmVa5pcCa9GH-Ov7swbpl1CHru_D2G_GXCQ4O',
             'secret' => 'EFN_usuuBumAEyMgasVcamuZCaimCZ7JJzCWqsFbYKZ08HhQ6y43jENMHLJrk8qHhYfQRzXnt2SBYVHI'
@@ -124,11 +128,36 @@ class AchatController extends AbstractController
         } catch (\PayPal\Exception\PayPalConnectionException $e) {
             dump(json_decode($e->getData()));
         }
+dump($payment);
+dump($apiContext);
+dump($execution);
+        ///////////// Insertion de la commande en BDD
 
-        $panier->reset();
+        $montantHT = 0;
+        $nbArticles = 0;
+        foreach($panier->getPanierComplet() as $item) {
+            $montantHT += $item['product']->getPrixUnitaireHT();
+            $nbArticles++;
+        }
+
+        $entityManager = $this->getDoctrine()->getManager();
+
+        $commande = new Commande();
+        $commande->setDate(new \DateTime());
+        $commande->setIsSend(0);
+        $commande->setMontantHT($montantHT);
+        $commande->setMontantTVA($montantHT * 0.2);
+        $commande->setMontantTotalTTC($montantHT + ($montantHT * 0.2));
+        $commande->setNbArticles($nbArticles);
+        $commande->setPayPalID($payment->id);
+        $entityManager->persist($commande);
+        $entityManager->flush();
+        dd($commande);
+//        $panier->reset();
 
         return $this->render('achat/paiement.html.twig', [
             'controller_name' => 'AchatController',
+//            'commande' => $commande,
         ]);
     }
 

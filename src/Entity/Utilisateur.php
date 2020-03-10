@@ -129,10 +129,16 @@ class Utilisateur implements UserInterface
     */
     private $emailConfirm;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Commande", mappedBy="User")
+     */
+    private $commandes;
+
     public function __construct()
     {
         $this->Adresse = new ArrayCollection();
         $this->devis = new ArrayCollection();
+        $this->commandes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -382,8 +388,36 @@ class Utilisateur implements UserInterface
     public function setTelephone(string $telephone): self
     {
         $this->telephone = $telephone;
+        return $this;
+    }
+
+    /**
+     * @return Collection|Commande[]
+     */
+    public function getCommandes(): Collection
+    {
+        return $this->commandes;
+    }
+
+    public function addCommande(Commande $commande): self
+    {
+        if (!$this->commandes->contains($commande)) {
+            $this->commandes[] = $commande;
+            $commande->setUser($this);
+        }
 
         return $this;
     }
-   
+
+    public function removeCommande(Commande $commande): self
+    {
+        if ($this->commandes->contains($commande)) {
+            $this->commandes->removeElement($commande);
+            // set the owning side to null (unless already changed)
+            if ($commande->getUser() === $this) {
+                $commande->setUser(null);
+            }
+        }
+
+    }
 }
