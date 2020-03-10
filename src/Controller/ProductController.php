@@ -116,11 +116,11 @@ class ProductController extends AbstractController
                 'choice_label' => 'Nom',
                 'required'  => true,
             ])
-            ->add('UtilisateurAdmin',EntityType::class,[
-                'class' => UtilisateurAdministration::class,
-                'choice_label' => 'Nom',
-                'required'  => true,
-            ])
+            // ->add('UtilisateurAdmin',EntityType::class,[
+            //     'class' => UtilisateurAdministration::class,
+            //     'choice_label' => 'Nom',
+            //     'required'  => true,
+            // ])
             ->add('Image', FileType::class, [
                 'label' => 'Image',
                 'mapped' => false,

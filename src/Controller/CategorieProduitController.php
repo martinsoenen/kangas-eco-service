@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\Entity\Article;
 use App\Entity\CategorieProduit;
 use App\Entity\Produit;
-use App\Entity\UtilisateurAdministration;
 use App\Entity\SousCategorieProduit;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -47,11 +46,11 @@ class CategorieProduitController extends AbstractController
         }
         $form = $this->createFormBuilder($categorieProduit)
             ->add('nom',TextType::class,array('required'  => true))
-            ->add('UtilisateurAdmin',EntityType::class,[
-                'class' => UtilisateurAdministration::class,
-                'choice_label' => 'Nom',
-                'required'  => true,
-            ])
+            // ->add('UtilisateurAdmin',EntityType::class,[
+            //     'class' => UtilisateurAdministration::class,
+            //     'choice_label' => 'Nom',
+            //     'required'  => true,
+            // ])
             ->getForm();
 
         $form->handleRequest($request);

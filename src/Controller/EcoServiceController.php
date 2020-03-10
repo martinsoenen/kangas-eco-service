@@ -88,17 +88,6 @@ class EcoServiceController extends AbstractController
     }
 
     /**
-     * @Route("/particulier", name="particulier")
-     * @Route("/particulier/index", name="particulier_index")
-     */
-    public function particulier_index()
-    {
-        return $this->render('eco_service/particulier_index.html.twig',[
-            'controller_name' => 'EcoServiceController',
-        ]);
-    }
-
-    /**
      * @Route("/qui-sommes-nous", name="qui-sommes-nous")
      */
     public function qui_sommes_nous()
@@ -108,14 +97,4 @@ class EcoServiceController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/entreprise", name="entreprise")
-     * @Route("/entreprise/index", name="entreprise_index")
-     */
-    public function entreprise_index()
-    {
-        return $this->render('eco_service/entreprise_index.html.twig', [
-            'controller_name' => 'EcoServiceController',
-        ]);
-    }
 }
