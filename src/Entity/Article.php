@@ -35,11 +35,7 @@ class Article
      * @ORM\Column(type="string", length=255)
      */
     private $image;
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\UtilisateurAdministration")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $UtilisateurAdmin;
+    
 
     public function getId(): ?int
     {
@@ -66,18 +62,6 @@ class Article
     public function setText(string $text): self
     {
         $this->text = $text;
-
-        return $this;
-    }
-
-    public function getUtilisateurAdmin(): ?UtilisateurAdministration
-    {
-        return $this->UtilisateurAdmin;
-    }
-
-    public function setUtilisateurAdmin(?UtilisateurAdministration $UtilisateurAdmin): self
-    {
-        $this->UtilisateurAdmin = $UtilisateurAdmin;
 
         return $this;
     }

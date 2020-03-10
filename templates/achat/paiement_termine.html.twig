@@ -5,5 +5,10 @@
 {% endblock %}
 
 {% block body %}
-    Paiement ok - il faudrait afficher le récap' de commande
+    {% if commande is defined %}
+        Récapitulatif de votre commande numéro {{ commande.id }} <br/>
+
+        Nom : {{ commande.name }} <br/>
+    {% endif %}
+
 {% endblock %}

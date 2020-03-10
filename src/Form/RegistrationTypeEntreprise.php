@@ -23,7 +23,6 @@ class RegistrationTypeEntreprise extends AbstractType
         $builder
             ->add('email', EmailType::class)
             ->add('emailConfirm', EmailType::class)
-            
             ->add('password', PasswordType::class)
             ->add('passwordConfirm',PasswordType::class)
             ->add('nom',TextType::class)

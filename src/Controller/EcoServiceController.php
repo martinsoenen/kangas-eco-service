@@ -4,6 +4,10 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Request;
+
+use App\Form\ContactGeneralType;
+
 
 class EcoServiceController extends AbstractController
 {
@@ -40,10 +44,35 @@ class EcoServiceController extends AbstractController
     /**
      * @Route("/contact", name="contact")
      */
-    public function contact()
+    public function contact(Request $request, \Swift_Mailer $mailer)
     {
+        $form = $this->createForm(ContactGeneralType::class);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+        
+            $data = $form->getData();
+
+             $message = (new \Swift_Message('Contact Eco-Service'))
+                ->setTo('contact@kangas.fr')
+                ->setFrom($data['email'])
+                ->setBody(
+                    'Message : ' . $data['message']. '<br>'.
+                    'Envoyé par ' .$data['nom'] . $data['prenom']. '<br>'.
+                    $data['email'],
+                    'text/html'
+                );
+            
+            $mailer->send($message);
+
+            $this->addFlash('notice', 'Votre email a bien été envoyé. Nous vous repondrons au plus vite ');
+
+            return $this->redirectToRoute('home');
+        }
+
         return $this->render('eco_service/contact.html.twig', [
             'controller_name' => 'EcoServiceController',
+            'form' => $form->createView(),
         ]);
     }
 
@@ -59,17 +88,6 @@ class EcoServiceController extends AbstractController
     }
 
     /**
-     * @Route("/particulier", name="particulier")
-     * @Route("/particulier/index", name="particulier_index")
-     */
-    public function particulier_index()
-    {
-        return $this->render('eco_service/particulier_index.html.twig',[
-            'controller_name' => 'EcoServiceController',
-        ]);
-    }
-
-    /**
      * @Route("/qui-sommes-nous", name="qui-sommes-nous")
      */
     public function qui_sommes_nous()
@@ -79,14 +97,4 @@ class EcoServiceController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/entreprise", name="entreprise")
-     * @Route("/entreprise/index", name="entreprise_index")
-     */
-    public function entreprise_index()
-    {
-        return $this->render('eco_service/entreprise_index.html.twig', [
-            'controller_name' => 'EcoServiceController',
-        ]);
-    }
 }
