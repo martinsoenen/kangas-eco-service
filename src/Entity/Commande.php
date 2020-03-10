@@ -64,6 +64,11 @@ class Commande
      */
     private $User;
 
+    /**
+     * @ORM\Column(type="string", length=1000)
+     */
+    private $shipping_addr;
+
     public function __construct()
     {
         $this->Produit = new ArrayCollection();
@@ -192,6 +197,18 @@ class Commande
     public function setUser(?Utilisateur $User): self
     {
         $this->User = $User;
+
+        return $this;
+    }
+
+    public function getShippingAddr(): ?string
+    {
+        return $this->shipping_addr;
+    }
+
+    public function setShippingAddr(string $shipping_addr): self
+    {
+        $this->shipping_addr = $shipping_addr;
 
         return $this;
     }
