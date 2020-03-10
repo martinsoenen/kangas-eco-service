@@ -4,30 +4,37 @@ namespace App\Controller;
 
 use App\Entity\Article;
 use App\Repository\ArticleRepository;
+use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManagerInterface;
 use phpDocumentor\Reflection\File;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaTypeType;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 class BlogController extends AbstractController
 {
+    const NB_BLOGS_PER_PAGE = 6;
     /**
      * @Route("/blog", name="blog")
      * @Route("/blog/index", name="blog_index")
      */
-    public function index(ArticleRepository $repo)
+    public function index(ArticleRepository $repo, PaginatorInterface $paginator, Request $request)
     {
         $articles = $repo->findAll();
+        $pagination = $paginator->paginate(
+            $articles,
+            $request->query->getInt('page', 1),
+            self::NB_BLOGS_PER_PAGE
+        );
 
         return $this->render('blog/index.html.twig', [
             'controller_name' => 'BlogController',
-            'articles' =>$articles
+            'articles' => $pagination,
         ]);
     }
 

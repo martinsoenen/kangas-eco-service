@@ -20,9 +20,9 @@
 		<form action="{{path('security_login')}}" method="POST">
 			<div class="form-group">
 				<input type="text" placeholder="Adresse email" name="_username" class="form-control" required>
-
-
 				<input type="password" placeholder="Mot de passe" name="_password" class="form-control" required>
+				<a href="{{path('security_forgot')}}">Mot de passe oublié</a>
+
 			</div>
 			<div class="form-group">
 				<button type="submit" class="btn btn-success">Se connecter</button>
@@ -32,6 +32,6 @@
 
 	<div class="tab-pane" id="tabs-2" role="tabpanel">
 	</div>
-
+</div>
 
 {% endblock %}
