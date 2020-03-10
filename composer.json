@@ -27,14 +27,11 @@
         "symfony/validator": "4.4.*",
         "symfony/web-link": "4.4.*",
         "symfony/yaml": "4.4.*",
-<<<<<<< HEAD
         "paypal/rest-api-sdk-php":  "1.14.*",
         "ext-intl": "*"
-=======
         "knplabs/knp-paginator-bundle": "*",
         "paypal/rest-api-sdk-php": "1.14.*",
         "symfony/swiftmailer-bundle": "*"
->>>>>>> 4c248c70e6dc6d23e995bd66ab7ff541be9a6008
     },
     "require-dev": {
         "symfony/debug-pack": "*",
