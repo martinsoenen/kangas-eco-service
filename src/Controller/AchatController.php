@@ -128,7 +128,7 @@ class AchatController extends AbstractController
         } catch (\PayPal\Exception\PayPalConnectionException $e) {
             dump(json_decode($e->getData()));
         }
-dump($payment);
+
         ///////////// Insertion de la commande en BDD
 
         $entityManager = $this->getDoctrine()->getManager();
@@ -146,6 +146,8 @@ dump($payment);
             }
         }
 
+        $adresse = $payment->getPayer()->getPayerInfo()->getShippingAddress();
+
         $commande->setDate(new \DateTime());
         $commande->setIsSend(0);
         $commande->setMontantHT($montantHT);
@@ -154,9 +156,10 @@ dump($payment);
         $commande->setNbArticles($nbArticles);
         $commande->setPayPalID($payment->id);
         $commande->setUser($this->getUser());
+        $commande->setShippingAddr($adresse->getLine1() . '|' . $adresse->getLine2() . '|' . $adresse->getPostalCode() . '|' . $adresse->getCity());
         $entityManager->persist($commande);
         $entityManager->flush();
-dump($commande);
+
         ///////////// Réinitialisation du panier
 
 //        $panier->reset();
@@ -164,6 +167,7 @@ dump($commande);
         return $this->render('achat/paiement_termine.html.twig', [
             'controller_name' => 'AchatController',
             'commande' => $commande,
+            'adresse' => explode('|', $commande->getShippingAddr()),
         ]);
     }
 

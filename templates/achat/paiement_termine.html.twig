@@ -10,17 +10,22 @@
         <br/>
         Nom de l'utilisateur : {{ commande.user.prenom }} {{ commande.user.nom }} <br/>
         ID PayPal de la commande : {{ commande.paypalid }} <br/>
-        Adresse de livraison : {#TODO#} <br/>
         Date de la commande : le {{ commande.date | date("d/m/Y") }} <br/>
-        Nombre d'articles : {{ commande.nbArticles }} <br/>
-        Montant HT : {{ commande.montantHT }}€ <br/>
-        Montant TVA : {{ commande.montantTVA }}€ <br/>
-        Montant total : {{ commande.montantTotalTTC }}€ <br/>
         Etat de la commande :   {% if commande.isSend == 0 %}
                                     en attente de traitement
                                 {% else %}
                                     envoyée
                                 {% endif %}<br/>
+        <br/>
+        Adresse de livraison :<br/>
+        {% for adresse in adresse %}
+            {{ adresse }}<br/>
+        {% endfor %}
+        <br/>
+        Nombre d'articles : {{ commande.nbArticles }} <br/>
+        Montant HT : {{ commande.montantHT }}€ <br/>
+        Montant TVA : {{ commande.montantTVA }}€ <br/>
+        Montant total : {{ commande.montantTotalTTC }}€ <br/>
         <br/>
         <table class="table">
             <thead>
@@ -29,8 +34,8 @@
                     <th>Prix HT</th>
                     <th>TVA</th>
                     <th>Prix TTC</th>
-    {#                                <th>Quantité</th>#}
-                    <th>Total</th>
+{#                    <th>Quantité</th>#}
+{#                    <th>Total</th>#}
                 </tr>
             </thead>
             <tbody>
@@ -41,13 +46,13 @@
                         <td>{{ 100 * item.tauxTVA }}%</td>
                         <td>{{ item.prixUnitaireHT * (1 + item.tauxTVA) }}€</td>
     {#                                    <td>{{ item.quantity }}</td>#}
-                        <td>{{ (item.prixUnitaireHT * (1 + item.tauxTVA)) }}€</td>
+{#                        <td>{{ (item.prixUnitaireHT * (1 + item.tauxTVA)) }}€</td>#}
                     </tr>
                 {% endfor %}
             </tbody>
             <tfoot>
                 <tr>
-                    <td colspan="4" class="text-right"> Montant total :</td>
+                    <td colspan="3" class="text-right"> Montant total :</td>
                     <td>{{ commande.montantTotalTTC }}€</td>
                     <td></td>
                 </tr>
