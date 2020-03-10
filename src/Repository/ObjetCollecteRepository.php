@@ -14,19 +14,19 @@ use Doctrine\Common\Persistence\ManagerRegistry;
  */
 class ObjetCollecteRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
-    {
-        parent::__construct($registry, ObjetCollecte::class);
-    }
-
-    public function findObject() {
-        return $this->createQueryBuilder('o')
-            ->leftJoin("o.CategorieCollecte", "cc")
-            ->addSelect("cc")
-            ->getQuery()
-            ->getResult()
-            ;
-    }
+//    public function __construct(ManagerRegistry $registry)
+//    {
+//        parent::__construct($registry, ObjetCollecte::class);
+//    }
+//
+//    public function findObject() {
+//        return $this->createQueryBuilder('o')
+//            ->leftJoin("o.CategorieCollecte", "cc")
+//            ->addSelect("cc")
+//            ->getQuery()
+//            ->getResult()
+//            ;
+//    }
     // /**
     //  * @return ObjetCollecteType[] Returns an array of ObjetCollecteType objects
     //  */

@@ -19,8 +19,6 @@ class CategorieCollecteRepository extends ServiceEntityRepository
         parent::__construct($registry, CategorieCollecte::class);
     }
 
-
-
     // /**
     //  * @return CategorieCollecteController[] Returns an array of CategorieCollecteController objects
     //  */
