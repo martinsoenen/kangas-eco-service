@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {{ form_start(formCategorieCollecte) }}
+
+    {{ form_row(formCategorieCollecte.nom, {'label' : 'Nom de la catégorie :','attr' : {'placeholder' :
+        "Catégorie"}}) }}
+    <button type="submit" class="btn btn-success ">
+        {% if editMode %}
+            Enregistrer les modifications
+        {% else %}
+            Ajouter la catégorie
+        {% endif %}
+    </button>
+
+    {{ form(formCategorieCollecte) }}
+{% endblock %}

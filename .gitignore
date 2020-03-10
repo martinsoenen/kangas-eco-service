@@ -19,3 +19,4 @@ composer.lock
 .idea
 /MCD/kangas.mwb.bak
 /.env.rec
+/public/uploads
