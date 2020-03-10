@@ -37,7 +37,7 @@ class ProductController extends AbstractController
     }
 
     /**
-     * @Route("/magasin/categorie/{id}", name="categorie-produit")
+     * @Route("/magasin/categorie/{id}", name="categorie_produit")
      * @Entity("CategorieProduit", expr="repository.find(id)")
      */
     public function categorie(CategorieProduit $categorie)
@@ -53,7 +53,7 @@ class ProductController extends AbstractController
     }
 
     /**
-     * @Route("/magasin/sous-categorie/{id}", name="sous-categorie-produit")
+     * @Route("/magasin/sous-categorie/{id}", name="sous_categorie_produit")
      * @Entity("SousCategorieProduit", expr="repository.find(id)")
      */
     public function sous_categorie(SousCategorieProduit $souscategorie)
@@ -70,7 +70,7 @@ class ProductController extends AbstractController
 
 
     /**
-     * @Route("/magasin/produit_{id}", name="magasin-produit")
+     * @Route("/magasin/produit_{id}", name="magasin_produit")
      * @Entity("Produit", expr="repository.find(id)")
      */
     public function show(Produit $produit)

@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\Request;
 class CategorieCollecteController extends AbstractController
 {
     /**
-     * @Route("/admin/collecte/categorie", name="admin-collecte-categorie")
+     * @Route("/admin/collecte/categorie", name="admin_collecte_categorie")
      */
     public function categorie_collecte_show()
     {

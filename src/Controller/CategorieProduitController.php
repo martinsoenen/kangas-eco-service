@@ -22,7 +22,7 @@ use Symfony\Component\Validator\Constraints\File;
 class CategorieProduitController extends AbstractController
 {
     /**
-     * @Route("/admin/produits/categorie", name="admin-categorie-produits")
+     * @Route("/admin/produits/categorie", name="admin_categorie_produits")
      */
     public function afficherCategorieProduit()
     {
