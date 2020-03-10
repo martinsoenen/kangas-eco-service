@@ -6,11 +6,11 @@ use App\Entity\CategorieCollecte;
 use App\Entity\ObjetCollecte;
 use App\Form\CategorieCollecteType;
 use App\Form\ObjetCollecteType;
-
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 
 class EntrepriseController extends AbstractController
@@ -50,7 +50,7 @@ class EntrepriseController extends AbstractController
                             ->where('o.CategorieCollecte = :val')
                             ->SetParameter('val', 'Electromenager');
               },
-                ]);
+              ]);
         }
         if ($form->isSubmitted() && $form->isValid()) {
 
