@@ -22,9 +22,9 @@
                 {% for item in items %}
                     <tr>
                         <td>{{ item.product.nomProduit }}</td>
-                        <td>{{ item.product.prixUnitaireHT * (1 + item.product.tauxTVA) }}€</td>
+                        <td>{{ item.product.prixUnitaireHT * (1 + item.product.tauxTVA / 100) }}€</td>
                         <td>{{ item.quantity }}</td>
-                        <td>{{ (item.product.prixUnitaireHT * (1 + item.product.tauxTVA)) * item.quantity }}€</td>
+                        <td>{{ (item.product.prixUnitaireHT * ( 1 + item.product.tauxTVA / 100 )) * item.quantity }}€</td>
                         <td>
                             <a href="{{ path('panier_remove', {'id': item.product.id}) }}" class="btn btn-danger btn-sm">
                                 <i class="fa fa-trash"></i>
