@@ -37,7 +37,7 @@ class Utilisateur implements UserInterface
     private $email;
 
     /**
-     * @ORM\Column(type="string", length=3, nullable=true)
+     * @ORM\Column(type="string", length=5, nullable=true)
      */
     private $civilite;
 
@@ -78,12 +78,28 @@ class Utilisateur implements UserInterface
     private $utilisateurType;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
+     * @Assert\Length(
+     *   min = 14,
+     *   minMessage="Veuillez saisir un N° de SIRET valide",
+     * )
+     * * @Assert\Length(
+     *   max = 14,
+     *   maxMessage="Veuillez saisir un N° de SIRET valide",
+     * )
+     * @ORM\Column(type="string", nullable=true)
      */
     private $siret;
 
     /**
-     * @ORM\Column(type="integer")
+     * @Assert\Length(
+     *   min = 10,
+     *   minMessage="Veuillez saisir un numéro de téléphone valide",
+     * )
+     *  @Assert\Length(
+     *   max = 10,
+     *   maxMessage="Veuillez saisir un numéro de téléphone valide",
+     * )
+     * @ORM\Column(type="string")
      */
     private $telephone;
 
@@ -113,10 +129,16 @@ class Utilisateur implements UserInterface
     */
     private $emailConfirm;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Commande", mappedBy="User")
+     */
+    private $commandes;
+
     public function __construct()
     {
         $this->Adresse = new ArrayCollection();
         $this->devis = new ArrayCollection();
+        $this->commandes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -220,30 +242,17 @@ class Utilisateur implements UserInterface
         return $this;
     }
 
-    public function getSiret(): ?int
+    public function getSiret(): ?string
     {
         return $this->siret;
     }
 
-    public function setSiret(?int $siret): self
+    public function setSiret(?string $siret): self
     {
         $this->siret = $siret;
 
         return $this;
     }
-
-    public function getTelephone(): ?int
-    {
-        return $this->telephone;
-    }
-
-    public function setTelephone(int $telephone): self
-    {
-        $this->telephone = $telephone;
-
-        return $this;
-    }
-
   
     /**
      * @return Collection|Adresse[]
@@ -370,5 +379,45 @@ class Utilisateur implements UserInterface
 
         return $this;
     }
-   
+
+    public function getTelephone(): ?string
+    {
+        return $this->telephone;
+    }
+
+    public function setTelephone(string $telephone): self
+    {
+        $this->telephone = $telephone;
+        return $this;
+    }
+
+    /**
+     * @return Collection|Commande[]
+     */
+    public function getCommandes(): Collection
+    {
+        return $this->commandes;
+    }
+
+    public function addCommande(Commande $commande): self
+    {
+        if (!$this->commandes->contains($commande)) {
+            $this->commandes[] = $commande;
+            $commande->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommande(Commande $commande): self
+    {
+        if ($this->commandes->contains($commande)) {
+            $this->commandes->removeElement($commande);
+            // set the owning side to null (unless already changed)
+            if ($commande->getUser() === $this) {
+                $commande->setUser(null);
+            }
+        }
+
+    }
 }
