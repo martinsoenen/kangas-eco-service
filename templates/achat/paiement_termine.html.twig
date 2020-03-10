@@ -7,8 +7,52 @@
 {% block body %}
     {% if commande is defined %}
         Récapitulatif de votre commande numéro {{ commande.id }} <br/>
-
-        Nom : {{ commande.name }} <br/>
+        <br/>
+        Nom de l'utilisateur : {{ commande.user.prenom }} {{ commande.user.nom }} <br/>
+        ID PayPal de la commande : {{ commande.paypalid }} <br/>
+        Adresse de livraison : {#TODO#} <br/>
+        Date de la commande : le {{ commande.date | date("d/m/Y") }} <br/>
+        Nombre d'articles : {{ commande.nbArticles }} <br/>
+        Montant HT : {{ commande.montantHT }}€ <br/>
+        Montant TVA : {{ commande.montantTVA }}€ <br/>
+        Montant total : {{ commande.montantTotalTTC }}€ <br/>
+        Etat de la commande :   {% if commande.isSend == 0 %}
+                                    en attente de traitement
+                                {% else %}
+                                    envoyée
+                                {% endif %}<br/>
+        <br/>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Produit</th>
+                    <th>Prix HT</th>
+                    <th>TVA</th>
+                    <th>Prix TTC</th>
+    {#                                <th>Quantité</th>#}
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in commande.produit %}
+                    <tr>
+                        <td>{{ item.nomProduit }}</td>
+                        <td>{{ item.prixUnitaireHT }}€</td>
+                        <td>{{ 100 * item.tauxTVA }}%</td>
+                        <td>{{ item.prixUnitaireHT * (1 + item.tauxTVA) }}€</td>
+    {#                                    <td>{{ item.quantity }}</td>#}
+                        <td>{{ (item.prixUnitaireHT * (1 + item.tauxTVA)) }}€</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="4" class="text-right"> Montant total :</td>
+                    <td>{{ commande.montantTotalTTC }}€</td>
+                    <td></td>
+                </tr>
+            </tfoot>
+        </table>
     {% endif %}
 
 {% endblock %}
