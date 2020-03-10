@@ -43,64 +43,71 @@ class AchatController extends AbstractController
      */
     public function paiement(PanierService $panierService)
     {
-        $credentials = [
-            'id' => 'Ae0q9Y6VL5tsv0vcBvzBMv3kjg7mM50yooD8C9u2nm1HmVa5pcCa9GH-Ov7swbpl1CHru_D2G_GXCQ4O',
-            'secret' => 'EFN_usuuBumAEyMgasVcamuZCaimCZ7JJzCWqsFbYKZ08HhQ6y43jENMHLJrk8qHhYfQRzXnt2SBYVHI'
-        ];
-        $apiContext = new ApiContext(
-            new OAuthTokenCredential($credentials['id'],$credentials['secret']
-            )
-        );
+        if($this->getUser()!=null) {
+            $credentials = [
+                'id' => 'Ae0q9Y6VL5tsv0vcBvzBMv3kjg7mM50yooD8C9u2nm1HmVa5pcCa9GH-Ov7swbpl1CHru_D2G_GXCQ4O',
+                'secret' => 'EFN_usuuBumAEyMgasVcamuZCaimCZ7JJzCWqsFbYKZ08HhQ6y43jENMHLJrk8qHhYfQRzXnt2SBYVHI'
+            ];
+            $apiContext = new ApiContext(
+                new OAuthTokenCredential($credentials['id'], $credentials['secret']
+                )
+            );
 
-        // On construit notre appel à l'API PayPal
+            // On construit notre appel à l'API PayPal
 
-        $list = new ItemList();
-        $totalPrice = 0;
-        foreach ($panierService->getPanierComplet() as $product) {
-            $item = (new Item())
-                ->setName($product['product']->getNomProduit())
-                ->setPrice(round($product['product']->getPrixUnitaireHT() * ( 1 + $product['product']->getTauxTVA()), 2))
+            $list = new ItemList();
+            $totalPrice = 0;
+            foreach ($panierService->getPanierComplet() as $product) {
+                $item = (new Item())
+                    ->setName($product['product']->getNomProduit())
+                    ->setPrice(round($product['product']->getPrixUnitaireHT() * (1 + $product['product']->getTauxTVA()), 2))
+                    ->setCurrency('EUR')
+                    ->setQuantity($product['quantity']);
+                $list->addItem($item);
+
+                $totalPrice += ($product['quantity'] * round(($product['product']->getPrixUnitaireHT() * (1 + $product['product']->getTauxTVA())), 2));
+            }
+
+            $details = (new Details())
+                ->setSubtotal($totalPrice);
+            //            TODO:Ajouter la TVA
+            //            ->setTax();
+
+            $amount = (new Amount())
+                ->setTotal($totalPrice)
                 ->setCurrency('EUR')
-                ->setQuantity($product['quantity']);
-            $list->addItem($item);
+                ->setDetails($details);
 
-            $totalPrice += ($product['quantity'] * round(($product['product']->getPrixUnitaireHT() * ( 1 + $product['product']->getTauxTVA())), 2));
+            $transaction = (new Transaction())
+                ->setItemList($list)
+                ->setDescription('Achat sur le site Eco-Service')
+                ->setAmount($amount);
+
+            $payment = new Payment();
+            $payment->setTransactions([$transaction]);
+            $payment->setIntent('sale');
+            $redirectUrls = (new RedirectUrls())
+                ->setReturnUrl($this->generateUrl('panier_paiement_termine', [], UrlGenerator::ABSOLUTE_URL))
+                ->setCancelUrl($this->generateUrl('panier', [], UrlGenerator::ABSOLUTE_URL));
+            $payment->setRedirectUrls($redirectUrls);
+            $payment->setPayer((new Payer())->setPaymentMethod('paypal'));
+
+            try {
+                $payment->create($apiContext);
+                header('Location: '.$payment->getApprovalLink());
+            } catch (\PayPal\Exception\PayPalConnectionException $e) {
+                dump(json_decode($e->getData()));
+            }
+
+            return $this->render('achat/paiement_termine.html.twig', [
+                'controller_name' => 'AchatController',
+            ]);
+        }else{
+            $this->addFlash('error', 'Veuillez vous connecter pour commander un article !!');
+            return $this->render('security/login.html.twig', [
+                'controller_name' => 'AchatController',
+            ]);
         }
-
-        $details = (new Details())
-            ->setSubtotal($totalPrice);
-//            TODO:Ajouter la TVA
-//            ->setTax();
-
-        $amount = (new Amount())
-            ->setTotal($totalPrice)
-            ->setCurrency('EUR')
-            ->setDetails($details);
-
-        $transaction = (new Transaction())
-            ->setItemList($list)
-            ->setDescription('Achat sur le site Eco-Service')
-            ->setAmount($amount);
-
-        $payment = new Payment();
-        $payment->setTransactions([$transaction]);
-        $payment->setIntent('sale');
-        $redirectUrls = (new RedirectUrls())
-            ->setReturnUrl($this->generateUrl('panier_paiement_termine', [], UrlGenerator::ABSOLUTE_URL))
-            ->setCancelUrl($this->generateUrl('panier', [], UrlGenerator::ABSOLUTE_URL));
-        $payment->setRedirectUrls($redirectUrls);
-        $payment->setPayer((new Payer())->setPaymentMethod('paypal'));
-
-        try {
-            $payment->create($apiContext);
-            header('Location: ' . $payment->getApprovalLink());
-        } catch (\PayPal\Exception\PayPalConnectionException $e) {
-            dump(json_decode($e->getData()));
-        }
-
-        return $this->render('achat/paiement_termine.html.twig', [
-            'controller_name' => 'AchatController',
-        ]);
     }
 
     /**

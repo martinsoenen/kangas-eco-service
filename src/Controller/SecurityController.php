@@ -54,6 +54,9 @@ class SecurityController extends AbstractController
                 $Utilisateur->setUtilisateurType("client");          
                 $em->persist($Utilisateur);
                 $em->flush();
+
+                return $this->redirectToRoute('home');
+                
             }
             
             if ($formEntreprise->isSubmitted() && $formEntreprise->isValid()) { 
@@ -62,14 +65,17 @@ class SecurityController extends AbstractController
                 $Utilisateur->setUtilisateurType("pro");
                 $em->persist($Utilisateur);
                 $em->flush();
+
+                 return $this->redirectToRoute('home');
             }
             if ($formAdresse->isSubmitted() && $formAdresse->isValid()) { 
                 $Adresse->setUtilisateur($Utilisateur);
                 $em->persist($Adresse);
                 $em->flush();
+
+                return $this->redirectToRoute('home');
             }
 
-            $Adresse->setUtilisateur($Utilisateur);
 
             return $this->render('security/signin.html.twig', [
                 'formClient' => $formClient->createView(),

@@ -20,7 +20,7 @@ class CategorieCollecteRepository extends ServiceEntityRepository
     }
 
     // /**
-    //  * @return CategorieCollecte[] Returns an array of CategorieCollecte objects
+    //  * @return CategorieCollecteController[] Returns an array of CategorieCollecteController objects
     //  */
     /*
     public function findByExampleField($value)
@@ -37,7 +37,7 @@ class CategorieCollecteRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?CategorieCollecte
+    public function findOneBySomeField($value): ?CategorieCollecteController
     {
         return $this->createQueryBuilder('c')
             ->andWhere('c.exampleField = :val')

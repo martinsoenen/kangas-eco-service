@@ -126,24 +126,24 @@ class Devis
         return $this;
     }
 
-    public function getIdUtilisateur(): ?UtilisateurEntreprise
+    public function getIdUtilisateur()/*: ?UtilisateurEntreprise*/
     {
         return $this->idUtilisateur;
     }
 
-    public function setIdUtilisateur(?UtilisateurEntreprise $idUtilisateur): self
+    public function setIdUtilisateur(/*?UtilisateurEntreprise */$idUtilisateur): self
     {
-        $this->idUtilisateur = $idUtilisateur;
+        $this->idUtilisateur = $this->getUtilisateur()->getId();
 
         return $this;
     }
 
-    public function getUtilisateur(): ?UtilisateurEntreprise
+    public function getUtilisateur()/*: ?UtilisateurEntreprise*/
     {
         return $this->Utilisateur;
     }
 
-    public function setUtilisateur(?UtilisateurEntreprise $Utilisateur): self
+    public function setUtilisateur(/*?UtilisateurEntreprise*/ $Utilisateur): self
     {
         $this->Utilisateur = $Utilisateur;
 
