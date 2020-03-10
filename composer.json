@@ -27,8 +27,6 @@
         "symfony/validator": "4.4.*",
         "symfony/web-link": "4.4.*",
         "symfony/yaml": "4.4.*",
-        "paypal/rest-api-sdk-php":  "1.14.*",
-        "ext-intl": "*"
         "knplabs/knp-paginator-bundle": "*",
         "paypal/rest-api-sdk-php": "1.14.*",
         "symfony/swiftmailer-bundle": "*"
