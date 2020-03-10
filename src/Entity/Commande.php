@@ -62,11 +62,10 @@ class Commande
      * @ORM\ManyToOne(targetEntity="App\Entity\Utilisateur", inversedBy="commandes")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $UserID;
+    private $User;
 
     public function __construct()
     {
-        $this->idProduit = new ArrayCollection();
         $this->Produit = new ArrayCollection();
     }
 
@@ -185,14 +184,14 @@ class Commande
         return $this;
     }
 
-    public function getUserID(): ?Utilisateur
+    public function getUser(): ?Utilisateur
     {
-        return $this->UserID;
+        return $this->User;
     }
 
-    public function setUserID(?Utilisateur $UserID): self
+    public function setUser(?Utilisateur $User): self
     {
-        $this->UserID = $UserID;
+        $this->User = $User;
 
         return $this;
     }
