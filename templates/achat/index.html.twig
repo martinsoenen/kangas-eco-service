@@ -23,7 +23,10 @@
                     <tr>
                         <td>{{ item.product.nomProduit }}</td>
                         <td>{{ item.product.prixUnitaireHT * (1 + item.product.tauxTVA / 100) }}€</td>
-                        <td>{{ item.quantity }}</td>
+                        <td>  
+                            <input id="{{ item.product.id }}" type="number" name="quantite" value={{ item.quantity }} > 
+                            <a id="{{ item.product.id }}" class="btn btn-success update"><i class="fa fa-shopping-cart mr-1"> Mettre à jour le panier</i></a>
+                        </td>
                         <td>{{ (item.product.prixUnitaireHT * ( 1 + item.product.tauxTVA / 100 )) * item.quantity }}€</td>
                         <td>
                             <a href="{{ path('panier_remove', {'id': item.product.id}) }}" class="btn btn-danger btn-sm">
@@ -36,12 +39,13 @@
             <tfoot>
             <tr>
                 <td colspan="3" class="text-right"> Total :</td>
-                <td>{{ total }}€</td>
-                <td></td>
+                <td>{{ total }}€ </td>
+                
             </tr>
             </tfoot>
         </table>
 
+        <a class="btn btn-success" href="{{path('panier')}}">Mettre à jour le total</a>
         <a href="{{ path('panier_paiement') }}" class="btn btn-success"><i class="fa fa-paypal"> Payer</i></a>
 
         {% if app.environment == 'dev' %}
@@ -52,4 +56,39 @@
     {% else %}
         <p>Votre panier est vide.</p>
     {% endif %}
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent()}}
+	<script>
+		$('.btn.btn-success.update').click(function () {
+            let id = $(this).attr('id');
+            let value = $("#" + id + "[name='quantite']").val();
+
+            $.ajax({
+                url: '/panier/remove/' + id,
+                type: 'GET',
+                data: {
+                    quantite: value
+                },
+                dataType: "integer",
+                success: function (response) {
+                    
+                }
+            });
+            $.ajax({
+                url : '/panier/add/'+ id,
+                type : 'GET',
+                data : {
+                    quantite: value
+                },
+                dataType: "integer",
+                success: function(response) {
+                    // console.log(response);
+                }
+            });       
+            
+            alert('La quantité a bien été mise à jour'); // TODO: récupérer le nom du produit et l'afficher ici
+        });
+	</script>
 {% endblock %}
