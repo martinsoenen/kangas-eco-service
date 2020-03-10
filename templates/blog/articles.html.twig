@@ -1,13 +1,24 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Blog - {{parent()}}{% endblock %}
+
+{% block additional_stylesheets %}
+    <link rel="stylesheet" type="text/css" href="{{asset('../assets/blog/blog.css')}}">
+{% endblock %}
+
 {% block body %}
-    <h1>ECO - SERVICE</h1>
-    <h3>Blog DIY</h3>
-        <section class="articles">
-            <div class="">
-                <h4 class="card-title">{{ article.titre }}</h4>
-                <p>{{ article.text }}</p>
+<section class="container">
+    <div class="row ">
+        <h1>{{ article.titre }}</h1>
+        <div class="article-item">
+            <img src="https://via.placeholder.com/700x500/" class="card-img-top" alt="...">
+            <div class="offset-md-1 col-md-10">
+                <p class="article-text">{{ article.text }}</p>
+                <div class="retour-cont">
+                    <a href="{{ path('blog') }}" class="btn btn-primary article-retour">Retour</a>
+                </div>
             </div>
-        </section>
+        </div>
+    </div>
+</section>
 {% endblock %}

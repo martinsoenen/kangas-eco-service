@@ -6,6 +6,10 @@ i {
     color: #EEEEEE;
 }
 
+a:hover{
+    text-decoration: none;
+}
+
 
 body {
     font-family: "Roboto", sans-serif;
@@ -17,6 +21,8 @@ h1, h2, h3, h4, h5, h6 {
     
 h1 { 
     font-size: 48px;
+    text-align: center;
+    width: 100%;
 }
 
 
@@ -186,6 +192,10 @@ thead tr {
     .d-flex{
         flex-direction: column !important;
     }
+
+    h1 {
+        font-size: 25px;
+    }
 }
 
 @media (min-width: 768px)
@@ -227,4 +237,50 @@ thead tr {
         margin: 10px;
     }
 
+}
+
+
+/*=======================================================================
+                                BOUTON DIY PART
+  =======================================================================*/
+
+.diy-button-container {
+    z-index: 10;
+    margin-left: 15px;
+    bottom: 10px;
+    position: fixed;
+}
+.diy-button-icon
+{
+    height: 50px;
+    width: 50px;
+    padding: 10px;
+    border-radius: 50px;
+    background-color: #74d14c;
+    color: #222222;
+    box-shadow: 0 0 3px 1px #555;
+}
+
+.diy-button-icon:hover
+{
+    padding: 10px;
+    border-radius: 50px;
+    background-color: #f7cf9b;
+    text-decoration: none;
+    box-shadow: 0 0 5px 3px #555;
+}
+
+.diy-button-text
+{
+    color: #222222;
+    margin-left: 10px;
+    font-weight: bolder;
+    font-size: 18px;
+    text-decoration: none;
+    text-shadow: 0 0 1px #fff;
+}
+
+.diy-button-text:hover
+{
+    text-decoration: none;
 }
