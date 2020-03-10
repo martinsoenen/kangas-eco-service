@@ -114,7 +114,7 @@ class Utilisateur implements UserInterface
     private $emailConfirm;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Commande", mappedBy="UserID")
+     * @ORM\OneToMany(targetEntity="App\Entity\Commande", mappedBy="User")
      */
     private $commandes;
 
@@ -389,7 +389,7 @@ class Utilisateur implements UserInterface
     {
         if (!$this->commandes->contains($commande)) {
             $this->commandes[] = $commande;
-            $commande->setUserID($this);
+            $commande->setUser($this);
         }
 
         return $this;
@@ -400,8 +400,8 @@ class Utilisateur implements UserInterface
         if ($this->commandes->contains($commande)) {
             $this->commandes->removeElement($commande);
             // set the owning side to null (unless already changed)
-            if ($commande->getUserID() === $this) {
-                $commande->setUserID(null);
+            if ($commande->getUser() === $this) {
+                $commande->setUser(null);
             }
         }
 
