@@ -169,7 +169,7 @@ class AchatController extends AbstractController
 
         ///////////// Réinitialisation du panier
 
-//        $panier->reset();
+        $panier->reset();
 
         return $this->render('achat/paiement_termine.html.twig', [
             'controller_name' => 'AchatController',
