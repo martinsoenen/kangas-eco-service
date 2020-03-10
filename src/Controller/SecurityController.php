@@ -54,8 +54,6 @@ class SecurityController extends AbstractController
                 $Utilisateur->setUtilisateurType("client");          
                 $em->persist($Utilisateur);
                 $em->flush();
-
-                return $this->redirectToRoute('home');
                 
             }
             
