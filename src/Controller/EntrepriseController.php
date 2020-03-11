@@ -11,10 +11,19 @@ class EntrepriseController extends AbstractController
      * @Route("/entreprise/services", name="entreprise_services")
      */
     public function services()
+    
     {
-        return $this->render('entreprise/services.html.twig', [
-            'controller_name' => 'EntrepriseController',
-        ]);
+        if($this->getUser()->getUtilisateurType()=="pro" ){
+
+            return $this->render('entreprise/services.html.twig', [
+                'controller_name' => 'EntrepriseController',
+            ]);
+
+        }
+        else{
+            $this->addFlash('error', 'Vous avez un compte client. Accès refusé.');
+            return $this->redirectToRoute('home');
+        }
     }
 
     /**
@@ -22,9 +31,15 @@ class EntrepriseController extends AbstractController
      */
     public function devis()
     {
-        return $this->render('entreprise/devis.html.twig', [
-            'controller_name' => 'EntrepriseController',
-        ]);
+        if($this->getUser()->getUtilisateurType()=="pro" ){
+
+            return $this->render('entreprise/devis.html.twig', [
+                'controller_name' => 'EntrepriseController',
+            ]);
+        }else{
+            $this->addFlash('error', 'Vous avez un compte client. Accès refusé.');
+            return $this->redirectToRoute('home');
+        }
     }
 
     /**
@@ -32,8 +47,15 @@ class EntrepriseController extends AbstractController
      */
     public function contact()
     {
+        if($this->getUser()->getUtilisateurType()=="pro" ){
+
         return $this->render('entreprise/contact.html.twig', [
             'controller_name' => 'EntrepriseController',
         ]);
+
+        }else{
+            $this->addFlash('error', 'Vous avez un compte client. Accès refusé.');
+            return $this->redirectToRoute('home');
+        }
     }
 }

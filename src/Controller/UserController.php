@@ -54,6 +54,7 @@ class UserController extends AbstractController
                 ]);
             }
             else {
+            $this->addFlash('error', 'Vous avez un compte entreprise. Accès refusé.');
                  return $this->redirectToRoute('profil_entreprise');
             }
         }
