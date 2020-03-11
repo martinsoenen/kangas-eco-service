@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Commande;
 use App\Entity\Role;
 
+use App\Repository\CommandeRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -26,22 +27,22 @@ use App\Form\AdresseType;
 class UserController extends AbstractController
 {
 
-        ////////////////////CLIENT////////////////////////////////
+    ////////////////////CLIENT////////////////////////////////
 
-     /**
+    /**
      * @Route("/profil/client", name="profil_client")
      */
     public function profilClient()
-    {   
-        if($this->getUser() != null){
+    {
+        if ($this->getUser() != null) {
             $UtilisateurId = $this->getUser()->getId();
             //Aiguillage particulier/entreprise
             $userDetails = $this->getDoctrine()
                                 ->getRepository(Utilisateur::class)
                                 ->getUtilisateurClientById($UtilisateurId);
             $Adresse =$this->getDoctrine()
-                                ->getRepository(Adresse::class)
-                                ->getAdresseById($UtilisateurId);
+                            ->getRepository(Adresse::class)
+                            ->getAdresseById($UtilisateurId);
 
             $commandes = $this->getDoctrine()
                                 ->getRepository(Commande::class)
@@ -190,4 +191,17 @@ class UserController extends AbstractController
         }
     }
 
+    /**
+     * @Route("/profil/commande/{id}", name="show_command")
+     */
+    public function ShowCommande(CommandeRepository $repo, $id)
+    {
+        $commande = $repo->find($id);
+
+        return $this->render('achat/paiement_termine.html.twig', [
+            'controller_name' => 'AchatController',
+            'commande' => $commande,
+            'adresse' => explode('|', $commande->getShippingAddr()),
+        ]);
+    }
 }

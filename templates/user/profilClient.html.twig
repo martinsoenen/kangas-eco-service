@@ -46,9 +46,9 @@
 				{% for commande in commandes %}
 					{% dump(commande) %}
 					<tr>
-						<td>{{ commande.date | date("m/d/Y") }}</td>
+						<td>{{ commande.date | date("d/m/Y") }}</td>
 						<td>{% if commande.isSend == 0 %}En attente de traitement{% else %}Envoyée{% endif %}</td>
-						<td><button type="button" class="btn btn-primary"><a href="#">Voir</a></button></td> {#TODO: ajouter lien vers la commande#}
+						<td><button type="button" class="btn btn-primary"><a href="{{ path('show_command', {'id' : commande.id}) }}">Voir</a></button></td>
 					</tr>
 				{% endfor %}
 			</tbody>
