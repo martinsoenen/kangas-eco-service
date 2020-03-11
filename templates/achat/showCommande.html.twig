@@ -1,8 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Commande terminée -
-	{{parent()}}
-{% endblock %}
+{% block title %}Commande {% if commande is defined %}n°{{ commande.id }} {% endif %}- {{parent()}}{% endblock %}
 
 {% block body %}
     {% if commande is defined %}
@@ -11,10 +9,18 @@
         Nom de l'utilisateur : {{ commande.user.prenom }} {{ commande.user.nom }} <br/>
         ID PayPal de la commande : {{ commande.paypalid }} <br/>
         Date de la commande : le {{ commande.date | date("d/m/Y") }} <br/>
-        Etat de la commande :   {% if commande.isSend == 0 %}
-                                    en attente de traitement
+        Etat de la commande :   {% if commande.isSend == -1 %}
+                                    annulée
                                 {% else %}
-                                    envoyée
+                                    {% if commande.isSend == 0 %}
+                                        en attente de traitement
+                                    {% else %}
+                                        {% if commande.isSend == 1 %}
+                                            envoyée
+                                        {% else %}
+                                            statut inconnu
+                                        {% endif %}
+                                    {% endif %}
                                 {% endif %}<br/>
         <br/>
         Adresse de livraison :<br/>
@@ -43,10 +49,10 @@
                     <tr>
                         <td>{{ item.nomProduit }}</td>
                         <td>{{ item.prixUnitaireHT }}€</td>
-                        <td>{{ 100 * item.tauxTVA }}%</td>
-                        <td>{{ item.prixUnitaireHT * (1 + item.tauxTVA) }}€</td>
+                        <td>{{ item.tauxTVA }}%</td>
+                        <td>{{ item.prixUnitaireHT * (1 + item.tauxTVA / 100) }}€</td>
     {#                                    <td>{{ item.quantity }}</td>#}
-{#                        <td>{{ (item.prixUnitaireHT * (1 + item.tauxTVA)) }}€</td>#}
+{#                        <td>{{ (item.prixUnitaireHT * (1 + item.tauxTVA / 100)) }}€</td>#}
                     </tr>
                 {% endfor %}
             </tbody>
@@ -58,6 +64,8 @@
                 </tr>
             </tfoot>
         </table>
+    {% else %}
+        Impossible d'afficher la commande.
     {% endif %}
 
 {% endblock %}
