@@ -1,0 +1,41 @@
+/*utilisateur(Mot de passe : Admin1234@)*/
+
+insert into utilisateur (id, email, civilite, password, nom,prenom,utilisateur_type, telephone) VALUES (1,'rachid@gmail.com', 'mr', '$2y$13$iduJalEuGNgwjfvpSVr9P.bSsiLhkClDC/Cuo3vF/ogMn5S2OPOlO','Rachid','John', 'client', 0876767887 );
+insert into utilisateur (id, email, civilite, password, nom,prenom,utilisateur_type, telephone) VALUES (2,'rachelle.goulag@gmail.com', 'mme', '$2y$13$iduJalEuGNgwjfvpSVr9P.bSsiLhkClDC/Cuo3vF/ogMn5S2OPOlO','Goulag','Rachelle', 'client', 0876756887 );
+insert into utilisateur (id, email, password, nom,prenom,utilisateur_type, telephone, raison_sociale, siret, fonction_representant) VALUES (3,'carrefour@gmail.com','$2y$13$iduJalEuGNgwjfvpSVr9P.bSsiLhkClDC/Cuo3vF/ogMn5S2OPOlO','RH','Carrefour', 'pro', 0876767887, 'Carrefour', 12345678912345, 'RH' );
+insert into utilisateur (id, email, civilite, password, nom,prenom,utilisateur_type, telephone) VALUES (4,'admin@gmail.com', 'mr', '$2y$13$iduJalEuGNgwjfvpSVr9P.bSsiLhkClDC/Cuo3vF/ogMn5S2OPOlO','Admin','Admin', 'admin', 0876546887 );
+
+/*adresse*/
+
+insert into adresse(id, utilisateur_id, nom, numero_rue, type_rue, nom_rue, cp, ville) VALUES (1, 1, 'Maison' ,69, 'rue' ,'de la Gigue', 65456, 'Paris');
+insert into adresse(id, utilisateur_id, nom, numero_rue, type_rue, nom_rue, cp, ville) VALUES (2, 1, 'Cave' ,70, 'rue' ,'de la Rue', 65467, 'Marseille');
+insert into adresse(id, utilisateur_id, nom, numero_rue, type_rue, nom_rue, cp, ville) VALUES (3, 2, 'Maison' ,14, 'avenue' ,'de la santé', 69009, 'Lyon');
+
+/*article*/
+
+insert into article(id, titre, text, date, image) VALUES (1, 'Ce titre est très original', 'vrihifhirhfrivhrvirvhrivhrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr',now(), 'http://placehold.it/1920x768');
+insert into article(id, titre, text, date, image) VALUES (2, 'France Bleu', 'vrihifhirhfrivhrvirvhrivdddddddhrrrrrrrrrrrrrrrrrrrr',now(), 'http://placehold.it/1920x768');
+insert into article(id, titre, text, date, image) VALUES (3, 'Virgin Radio', 'vrihifhiraaaaaaaaaaaaaaaaaaaaaaarrrrrrrrrrrrrrrrrrrrrr',now(), 'http://placehold.it/1920x768');
+insert into article(id, titre, text, date, image) VALUES (4, 'Mort aux vegans', 'vrihifeeerrrrrrrrrrrrrrrrrrrrrrrrrrrrr',now(), 'http://placehold.it/1920x768');
+insert into article(id, titre, text, date, image) VALUES (5, 'Morts aux cons', 'vrihifhirhfrivhrvizzzrrrrrrrrrrrr',now(), 'http://placehold.it/1920x768');
+insert into article(id, titre, text, date, image) VALUES (6, 'Ce titre est très original v2', 'vrihiarrrrrrrrrrrrrrrrrrrrrrrrrr',now(), 'http://placehold.it/1920x768');
+insert into article(id, titre, text, date, image) VALUES (7, 'Ce titre est un titre', 'vrihifhirwwwwwwwrrrrrrrrrrrrrrrrrrrrrr',now(), 'http://placehold.it/1920x768');
+insert into article(id, titre, text, date, image) VALUES (8, 'La fin de la tv', 'vrihiazertyrrr',now(), 'http://placehold.it/1920x768');
+insert into article(id, titre, text, date, image) VALUES (9, 'Pas de titre en titre', 'vrihifhirhfrivhrvirvhriveffffffhrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr',now(), 'http://placehold.it/1920x768');
+insert into article(id, titre, text, date, image) VALUES (10, 'Ce titre est un article', 'vrihifhirhfrivhrvirvhrivhrrrrrrrrreffffffffffffffffffffffffrrrrrrrrrrrrrrrrrrrrrrrrrrrr',now(), 'http://placehold.it/1920x768');
+
+/*categorie-produit*/
+
+
+/*commande*/
+
+
+/*commande-produit*/
+
+
+/*produit*/
+
+
+/*sous-categorie-produit*/
+
+
