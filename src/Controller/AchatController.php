@@ -60,12 +60,12 @@ class AchatController extends AbstractController
             foreach ($panierService->getPanierComplet() as $product) {
                 $item = (new Item())
                     ->setName($product['product']->getNomProduit())
-                    ->setPrice(round($product['product']->getPrixUnitaireHT() * (1 + $product['product']->getTauxTVA()), 2))
+                    ->setPrice(round($product['product']->getPrixUnitaireHT() * (1 + $product['product']->getTauxTVA() / 100), 2))
                     ->setCurrency('EUR')
                     ->setQuantity($product['quantity']);
                 $list->addItem($item);
 
-                $totalPrice += ($product['quantity'] * round(($product['product']->getPrixUnitaireHT() * (1 + $product['product']->getTauxTVA())), 2));
+                $totalPrice += ($product['quantity'] * round(($product['product']->getPrixUnitaireHT() * (1 + $product['product']->getTauxTVA() / 100)), 2));
             }
 
             $details = (new Details())
@@ -147,7 +147,7 @@ class AchatController extends AbstractController
         foreach($panier->getPanierComplet() as $item) {
             for ($i = 0;  $i < $item['quantity']; $i++) {
                 $montantHT += $item['product']->getPrixUnitaireHT();
-                $montantTVA += ( $item['product']->getTauxTVA() * $item['product']->getPrixUnitaireHT());
+                $montantTVA += (($item['product']->getTauxTVA() / 100) * $item['product']->getPrixUnitaireHT());
                 $nbArticles++;
                 $commande->addProduit($item['product']);
             }
