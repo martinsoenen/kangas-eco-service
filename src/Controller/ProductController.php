@@ -64,7 +64,7 @@ class ProductController extends AbstractController
 
         $produits = $this->getDoctrine()->getRepository(Produit::class)->findBySearch($request->query->get('name'));
         $categories = $this->getDoctrine()->getRepository(CategorieProduit::class)->findCategories();
-dump($produits);
+
         return $this->render('product/index.html.twig', [
             'controller_name' => 'ProductController',
             'produits' => $produits,

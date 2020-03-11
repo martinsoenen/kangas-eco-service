@@ -22,8 +22,7 @@ class ProduitRepository extends ServiceEntityRepository
     public function findBySearch($search): ?array
     {
         return $this->createQueryBuilder('p')
-            ->andWhere('p.nomProduit = :search')
-            ->setParameter('search', $search)
+            ->where('p.nomProduit LIKE \'%' . $search . '%\'')
             ->getQuery()
             ->getResult()
             ;
