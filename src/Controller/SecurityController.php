@@ -54,6 +54,7 @@ class SecurityController extends AbstractController
                 $Utilisateur->setUtilisateurType("client");          
                 $em->persist($Utilisateur);
                 $em->flush();
+                
             }
             
             if ($formEntreprise->isSubmitted() && $formEntreprise->isValid()) { 
@@ -62,14 +63,17 @@ class SecurityController extends AbstractController
                 $Utilisateur->setUtilisateurType("pro");
                 $em->persist($Utilisateur);
                 $em->flush();
+
+                 return $this->redirectToRoute('home');
             }
             if ($formAdresse->isSubmitted() && $formAdresse->isValid()) { 
                 $Adresse->setUtilisateur($Utilisateur);
                 $em->persist($Adresse);
                 $em->flush();
+
+                return $this->redirectToRoute('home');
             }
 
-            $Adresse->setUtilisateur($Utilisateur);
 
             return $this->render('security/signin.html.twig', [
                 'formClient' => $formClient->createView(),
@@ -124,7 +128,7 @@ class SecurityController extends AbstractController
 
             $mailer->send($message);
 
-            $this->addFlash('notice', 'Un mail vient de vous être envoyé pour la réinitialisation ');
+            $this->addFlash('notice', 'Un mail vient de vous être envoyé pour la réinitialisation. ');
 
             return $this->redirectToRoute('home');
         }
@@ -154,7 +158,7 @@ class SecurityController extends AbstractController
             $user->setPassword($passwordEncoder->encodePassword($user, $request->request->get('password')));
             $em->flush();
 
-            $this->addFlash('notice', 'Mot de passe mis à jour');
+            $this->addFlash('sucess', 'Votre mot de passe a bien été mis à jour, veuillez vous connecter.');
 
             return $this->redirectToRoute('home');
         }else {

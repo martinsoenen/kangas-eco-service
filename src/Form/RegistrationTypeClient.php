@@ -14,6 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\TelType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class RegistrationTypeClient extends AbstractType
@@ -21,9 +22,7 @@ class RegistrationTypeClient extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('email', EmailType::class, array(
-                //  'empty_data' => '',
-            ))
+            ->add('email', EmailType::class)
             ->add('emailConfirm', EmailType::class)
             ->add('civilite', ChoiceType::class, array(
                 'label' => false,
@@ -31,15 +30,15 @@ class RegistrationTypeClient extends AbstractType
                 'choices' => array(
                     'Mr' => 'mr',
                     'Mme' => 'mme',
+                    'Autre' => 'autre'
                 ),
                 'required' => true
             ))
-            ->add('password', PasswordType::class,array(
-            ))
+            ->add('password', PasswordType::class)
             ->add('passwordConfirm',PasswordType::class)
             ->add('nom',TextType::class)
             ->add('prenom',TextType::class)
-            ->add('telephone')
+            ->add('telephone', TelType::class )
             ->add('conditions', CheckboxType::class)
             ->add('save', SubmitType::class, array(
                 'label' => 'Valider',

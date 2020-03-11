@@ -3,18 +3,20 @@
 {% block title %}Devis en ligne - {{ parent() }}{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
-
-<div class="example-wrapper">
-    <h1>Page des devis</h1>
-
-    A faire
-    <ul>
-        <li>Your controller at <code><a href="{{ '/application/src/Controller/EntrepriseController.php'|file_link(0) }}">src/Controller/EntrepriseController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/application/templates/entreprise/devis.html.twig'|file_link(0) }}">templates/entreprise/devis.html.twig</a></code></li>
-    </ul>
-</div>
+    <h1>Devis en ligne </h1>
+    {{ form_start(form) }}
+        {{form_row(form.entreprise)}}
+        {{form_row(form.nom)}}
+        {{form_row(form.email)}}
+        {{form_row(form.tel)}}
+        {{form_row(form.objets)}}
+        {{form_row(form.poids)}}
+        {{form_row(form.taille)}}
+        {{form_row(form.image)}}
+        {{form_row(form.adresse)}}
+        {{form_row(form.cp)}}
+        {{form_row(form.ville)}}
+        {{form_row(form.date)}}
+        {{form_row(form.commentaire)}}
+    {{ form_end(form) }}
 {% endblock %}
