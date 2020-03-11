@@ -113,11 +113,6 @@ class Utilisateur implements UserInterface
      */
     private $Adresse;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Devis", mappedBy="Utilisateur", orphanRemoval=true)
-     */
-    private $devis;
-
     private $conditions;
 
     /**
@@ -137,7 +132,6 @@ class Utilisateur implements UserInterface
     public function __construct()
     {
         $this->Adresse = new ArrayCollection();
-        $this->devis = new ArrayCollection();
         $this->commandes = new ArrayCollection();
     }
 
@@ -285,37 +279,6 @@ class Utilisateur implements UserInterface
         return $this;
     }
 
-    /**
-     * @return Collection|Devis[]
-     */
-    public function getDevis(): Collection
-    {
-        return $this->devis;
-    }
-
-    public function addDevi(Devis $devi): self
-    {
-        if (!$this->devis->contains($devi)) {
-            $this->devis[] = $devi;
-            $devi->setUtilisateur($this);
-        }
-
-        return $this;
-    }
-
-    public function removeDevi(Devis $devi): self
-    {
-        if ($this->devis->contains($devi)) {
-            $this->devis->removeElement($devi);
-            // set the owning side to null (unless already changed)
-            if ($devi->getUtilisateur() === $this) {
-                $devi->setUtilisateur(null);
-            }
-        }
-
-        return $this;
-    }
-
     public function getConditions(): ?string
     {
         return $this->conditions;
@@ -355,6 +318,11 @@ class Utilisateur implements UserInterface
     public function getUsername(): string
     {
         return (string) $this->email;
+    }
+
+    public function getNomPrenom(): string
+    {
+        return (string) $this->nom.' '.$this->prenom ;
     }
     public function erasecredentials()
     {

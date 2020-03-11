@@ -3,19 +3,31 @@
 {% block title %}Admin - {{ parent() }}{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
-
-<div class="example-wrapper">
-    <h1>Page d'accueil admin</h1>
-
-    A faire
-    <ul>
-        <li>Your controller at <code><a href="{{ '/application/src/Controller/EcoServiceController.php'|file_link(0) }}">src/Controller/EcoServiceController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/application/templates/eco_service/admin_index.html.twig'|file_link(0)
-                }}">templates/eco_service/admin_index.html.twig</a></code></li>
-    </ul>
-</div>
+<ul>
+    <li>
+        <bouton onclick="window.location.href = '/admin/user';">
+            <i class="fa fa-user fa-2x">Gestion Administreurs et Modérateurs</i>
+        </bouton>
+    </li>
+    <li>
+        <bouton onclick="window.location.href = '/admin/article';">
+            <i class="fa fa-blog fa-2x">Gestion des articles</i>
+        </bouton>
+    </li>
+    <li>
+        <bouton onclick="window.location.href = '/admin/produits';">
+            <i class="fa fa-shopping-basket fa-2x">Gestion des produits</i>
+        </bouton>
+    </li>
+    <li>
+        <bouton onclick="window.location.href = '/admin/produits/categorie';">
+            <i class="fa fa-filter fa-2x">Gestion des Catégories</i>
+        </bouton>
+    </li>
+    <li>
+        <bouton onclick="window.location.href = '/admin/souscategorie';">
+            <i class="fa fa-sort-down fa-2x">Gestion des Sous Catégories</i>
+        </bouton>
+    </li>
+</ul>
 {% endblock %}

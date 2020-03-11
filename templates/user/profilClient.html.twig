@@ -47,7 +47,21 @@
 					{% dump(commande) %}
 					<tr>
 						<td>{{ commande.date | date("d/m/Y") }}</td>
-						<td>{% if commande.isSend == 0 %}En attente de traitement{% else %}Envoyée{% endif %}</td>
+						<td>
+							{% if commande.isSend == -1 %}
+								annulée
+							{% else %}
+								{% if commande.isSend == 0 %}
+									en attente de traitement
+								{% else %}
+									{% if commande.isSend == 1 %}
+										envoyée
+									{% else %}
+										statut inconnu
+									{% endif %}
+								{% endif %}
+							{% endif %}
+						</td>
 						<td><button type="button" class="btn btn-primary"><a href="{{ path('show_command', {'id' : commande.id}) }}">Voir</a></button></td>
 					</tr>
 				{% endfor %}
