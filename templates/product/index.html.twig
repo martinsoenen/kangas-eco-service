@@ -3,25 +3,33 @@
 {% block title %}Magasin - {{ parent() }}{% endblock %}
 
 {% block body %}
+    <form action="{{ path('magasin_search') }}" method="get">
+        <input class="form-control mr-sm-2" type="text" name="name" id="name" required>
+        <input class="btn btn-outline-success my-2 my-sm-0" type="submit" value="Rechercher">
+    </form>
 
 <div class="products">
-    {% for produit in produits %}
-        {{ produit.nomProduit }} - {{ produit.prixUnitaireHT }}€ - {{ produit.tauxTVA }}% - {{ produit.presentation }} - {{ produit.descriptionDetaillee }}
-        <br>
-        <input id="{{ produit.id }}" type="number" name="quantite" value=1 >
-        <a id="{{ produit.id }}" class="btn btn-success"><i class="fa fa-shopping-cart mr-1"> Ajouter au panier</i></a>
-        <br><br>
-    {% endfor %}
+    {% if produits != [] %}
+        {% for produit in produits %}
+            {{ produit.nomProduit }} - {{ produit.prixUnitaireHT }}€ - {{ produit.tauxTVA }}% - {{ produit.presentation }} - {{ produit.descriptionDetaillee }}
+            <br>
+            <input id="{{ produit.id }}" type="number" name="quantite" value=1 >
+            <a id="{{ produit.id }}" class="btn btn-success"><i class="fa fa-shopping-cart mr-1"> Ajouter au panier</i></a>
+            <br><br>
+        {% endfor %}
+    {% else %}
+        Aucun produit n'a été trouvé.
+    {% endif %}
 </div>
 
 {% for categ in categories %}
     <div class="dropdown">
         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <a class="dropdown-item" href="{{ path('categorie-produit', {'id': categ.id }) }}">{{ categ.nom }}</a>  {# TODO front : vérifier si le lien est fonctionnel car je ne peux pas#}
+            <a class="dropdown-item" href="{{ path('categorie_produit', {'id': categ.id }) }}">{{ categ.nom }}</a>
         </button>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
             {% for souscateg in categ.sousCategorieProduits %}
-                <a class="dropdown-item" href="{{ path('sous-categorie-produit', {'id': souscateg.id }) }}">{{ souscateg.nom }}</a> {# TODO front : vérifier si le lien est fonctionnel car je ne peux pas #}
+                <a class="dropdown-item" href="{{ path('sous_categorie_produit', {'id': souscateg.id }) }}">{{ souscateg.nom }}</a>
             {% endfor %}
         </div>
     </div>
