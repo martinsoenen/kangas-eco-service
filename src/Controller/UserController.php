@@ -198,7 +198,7 @@ class UserController extends AbstractController
     {
         $commande = $repo->find($id);
 
-        return $this->render('achat/paiement_termine.html.twig', [
+        return $this->render('achat/showCommande.html.twig', [
             'controller_name' => 'AchatController',
             'commande' => $commande,
             'adresse' => explode('|', $commande->getShippingAddr()),
