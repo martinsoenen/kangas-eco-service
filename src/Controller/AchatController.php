@@ -135,36 +135,46 @@ class AchatController extends AbstractController
         } catch (\PayPal\Exception\PayPalConnectionException $e) {
             dump(json_decode($e->getData()));
         }
-dump($payment);
-dump($apiContext);
-dump($execution);
+
         ///////////// Insertion de la commande en BDD
 
+        $entityManager = $this->getDoctrine()->getManager();
+        $commande = new Commande();
+
         $montantHT = 0;
+        $montantTVA = 0;
         $nbArticles = 0;
         foreach($panier->getPanierComplet() as $item) {
-            $montantHT += $item['product']->getPrixUnitaireHT();
-            $nbArticles++;
+            for ($i = 0;  $i < $item['quantity']; $i++) {
+                $montantHT += $item['product']->getPrixUnitaireHT();
+                $montantTVA += ( $item['product']->getTauxTVA() * $item['product']->getPrixUnitaireHT());
+                $nbArticles++;
+                $commande->addProduit($item['product']);
+            }
         }
 
-        $entityManager = $this->getDoctrine()->getManager();
+        $adresse = $payment->getPayer()->getPayerInfo()->getShippingAddress();
 
-        $commande = new Commande();
         $commande->setDate(new \DateTime());
         $commande->setIsSend(0);
         $commande->setMontantHT($montantHT);
-        $commande->setMontantTVA($montantHT * 0.2);
-        $commande->setMontantTotalTTC($montantHT + ($montantHT * 0.2));
+        $commande->setMontantTVA($montantTVA);
+        $commande->setMontantTotalTTC($montantHT + $montantTVA);
         $commande->setNbArticles($nbArticles);
         $commande->setPayPalID($payment->id);
+        $commande->setUser($this->getUser());
+        $commande->setShippingAddr($adresse->getLine1() . '|' . $adresse->getLine2() . '|' . $adresse->getPostalCode() . '|' . $adresse->getCity());
         $entityManager->persist($commande);
         $entityManager->flush();
-        dd($commande);
-//        $panier->reset();
 
-        return $this->render('achat/paiement.html.twig', [
+        ///////////// Réinitialisation du panier
+
+        $panier->reset();
+
+        return $this->render('achat/paiement_termine.html.twig', [
             'controller_name' => 'AchatController',
-//            'commande' => $commande,
+            'commande' => $commande,
+            'adresse' => explode('|', $commande->getShippingAddr()),
         ]);
     }
 

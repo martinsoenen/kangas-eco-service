@@ -40,7 +40,7 @@ class UserController extends AbstractController
             $UtilisateurId = $this->getUser()->getId();
 
             //Aiguillage particulier/entreprise
-            if($this->getUser()->getUtilisateurType()=="client"){
+            if($this->getUser()->getUtilisateurType()=="client" || $this->getUser()->getUtilisateurType()=="admin" ){
                 $userDetails = $this->getDoctrine()
                                     ->getRepository(Utilisateur::class)
                                     ->getUtilisateurClientById($UtilisateurId);
@@ -75,7 +75,7 @@ class UserController extends AbstractController
             $UtilisateurId = $this->getUser()->getId();
 
             //Aiguillage particulier/entreprise
-            if($this->getUser()->getUtilisateurType()=="client"){
+            if($this->getUser()->getUtilisateurType()=="client" || $this->getUser()->getUtilisateurType()=="admin") {
                 $userDetails = $this->getDoctrine()
                                     ->getRepository(Utilisateur::class)
                                     ->getUtilisateurClientById($UtilisateurId);
