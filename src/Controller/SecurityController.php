@@ -2,20 +2,19 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Security\Csrf\TokenGenerator\TokenGeneratorInterface;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-
-use App\Entity\Utilisateur;
 use App\Entity\Adresse;
+use App\Entity\Utilisateur;
 use App\Form\AdresseType;
 use App\Form\RegistrationTypeClient;
 use App\Form\RegistrationTypeEntreprise;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Csrf\TokenGenerator\TokenGeneratorInterface;
+
 class SecurityController extends AbstractController
 {
     /**
