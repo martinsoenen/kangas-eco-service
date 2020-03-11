@@ -171,7 +171,7 @@ class AchatController extends AbstractController
 
         $panier->reset();
 
-        return $this->render('showCommande.html.twig', [
+        return $this->render('achat/showCommande.html.twig', [
             'controller_name' => 'AchatController',
             'commande' => $commande,
             'adresse' => explode('|', $commande->getShippingAddr()),
