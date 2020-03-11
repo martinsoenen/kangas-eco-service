@@ -31,16 +31,24 @@ class AchatController extends AbstractController
      */
     public function index(PanierService $panierService)
     {
-        if($this->getUser()->getUtilisateurType()=="client" ){
-            return $this->render('achat/index.html.twig', [
-                'controller_name' => 'AchatController',
-                'items' => $panierService->getPanierComplet(),
-                'total' => $panierService->getTotal()
-            ]);
-        }
-        else{
-            $this->addFlash('error', 'Vous avez un compte entreprise. Accès refusé.');
-            return $this->redirectToRoute('home');
+        if($this->getUser()!=null) {
+            if($this->getUser()->getUtilisateurType()!="pro" ){
+                return $this->render('achat/index.html.twig', [
+                    'controller_name' => 'AchatController',
+                    'items' => $panierService->getPanierComplet(),
+                    'total' => $panierService->getTotal()
+                ]);
+            }
+            else{
+                $this->addFlash('error', 'Vous avez un compte entreprise. Accès refusé.');
+                return $this->redirectToRoute('home');
+            }
+        }else{
+        return $this->render('achat/index.html.twig', [
+                    'controller_name' => 'AchatController',
+                    'items' => $panierService->getPanierComplet(),
+                    'total' => $panierService->getTotal()
+                ]);
         }
     }
 
@@ -50,7 +58,7 @@ class AchatController extends AbstractController
     public function paiement(PanierService $panierService)
     {
         if($this->getUser()!=null) {
-            if($this->getUser()->getUtilisateurType()=="client"){
+            if($this->getUser()->getUtilisateurType()!="pro"){
                 $credentials = [
                     'id' => 'Ae0q9Y6VL5tsv0vcBvzBMv3kjg7mM50yooD8C9u2nm1HmVa5pcCa9GH-Ov7swbpl1CHru_D2G_GXCQ4O',
                     'secret' => 'EFN_usuuBumAEyMgasVcamuZCaimCZ7JJzCWqsFbYKZ08HhQ6y43jENMHLJrk8qHhYfQRzXnt2SBYVHI'
@@ -84,7 +92,7 @@ class AchatController extends AbstractController
                 'controller_name' => 'AchatController',
             ]);
         }else{
-            $this->addFlash('error', 'Veuillez vous connecter pour commander un article !!');
+            $this->addFlash('error', 'Veuillez vous connecter pour commander un article !');
             return $this->render('security/login.html.twig', [
                 'controller_name' => 'AchatController',
             ]);

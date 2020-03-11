@@ -22,7 +22,7 @@ class AdressController extends AbstractController
             $UtilisateurId = $this->getUser()->getId();
 
             //Aiguillage particulier/entreprise
-            if($this->getUser()->getUtilisateurType()=="client" || $this->getUser()->getUtilisateurType()=="admin"){
+            if($this->getUser()->getUtilisateurType()!="pro"){
                 
                 $id = $request->get('id');
 
@@ -77,7 +77,7 @@ class AdressController extends AbstractController
             $UtilisateurId = $this->getUser()->getId();
 
             //Aiguillage particulier/entreprise
-            if($this->getUser()->getUtilisateurType()=="client" || $this->getUser()->getUtilisateurType()=="admin"){
+            if($this->getUser()->getUtilisateurType()!="pro"){
 
                 
                 $form = $this->createForm(AdresseType::class)
