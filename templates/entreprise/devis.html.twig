@@ -3,11 +3,14 @@
 {% block title %}Devis en ligne - {{ parent() }}{% endblock %}
 
 {% block body %}
+    <h1>Devis en ligne </h1>
     {{ form_start(form) }}
         {{form_row(form.entreprise)}}
         {{form_row(form.nom)}}
         {{form_row(form.email)}}
-        {{form_row(form.produits)}}
+        {{form_row(form.tel)}}
+        {{form_row(form.objets)}}
+        {{form_row(form.poids)}}
         {{form_row(form.rue)}}
         {{form_row(form.cp)}}
         {{form_row(form.ville)}}

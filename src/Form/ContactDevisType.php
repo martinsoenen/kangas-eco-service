@@ -2,6 +2,7 @@
 
 namespace App\Form;
 
+use phpDocumentor\Reflection\Types\String_;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -31,11 +32,19 @@ class ContactDevisType extends AbstractType
                 'label' => 'Email de contact',
                 'required' => true,
             ))
-            ->add('produits', TextareaType::class,array(
+            ->add('tel')
+            ->add('objets', TextareaType::class,array(
                 'label' => 'Objets à collecter',
                 'required' => true,
                 'attr' => [
                     'placeholder' => 'Indiquez ici les objets à venir chercher et leur quantité',
+                ]
+            ))
+            ->add('poids', IntegerType::class,array(
+                'label' => 'Poids de l\'objet',
+                'required' => true,
+                'attr' => [
+                    'placeholder' => 'Poids de l\'objet',
                 ]
             ))
             ->add('rue', TextType::class,array(

@@ -24,31 +24,41 @@ class EntrepriseController extends AbstractController
      */
     public function devis(Request $request, \Swift_Mailer $mailer)
     {
-        $form = $this->createForm(ContactDevisType::class);
+        if($this->getUser()->getUtilisateurType()=="pro") {
+            $user= $this->getUser();
+            $form = $this->createForm(ContactDevisType::class);
+            if($user != null)
+            {
+                $form->get('nom')->setData($user->getNom());
+                $form->get('entreprise')->setData($user->getRaisonSociale());
+                $form->get('email')->setData($user->getEmail());
+                $form->get('tel')->setData($user->getTelephone());
+            }
 
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
+            $form->handleRequest($request);
+            if ($form->isSubmitted() && $form->isValid()) {
 
-            $data = $form->getData();
+                $data = $form->getData();
+                $message = (new \Swift_Message('Demande de devis par une entreprise'))
+                    ->setTo('devis@kangas.fr')
+                    ->setFrom($data['email'])
+                    ->setBody('Message envoyé par ' . $data['nom']->$this->getUser()->nom . ', représentant l\'entreprise ' . $data['entreprise']->$this->getUser()->fonctionRepresentant .
+                        '<br/>Adresse d\'enlèvement : ' . $data['rue'] . ' - ' . $data['cp'] . ' - ' . $data['ville'] .
+                        '<br>Date d\'enlèvement : ' . date_format($data['date'], "Y/m/d") .
+                        '<br/>Objets à collecter : ' . $data['objets'] .
+                        '<br/>Numéro de téléphone : ' . $data['tel'] .
+                        '<br/>Poids de l\'objet à collecter : ' . $data['poids'] .
+                        '<br/>Commentaire supplémentaire : ' . $data['commentaire']
+                        , 'text/html'
+                    );
 
-            $message = (new \Swift_Message('Demande de devis par une entreprise'))
-                ->setTo('devis@kangas.fr')
-                ->setFrom($data['email'])
-                ->setBody('Message envoyé par ' . $data['nom'] . ', représentant l\'entreprise ' . $data['entreprise'] .
-                    '<br/>Adresse d\'enlèvement : ' . $data['rue'] . ' - ' . $data['cp'] . ' - ' . $data['ville'] .
-                    '<br>Date d\'enlèvement : ' . date_format($data['date'],"Y/m/d") .
-                    '<br/>Objets à collecter : ' . $data['produits'] .
-                    '<br/>Commentaire supplémentaire : ' . $data['commentaire']
-                    ,'text/html'
-               );
+                $mailer->send($message);
 
-            $mailer->send($message);
+                $this->addFlash('notice', 'Votre email a bien été envoyé. Nous vous repondrons au plus vite ');
 
-            $this->addFlash('notice', 'Votre email a bien été envoyé. Nous vous repondrons au plus vite ');
-
-            return $this->redirectToRoute('home');
+                return $this->redirectToRoute('home');
+            }
         }
-
         return $this->render('entreprise/devis.html.twig', [
             'controller_name' => 'EntrepriseController',
             'form' => $form->createView(),
