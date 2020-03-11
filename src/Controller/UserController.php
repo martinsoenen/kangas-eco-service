@@ -202,12 +202,12 @@ class UserController extends AbstractController
      */
     public function showAdminBlog()
     {
-        $repo = $this->getDoctrine()->getRepository(User::class);
-        $utilisateur = $repo->findAll();
+        $repo = $this->getDoctrine()->getRepository(Utilisateur::class);
+        $utilisateurs = $repo->findAll();
 
         return $this->render('user/afficherAdmin.html.twig', [
             'controller_name' => 'UserController',
-            'utilisateur' => $utilisateur,
+            'utilisateurs' => $utilisateurs,
         ]);
 
     }
@@ -229,7 +229,9 @@ class UserController extends AbstractController
                 'label' => false,
                 'choices' => array(
                     'Administrateur' => 'admin',
-                    'Moderateur' => 'modo',
+                    'Modérateur' => 'modo',
+                    'Particulier' => 'client',
+                    'Professionnel' => 'pro',
                 ),
                 'required' => true
             ))
@@ -262,7 +264,7 @@ class UserController extends AbstractController
             $manager->persist($utilisateur);
             $manager->flush();
 
-            return $this->redirectToRoute('blog_admin');
+            return $this->redirectToRoute('afficher_admin');
         }
 
         return $this->render('user/ajouterAdmin.html.twig', [
