@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Commande;
 use App\Entity\Role;
 
 use Doctrine\ORM\EntityManagerInterface;
@@ -34,28 +35,26 @@ class UserController extends AbstractController
     {   
         if($this->getUser() != null){
             $UtilisateurId = $this->getUser()->getId();
-
             //Aiguillage particulier/entreprise
-            if($this->getUser()->getUtilisateurType()=="client" || $this->getUser()->getUtilisateurType()=="admin" ){
-                $userDetails = $this->getDoctrine()
-                                    ->getRepository(Utilisateur::class)
-                                    ->getUtilisateurClientById($UtilisateurId);
-                $Adresse =$this->getDoctrine()
-                                    ->getRepository(Adresse::class)
-                                    ->getAdresseById($UtilisateurId);
+            $userDetails = $this->getDoctrine()
+                                ->getRepository(Utilisateur::class)
+                                ->getUtilisateurClientById($UtilisateurId);
+            $Adresse =$this->getDoctrine()
+                                ->getRepository(Adresse::class)
+                                ->getAdresseById($UtilisateurId);
 
-                $form = $this->createForm(RegistrationTypeClient::class, $userDetails);
+            $commandes = $this->getDoctrine()
+                                ->getRepository(Commande::class)
+                                ->findByUserId($this->getUser()->getId());
 
-                
-                return $this->render('user/profilClient.html.twig', [
-                    'form' => $form->createView(),
-                    'Adresse' => $Adresse,
-                    'controller_name' => 'UserController',
-                ]);
-            }
-            else {
-                 return $this->redirectToRoute('profil_entreprise');
-            }
+            $form = $this->createForm(RegistrationTypeClient::class, $userDetails);
+
+            return $this->render('user/profilClient.html.twig', [
+                'form' => $form->createView(),
+                'Adresse' => $Adresse,
+                'commandes' => $commandes,
+                'controller_name' => 'UserController',
+            ]);
         }
         else {
             return $this->redirectToRoute('security_login');
