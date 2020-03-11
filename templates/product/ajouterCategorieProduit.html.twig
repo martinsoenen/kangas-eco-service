@@ -4,7 +4,7 @@
     {{ form_start(formCategorieProduit) }}
 
     {{ form_row(formCategorieProduit.nom, {'label' : 'Nom de la catégorie :','attr' : {'placeholder' : "catégorie"}}) }}
-    {{ form_row(formCategorieProduit.UtilisateurAdmin, {'label' : 'utilisateur:','attr' : {'placeholder' : "utilisateur"}}) }}
+    {# {{ form_row(formCategorieProduit.UtilisateurAdmin, {'label' : 'utilisateur:','attr' : {'placeholder' : "utilisateur"}}) }} #}
 
     <button type="submit" class="btn btn-success ">
         {% if editMode %}

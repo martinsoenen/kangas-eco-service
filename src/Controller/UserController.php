@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\Commande;
 use App\Entity\Role;
 
+use App\Repository\CommandeRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -31,7 +33,7 @@ class UserController extends AbstractController
      * @Route("/profil/client", name="profil_client")
      */
     public function profilClient()
-    {   
+    {
         if($this->getUser() != null){
             $UtilisateurId = $this->getUser()->getId();
 
@@ -44,12 +46,17 @@ class UserController extends AbstractController
                                     ->getRepository(Adresse::class)
                                     ->getAdresseById($UtilisateurId);
 
+                $commandes = $this->getDoctrine()
+                    ->getRepository(Commande::class)
+                    ->findByUserId($this->getUser()->getId());
+
                 $form = $this->createForm(RegistrationTypeClient::class, $userDetails);
 
-                
+
                 return $this->render('user/profilClient.html.twig', [
                     'form' => $form->createView(),
                     'Adresse' => $Adresse,
+                    'commandes' => $commandes,
                     'controller_name' => 'UserController',
                 ]);
             }
@@ -191,4 +198,17 @@ class UserController extends AbstractController
         }
     }
 
+    /**
+     * @Route("/profil/commande/{id}", name="show_command")
+     */
+    public function ShowCommande(CommandeRepository $repo, $id)
+    {
+        $commande = $repo->find($id);
+
+        return $this->render('achat/showCommande.html.twig', [
+            'controller_name' => 'AchatController',
+            'commande' => $commande,
+            'adresse' => explode('|', $commande->getShippingAddr()),
+        ]);
+    }
 }
