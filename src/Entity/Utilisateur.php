@@ -44,9 +44,9 @@ class Utilisateur implements UserInterface
     /**
     * @ORM\Column(type="string", length=255)
     * @Assert\Regex(
-    *   pattern = "/^(?=.*\d)(?=.*[A-Z])(?=.*[@#$%])(?!.*(.)\1{2}).*[a-z]/m",
+    *   pattern = "/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/m",
     *   match=true,
-    *   message="Votre mot de passe doit comporter au moins huit caractères, dont des lettres majuscules et minuscules, un chiffre et un symbole."
+    *   message="Votre mot de passe doit comporter au moins huit caractères, dont des lettres majuscules et minuscules, un chiffre et un caractère spécial."
     * )
      * Assert\EqualTo(propertyPath="passwordConfirm")
      */

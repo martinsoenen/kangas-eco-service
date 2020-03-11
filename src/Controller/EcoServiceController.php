@@ -65,7 +65,7 @@ class EcoServiceController extends AbstractController
             
             $mailer->send($message);
 
-            $this->addFlash('notice', 'Votre email a bien été envoyé. Nous vous repondrons au plus vite ');
+            $this->addFlash('sucess', 'Votre email a bien été envoyé. Nous vous repondrons au plus vite. ');
 
             return $this->redirectToRoute('home');
         }

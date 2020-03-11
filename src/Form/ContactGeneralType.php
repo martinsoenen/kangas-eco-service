@@ -10,6 +10,7 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 
 
 class ContactGeneralType extends AbstractType
@@ -33,6 +34,7 @@ class ContactGeneralType extends AbstractType
                 'label' => 'Message',
                 'required' => true,
             ))
+            ->add('conditions', CheckboxType::class)
             ->add('save', SubmitType::class, array(
                 'label' => 'Envoyer',
                 'attr' => array('title' => 'Envoyer l\'email' ,'class' => 'btn btn-outline-success'
