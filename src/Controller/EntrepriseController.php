@@ -2,20 +2,10 @@
 
 namespace App\Controller;
 
-use App\Entity\CategorieCollecte;
-use App\Entity\ObjetCollecte;
-use App\Form\CategorieCollecteType;
-use App\Form\ContactDevisType;
-use App\Form\ContactGeneralType;
-use App\Form\ObjetCollecteType;
-use App\Repository\ObjetCollecteRepository;
-use App\Repository\ProduitRepository;
-use Doctrine\ORM\EntityRepository;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Request;
+use App\Form\ContactDevisType;
 
 class EntrepriseController extends AbstractController
 {
