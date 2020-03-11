@@ -27,35 +27,42 @@ use App\Form\AdresseType;
 class UserController extends AbstractController
 {
 
-    ////////////////////CLIENT////////////////////////////////
+        ////////////////////CLIENT////////////////////////////////
 
-    /**
+     /**
      * @Route("/profil/client", name="profil_client")
      */
     public function profilClient()
     {
-        if ($this->getUser() != null) {
+        if($this->getUser() != null){
             $UtilisateurId = $this->getUser()->getId();
+
             //Aiguillage particulier/entreprise
-            $userDetails = $this->getDoctrine()
-                                ->getRepository(Utilisateur::class)
-                                ->getUtilisateurClientById($UtilisateurId);
-            $Adresse =$this->getDoctrine()
-                            ->getRepository(Adresse::class)
-                            ->getAdresseById($UtilisateurId);
+            if($this->getUser()->getUtilisateurType()=="client" || $this->getUser()->getUtilisateurType()=="admin" ){
+                $userDetails = $this->getDoctrine()
+                                    ->getRepository(Utilisateur::class)
+                                    ->getUtilisateurClientById($UtilisateurId);
+                $Adresse =$this->getDoctrine()
+                                    ->getRepository(Adresse::class)
+                                    ->getAdresseById($UtilisateurId);
 
-            $commandes = $this->getDoctrine()
-                                ->getRepository(Commande::class)
-                                ->findByUserId($this->getUser()->getId());
+                $commandes = $this->getDoctrine()
+                    ->getRepository(Commande::class)
+                    ->findByUserId($this->getUser()->getId());
 
-            $form = $this->createForm(RegistrationTypeClient::class, $userDetails);
+                $form = $this->createForm(RegistrationTypeClient::class, $userDetails);
 
-            return $this->render('user/profilClient.html.twig', [
-                'form' => $form->createView(),
-                'Adresse' => $Adresse,
-                'commandes' => $commandes,
-                'controller_name' => 'UserController',
-            ]);
+
+                return $this->render('user/profilClient.html.twig', [
+                    'form' => $form->createView(),
+                    'Adresse' => $Adresse,
+                    'commandes' => $commandes,
+                    'controller_name' => 'UserController',
+                ]);
+            }
+            else {
+                 return $this->redirectToRoute('profil_entreprise');
+            }
         }
         else {
             return $this->redirectToRoute('security_login');
