@@ -1,4 +1,4 @@
-.my-form {
+.form-container {
     min-height: 775px;
     width: 70%;
     margin: 25px auto;
@@ -35,6 +35,10 @@
     border-radius: 5px;
 }
 
+.menu-connexion-link-active:visited {
+    background-color: #f2af58;
+}
+
 .menu-connexion-link-active:hover {
     background-color: #f2af58;
     border : 1px solid transparent !important; 
@@ -48,16 +52,15 @@
     margin-bottom: 20px;
 }
 
-.my-form .tab-content {
+.form-container .tab-content {
     margin : auto;
 }
 
 @media (max-width: 768px)
 {
-    .my-form {
+    .form-container {
         min-height: 775px;
         width: 100%;
-        margin: auto;
     }
 }
 
