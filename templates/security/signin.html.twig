@@ -2,55 +2,62 @@
 
 {% block title %}Inscription - {{parent()}}
 {% endblock %}
+
+{% block additional_stylesheets %}
+    <link rel="stylesheet" type="text/css" href="{{asset('../assets/connexion/login.css')}}">
+{% endblock %}
+
 {% block body %}
 
-<ul class="nav nav-tabs" role="tablist">
-	<li class="nav-item">
-		<a class="nav-link" data-toggle="tab" role="tab" >Inscription</a>
-	</li>
-	<li class="nav-item">
-		<a class="nav-link" href="{{path('security_login')}}">Connexion</a>
-	</li>
-</ul>
-<div class="tab-content">
-	<div class="tab-pane active" id="tabs-1" role="tabpanel">
-		{{ form_start(typeCompte) }}
-			{{form_row(typeCompte.utilisateurType, {'label' : false, 'attr' :{'placeholder' : 'Type de compte'}})}}
-		{{ form_end(typeCompte) }}
-		<div class="entreprise" style="display:none;">
-			{{ form_start(formEntreprise) }}
-				{{form_row(formEntreprise.siret, {'label' : false, 'attr' :{'placeholder' : 'N° de SIRET'}})}}
-				{{form_row(formEntreprise.raisonSociale, {'label' : false, 'attr' :{'placeholder' : 'Raison sociale'}})}}
-				{{form_row(formEntreprise.fonctionRepresentant, {'label' : false, 'attr' :{'placeholder' : 'Fonction du représentant'}})}}
-				{{form_row(formEntreprise.nom, {'label' : false, 'attr' :{'placeholder' : 'Nom'}})}}
-				{{form_row(formEntreprise.prenom, {'label' : false, 'attr' :{'placeholder' : 'Prénom'}})}}
-				{{form_row(formEntreprise.telephone, {'label' : false, 'attr' :{'placeholder' : 'Numéro de téléphone'}})}}
-				{{form_row(formEntreprise.email, {'label' : false,'attr' :{'placeholder' : 'Email' }})}}
-				{{form_row(formEntreprise.emailConfirm, {'label' : false, 'attr' :{'placeholder' : 'Confirmez votre e-mail'}})}}
-				{{form_row(formEntreprise.password, {'label' : false, 'attr' :{'placeholder' : 'Mot de passe'}})}}
-				{{form_row(formEntreprise.passwordConfirm, {'label' : false, 'attr' :{'placeholder' : 'Confirmez mot de passe'}})}}
-				{{form_row(formEntreprise.conditions, {'label' : 'J\'accepte les CGU et les CGV d\'Eco-Service','attr' :{'class':'formClient-check-input'}})}}
-				{{ form_row(formEntreprise._token) }}
-				<button type='submit' name="client" class="btn btn-success">S'inscrire</button>
-			{{ form_end(formEntreprise, {'render_rest': false}) }}
+<div class="my-form">
+	<ul class="nav nav-tabs  menu-connexion" role="tablist">
+		<li class="nav-item menu-connexion-item ">
+			<a class="nav-link menu-connexion-link" href="{{path('security_login')}}">Connexion</a>
+		</li>
+		<li class="nav-item menu-connexion-item">
+			<a class="nav-link menu-connexion-link-active" data-toggle="tab" role="tab" >Inscription</a>
+		</li>
+	</ul>
+	<div class="tab-content col-md-10 col-12">
+		<div class="tab-pane active" id="tabs-1" role="tabpanel">
+			{{ form_start(typeCompte) }}
+				{{form_row(typeCompte.utilisateurType, {'label' : false, 'attr' :{'placeholder' : 'Type de compte'}})}}
+			{{ form_end(typeCompte) }}
+			<div class="entreprise" style="display:none;">
+				{{ form_start(formEntreprise) }}
+					{{form_row(formEntreprise.siret, {'label' : false, 'attr' :{'placeholder' : 'N° de SIRET'}})}}
+					{{form_row(formEntreprise.raisonSociale, {'label' : false, 'attr' :{'placeholder' : 'Raison sociale'}})}}
+					{{form_row(formEntreprise.fonctionRepresentant, {'label' : false, 'attr' :{'placeholder' : 'Fonction du représentant'}})}}
+					{{form_row(formEntreprise.nom, {'label' : false, 'attr' :{'placeholder' : 'Nom'}})}}
+					{{form_row(formEntreprise.prenom, {'label' : false, 'attr' :{'placeholder' : 'Prénom'}})}}
+					{{form_row(formEntreprise.telephone, {'label' : false, 'attr' :{'placeholder' : 'Numéro de téléphone'}})}}
+					{{form_row(formEntreprise.email, {'label' : false,'attr' :{'placeholder' : 'Email' }})}}
+					{{form_row(formEntreprise.emailConfirm, {'label' : false, 'attr' :{'placeholder' : 'Confirmez votre e-mail'}})}}
+					{{form_row(formEntreprise.password, {'label' : false, 'attr' :{'placeholder' : 'Mot de passe'}})}}
+					{{form_row(formEntreprise.passwordConfirm, {'label' : false, 'attr' :{'placeholder' : 'Confirmez mot de passe'}})}}
+					{{form_row(formEntreprise.conditions, {'label' : 'J\'accepte les CGU et les CGV d\'Eco-Service','attr' :{'class':'formClient-check-input'}})}}
+					{{ form_row(formEntreprise._token) }}
+					<button type='submit' name="client" class="btn btn-success">S'inscrire</button>
+				{{ form_end(formEntreprise, {'render_rest': false}) }}
+			</div>
+			<div class="particulier" style="display:none;">
+				{{ form_start(formClient) }}
+					{{form_row(formClient.civilite, {'label' : false, 'attr' :{'placeholder' : 'Civilité'}})}}				
+					{{form_row(formClient.nom, {'label' : false, 'attr' :{'placeholder' : 'Nom'}})}}
+					{{form_row(formClient.prenom, {'label' : false, 'attr' :{'placeholder' : 'Prénom'}})}}
+					{{form_row(formAdresse, {'label' : false})}}
+					{{form_row(formClient.telephone, {'label' : false, 'attr' :{'placeholder' : 'Numéro de téléphone'}})}}
+					{{form_row(formClient.email, {'label' : false, 'attr' :{'placeholder' : 'Email'}})}}
+					{{form_row(formClient.emailConfirm, {'label' : false, 'attr' :{'placeholder' : 'Confirmez votre e-mail'}})}}
+					{{form_row(formClient.password, {'label' : false, 'attr' :{'placeholder' : 'Mot de passe'}})}}
+					{{form_row(formClient.passwordConfirm, {'label' : false, 'attr' :{'placeholder' : 'Confirmez mot de passe'}})}}
+					<div class="center">{{form_row(formClient.conditions, {'label' : 'J\'accepte les CGU et les CGV d\'Eco-Service','attr' :{'class':'formClient-check-input'}})}}</div>
+					{{ form_row(formClient._token) }}
+					<div class="center"><button type='submit' name="client" class="btn btn-success">S'inscrire</button></div>
+				{{ form_end(formClient, {'render_rest': false}) }}
+			</div>
+			<div class="tab-pane" id="tabs-2" role="tabpanel"></div>
 		</div>
-		<div class="particulier" style="display:none;">
-			{{ form_start(formClient) }}
-				{{form_row(formClient.civilite, {'label' : false, 'attr' :{'placeholder' : 'Civilité'}})}}				
-				{{form_row(formClient.nom, {'label' : false, 'attr' :{'placeholder' : 'Nom'}})}}
-				{{form_row(formClient.prenom, {'label' : false, 'attr' :{'placeholder' : 'Prénom'}})}}
-				{{form_row(formAdresse, {'label' : false})}}
-				{{form_row(formClient.telephone, {'label' : false, 'attr' :{'placeholder' : 'Numéro de téléphone'}})}}
-				{{form_row(formClient.email, {'label' : false, 'attr' :{'placeholder' : 'Email'}})}}
-				{{form_row(formClient.emailConfirm, {'label' : false, 'attr' :{'placeholder' : 'Confirmez votre e-mail'}})}}
-				{{form_row(formClient.password, {'label' : false, 'attr' :{'placeholder' : 'Mot de passe'}})}}
-				{{form_row(formClient.passwordConfirm, {'label' : false, 'attr' :{'placeholder' : 'Confirmez mot de passe'}})}}
-				{{form_row(formClient.conditions, {'label' : 'J\'accepte les CGU et les CGV d\'Eco-Service','attr' :{'class':'formClient-check-input'}})}}
-				{{ form_row(formClient._token) }}
-				<button type='submit' name="client" class="btn btn-success">S'inscrire</button>
-			{{ form_end(formClient, {'render_rest': false}) }}
-		</div>
-		<div class="tab-pane" id="tabs-2" role="tabpanel"></div>
 	</div>
 </div>
 
