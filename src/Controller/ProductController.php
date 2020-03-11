@@ -56,6 +56,23 @@ class ProductController extends AbstractController
     }
 
     /**
+     * @Route("/magasin/recherche", name="magasin_search", methods={"GET","POST"})
+     */
+    public function magasinRecherche(Request $request)
+    {
+//        $request->query->get('name');
+
+        $produits = $this->getDoctrine()->getRepository(Produit::class)->findBySearch($request->query->get('name'));
+        $categories = $this->getDoctrine()->getRepository(CategorieProduit::class)->findCategories();
+dump($produits);
+        return $this->render('product/index.html.twig', [
+            'controller_name' => 'ProductController',
+            'produits' => $produits,
+            'categories' => $categories
+        ]);
+    }
+
+    /**
      * @Route("/magasin/categorie/{id}", name="categorie_produit")
      * @Entity("CategorieProduit", expr="repository.find(id)")
      */
