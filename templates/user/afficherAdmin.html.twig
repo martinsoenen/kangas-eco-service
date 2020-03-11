@@ -11,16 +11,16 @@
         </tr>
         </thead>
         <tbody>
-        {% for admin in admins %}
+        {% for utilisateur in utilisateurs %}
         <tr>
-            <td>{{admin.nom}}</td>
-            <td>{{admin.prenom}}</td>
-            <td>{{admin.role.nom}}</td>
+            <td>{{utilisateur.nom}}</td>
+            <td>{{utilisateur.prenom}}</td>
+            <td>{{utilisateur.utilisateurType}}</td>
             <td>
-                <bouton onclick="window.location.href = '/admin/{{admin.id}}/edit';">
+                <bouton onclick="window.location.href = '/admin/user/{{utilisateur.id}}/edit';">
                     <i class="fa fa-pencil fa-2x"></i>
                 </bouton>
-                <bouton onclick="window.location.href = '/admin/{{admin.id}}/delete';">
+                <bouton onclick="window.location.href = '/admin/user/{{utilisateur.id}}/delete';">
                     <i class="fa fa-trash fa-2x"></i>
                 </bouton>
             </td>

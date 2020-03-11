@@ -9,10 +9,9 @@
     <p>
         Présentation : {{ produit.presentation }}<br/>
         Prix HT : {{ produit.prixUnitaireHT }}€ - TVA : {{ produit.tauxTVA }}% <br/>
-        Prix TTC : {{ (produit.prixUnitaireHT * (1 + produit.tauxTVA)) }}€ <br/>
+        Prix TTC : {{ (produit.prixUnitaireHT * (1 + produit.tauxTVA / 100)) }}€ <br/>
         Description : {{ produit.descriptionDetaillee }} <br/>
     </p>
-    {# TODO: champ de sélection de quantité qu'on veut ajouter au panier#}
     <input id="{{ produit.id }}" type="number" name="quantite" value=1 >
     <a id="{{ produit.id }}" class="btn btn-success"><i class="fa fa-shopping-cart mr-1"> Ajouter au panier</i></a>
 </div>
@@ -36,7 +35,7 @@
                     console.log(response);
                 }
             });
-            alert('Vous avez ajouté ' + value + ' au panier'); // TODO: récupérer le nom du produit et l'afficher ici
+            alert('Le produit a bien été ajouté au panier');
         });
 
     </script>

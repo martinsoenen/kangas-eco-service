@@ -37,16 +37,16 @@ class Utilisateur implements UserInterface
     private $email;
 
     /**
-     * @ORM\Column(type="string", length=3, nullable=true)
+     * @ORM\Column(type="string", length=5, nullable=true)
      */
     private $civilite;
 
     /**
     * @ORM\Column(type="string", length=255)
     * @Assert\Regex(
-    *   pattern = "/^(?=.*\d)(?=.*[A-Z])(?=.*[@#$%])(?!.*(.)\1{2}).*[a-z]/m",
+    *   pattern = "/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/m",
     *   match=true,
-    *   message="Votre mot de passe doit comporter au moins huit caractères, dont des lettres majuscules et minuscules, un chiffre et un symbole."
+    *   message="Votre mot de passe doit comporter au moins huit caractères, dont des lettres majuscules et minuscules, un chiffre et un caractère spécial."
     * )
      * Assert\EqualTo(propertyPath="passwordConfirm")
      */
@@ -78,12 +78,28 @@ class Utilisateur implements UserInterface
     private $utilisateurType;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
+     * @Assert\Length(
+     *   min = 14,
+     *   minMessage="Veuillez saisir un N° de SIRET valide",
+     * )
+     * * @Assert\Length(
+     *   max = 14,
+     *   maxMessage="Veuillez saisir un N° de SIRET valide",
+     * )
+     * @ORM\Column(type="string", nullable=true)
      */
     private $siret;
 
     /**
-     * @ORM\Column(type="integer")
+     * @Assert\Length(
+     *   min = 10,
+     *   minMessage="Veuillez saisir un numéro de téléphone valide",
+     * )
+     *  @Assert\Length(
+     *   max = 10,
+     *   maxMessage="Veuillez saisir un numéro de téléphone valide",
+     * )
+     * @ORM\Column(type="string")
      */
     private $telephone;
 
@@ -97,11 +113,6 @@ class Utilisateur implements UserInterface
      */
     private $Adresse;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Devis", mappedBy="Utilisateur", orphanRemoval=true)
-     */
-    private $devis;
-
     private $conditions;
 
     /**
@@ -113,10 +124,15 @@ class Utilisateur implements UserInterface
     */
     private $emailConfirm;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Commande", mappedBy="User")
+     */
+    private $commandes;
+
     public function __construct()
     {
         $this->Adresse = new ArrayCollection();
-        $this->devis = new ArrayCollection();
+        $this->commandes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -220,30 +236,17 @@ class Utilisateur implements UserInterface
         return $this;
     }
 
-    public function getSiret(): ?int
+    public function getSiret(): ?string
     {
         return $this->siret;
     }
 
-    public function setSiret(?int $siret): self
+    public function setSiret(?string $siret): self
     {
         $this->siret = $siret;
 
         return $this;
     }
-
-    public function getTelephone(): ?int
-    {
-        return $this->telephone;
-    }
-
-    public function setTelephone(int $telephone): self
-    {
-        $this->telephone = $telephone;
-
-        return $this;
-    }
-
   
     /**
      * @return Collection|Adresse[]
@@ -270,37 +273,6 @@ class Utilisateur implements UserInterface
             // set the owning side to null (unless already changed)
             if ($adresse->getUtilisateur() === $this) {
                 $adresse->setUtilisateur(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Devis[]
-     */
-    public function getDevis(): Collection
-    {
-        return $this->devis;
-    }
-
-    public function addDevi(Devis $devi): self
-    {
-        if (!$this->devis->contains($devi)) {
-            $this->devis[] = $devi;
-            $devi->setUtilisateur($this);
-        }
-
-        return $this;
-    }
-
-    public function removeDevi(Devis $devi): self
-    {
-        if ($this->devis->contains($devi)) {
-            $this->devis->removeElement($devi);
-            // set the owning side to null (unless already changed)
-            if ($devi->getUtilisateur() === $this) {
-                $devi->setUtilisateur(null);
             }
         }
 
@@ -347,6 +319,11 @@ class Utilisateur implements UserInterface
     {
         return (string) $this->email;
     }
+
+    public function getNomPrenom(): string
+    {
+        return (string) $this->nom.' '.$this->prenom ;
+    }
     public function erasecredentials()
     {
     }
@@ -370,5 +347,45 @@ class Utilisateur implements UserInterface
 
         return $this;
     }
-   
+
+    public function getTelephone(): ?string
+    {
+        return $this->telephone;
+    }
+
+    public function setTelephone(string $telephone): self
+    {
+        $this->telephone = $telephone;
+        return $this;
+    }
+
+    /**
+     * @return Collection|Commande[]
+     */
+    public function getCommandes(): Collection
+    {
+        return $this->commandes;
+    }
+
+    public function addCommande(Commande $commande): self
+    {
+        if (!$this->commandes->contains($commande)) {
+            $this->commandes[] = $commande;
+            $commande->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommande(Commande $commande): self
+    {
+        if ($this->commandes->contains($commande)) {
+            $this->commandes->removeElement($commande);
+            // set the owning side to null (unless already changed)
+            if ($commande->getUser() === $this) {
+                $commande->setUser(null);
+            }
+        }
+
+    }
 }
