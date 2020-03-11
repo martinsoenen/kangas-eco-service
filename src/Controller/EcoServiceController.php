@@ -47,6 +47,13 @@ class EcoServiceController extends AbstractController
     public function contact(Request $request, \Swift_Mailer $mailer)
     {
         $form = $this->createForm(ContactGeneralType::class);
+        
+        if($this->getUser()!= null){
+            $user = $this->getUser();
+            $form->get('email')->setData($user->getEmail());
+            $form->get('nom')->setData($user->getNom());
+            $form->get('prenom')->setData($user->getPrenom());
+        }
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {

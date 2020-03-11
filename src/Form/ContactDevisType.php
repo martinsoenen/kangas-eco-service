@@ -5,6 +5,7 @@ namespace App\Form;
 use phpDocumentor\Reflection\Types\String_;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -13,6 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Validator\Constraints\File;
 
 
 class ContactDevisType extends AbstractType
@@ -47,6 +49,20 @@ class ContactDevisType extends AbstractType
                     'placeholder' => 'Poids de l\'objet',
                 ]
             ))
+            ->add('taille', IntegerType::class,array(
+                'label' => 'Taille de l\'objet',
+                'required' => true,
+                'attr' => [
+                    'placeholder' => 'Taille de l\'objet',
+                ]
+            ))
+            ->add('image', FileType::class,array(
+                'label' => 'Photo de l\'objet',
+                'required' => true,
+                'attr' => [
+                    'placeholder' => 'Insérer une photo de l\'objet à collecter',
+                ]
+            ))
             ->add('adresse', TextType::class,array(
                 'label' => 'Adresse de récupération de l\'objet',
                 'required' => true,
@@ -63,7 +79,7 @@ class ContactDevisType extends AbstractType
                 'required' => true,
             ))
             ->add('date', DateType::class,array(
-                'label' => 'Date',
+                'label' => 'Date de récupération de l\'objet',
                 'required' => true,
             ))
             ->add('commentaire', TextareaType::class,array(
