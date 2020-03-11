@@ -1,8 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Commande terminée -
-	{{parent()}}
-{% endblock %}
+{% block title %}Commande {% if commande is defined %}n°{{ commande.id }} {% endif %}- {{parent()}}{% endblock %}
 
 {% block body %}
     {% if commande is defined %}
@@ -58,6 +56,8 @@
                 </tr>
             </tfoot>
         </table>
+    {% else %}
+        Impossible d'afficher la commande.
     {% endif %}
 
 {% endblock %}

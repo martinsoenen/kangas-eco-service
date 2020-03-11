@@ -18,11 +18,20 @@ class ObjetCollecteRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, ObjetCollecte::class);
     }
-
+//
+//    public function findObject() {
+//        return $this->createQueryBuilder('o')
+//            ->leftJoin("o.CategorieCollecte", "cc")
+//            ->addSelect("cc")
+//            ->getQuery()
+//            ->getResult()
+//            ;
+//    }
     // /**
-    //  * @return ObjetCollecte[] Returns an array of ObjetCollecte objects
+    //  * @return ObjetCollecteType[] Returns an array of ObjetCollecteType objects
     //  */
     /*
+     *
     public function findByExampleField($value)
     {
         return $this->createQueryBuilder('o')
@@ -37,7 +46,7 @@ class ObjetCollecteRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?ObjetCollecte
+    public function findOneBySomeField($value): ?ObjetCollecteType
     {
         return $this->createQueryBuilder('o')
             ->andWhere('o.exampleField = :val')

@@ -55,7 +55,7 @@ class PanierService {
         $total = 0;
 
         foreach($this->getPanierComplet() as $item) {
-            $total += $item['product']->getPrixUnitaireHT() * (1 + $item['product']->getTauxTVA()) * $item['quantity'];
+            $total += $item['product']->getPrixUnitaireHT() * (1 + $item['product']->getTauxTVA()/100) * $item['quantity'];
         }
 
         return $total;

@@ -99,7 +99,7 @@ class AchatController extends AbstractController
                 dump(json_decode($e->getData()));
             }
 
-            return $this->render('achat/paiement_termine.html.twig', [
+            return $this->render('achat/showCommande.html.twig', [
                 'controller_name' => 'AchatController',
             ]);
         }else{
@@ -171,7 +171,7 @@ class AchatController extends AbstractController
 
         $panier->reset();
 
-        return $this->render('achat/paiement_termine.html.twig', [
+        return $this->render('showCommande.html.twig', [
             'controller_name' => 'AchatController',
             'commande' => $commande,
             'adresse' => explode('|', $commande->getShippingAddr()),
