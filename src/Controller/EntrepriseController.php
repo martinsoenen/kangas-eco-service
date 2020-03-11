@@ -55,8 +55,10 @@ class EntrepriseController extends AbstractController
                         '<br/>Adresse d\'enlèvement : ' . $data['adresse'] . ' - ' . $data['cp'] . ' - ' . $data['ville'] .
                         '<br>Date d\'enlèvement : ' . date_format($data['date'], "Y/m/d") .
                         '<br/>Objets à collecter : ' . $data['objets'] .
-                        '<br/>Numéro de téléphone : ' . $data['tel'] .
                         '<br/>Poids de l\'objet à collecter : ' . $data['poids'] .
+                        '<br/>Taille de l\'objet à collecter : ' . $data['taille'] .
+                        '<br/>Image de l\'objet : ' . $data['image'] .
+                        '<br/>Numéro de téléphone : ' . $data['tel'] .
                         '<br/>Commentaire supplémentaire : ' . $data['commentaire']
                         , 'text/html'
                     );
