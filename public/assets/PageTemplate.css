@@ -220,7 +220,19 @@ thead tr {
         padding: .5rem 1rem !important;
     }
 
+    #profile-icon
+    {
+        display: none;
+
+    }
+
     #login-icon
+    {
+        display: none;
+
+    }
+
+    #logout-icon
     {
         display: none;
 

@@ -3,9 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Role;
-use App\Entity\UtilisateurAdministration;
 
-use App\Repository\UtilisateurAdministrationRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -38,7 +36,7 @@ class UserController extends AbstractController
             $UtilisateurId = $this->getUser()->getId();
 
             //Aiguillage particulier/entreprise
-            if($this->getUser()->getUtilisateurType()=="client"){
+            if($this->getUser()->getUtilisateurType()=="client" || $this->getUser()->getUtilisateurType()=="admin" ){
                 $userDetails = $this->getDoctrine()
                                     ->getRepository(Utilisateur::class)
                                     ->getUtilisateurClientById($UtilisateurId);
@@ -73,7 +71,7 @@ class UserController extends AbstractController
             $UtilisateurId = $this->getUser()->getId();
 
             //Aiguillage particulier/entreprise
-            if($this->getUser()->getUtilisateurType()=="client"){
+            if($this->getUser()->getUtilisateurType()=="client" || $this->getUser()->getUtilisateurType()=="admin") {
                 $userDetails = $this->getDoctrine()
                                     ->getRepository(Utilisateur::class)
                                     ->getUtilisateurClientById($UtilisateurId);
@@ -193,78 +191,4 @@ class UserController extends AbstractController
         }
     }
 
-
-
-
-    ////////////////////ADMIN////////////////////////////////
-
-
-    /**
-     * @Route("/admin/ajouter-admin", name="ajouter_admin")
-     * @Route("/admin/{id}/edit", name="modifier_admin")
-     */
-    public function ajouterUserAdministration(UtilisateurAdministration $admin = null,Request $request,EntityManagerInterface $manager, UserPasswordEncoderInterface $encoder)
-    {
-        if(!$admin) {
-            $admin = new UtilisateurAdministration();
-        }
-        $form = $this->createFormBuilder($admin)
-            ->add('Role',EntityType::class,[
-                'class' => Role::class,
-                'choice_label' => 'Nom',
-                'required'  => true,
-            ])
-            ->add('Nom', TextType::class,array('required'  => true))
-            ->add('Prenom', TextType::class,array('required'  => true))
-            ->add('Email', TextType::class,array('required'  => true))
-            ->add('Password', PasswordType::class)
-            ->getForm();
-
-
-        $form->handleRequest($request);
-
-
-        if($form->isSubmitted()&& $form->isValid()) {
-            $hash = $encoder->encodePassword($admin, $admin->getPassword());
-            $admin->setPassword($hash);
-
-            $manager->persist($admin);
-            $manager->flush();
-
-            return $this->redirectToRoute('afficher_admin');
-        }
-
-
-
-        return $this->render('user/ajouterAdmin.html.twig', [
-            'controller_name' => 'UserController',
-            'formAdmin'=> $form->createView(),
-            'editMode'=>$admin->getId() !== null,
-        ]);
-    }
-
-    /**
-     * @Route("/admin/afficher-admin", name="afficher_admin")
-     */
-    public function afficherUserAdministration()
-    {
-        $repo = $this->getDoctrine()->getRepository(UtilisateurAdministration::class);
-        $admins = $repo->findAll();
-
-
-        return $this->render('user/afficherAdmin.html.twig', [
-            'controller_name' => 'UserController',
-            'admins' => $admins,
-        ]);
-    }
-
-    /**
-     *  @Route("/admin/{id}/delete", name="delete_admin")
-     */
-    public function deleteUserAdministration(UtilisateurAdministration $admin, EntityManagerInterface $manager){
-        $manager->remove($admin);
-        $manager->flush();
-
-        return $this->redirectToRoute('afficher_admin');
-    }
 }

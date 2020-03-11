@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Catégories - Produit - Admin - {{ parent() }}{% endblock %}
+
+{% block body %}
+    <h1>Page d'administration des Catégories Produit</h1>
+    <tbody>
+    {% for categorie in categories %}
+        <tr>
+            <td>{{categorie.nom}}</td>
+            <td>
+                <bouton onclick="window.location.href = '/admin/produit/categorie/{{categorie.id}}/edit';">
+                    <i class="fa fa-pencil fa-2x"></i>
+                </bouton>
+                <bouton onclick="window.location.href = '/admin/produit/categorie/{{categorie.id}}/delete';">
+                    <i class="fa fa-trash fa-2x"></i>
+                </bouton>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+{% endblock %}

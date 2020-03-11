@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {{ form_start(formProduit) }}
+
+    {{ form_row(formProduit.Nomproduit, {'label' : 'Nom du produit :','attr' : {'placeholder' : "Nom"}}) }}
+    {{ form_row(formProduit.PrixunitaireHT, {'label' : 'Prix unitaire HT :','attr' : {'placeholder' : "Prix HT"}}) }}
+    {{ form_row(formProduit.TauxTVA, {'label' : 'Taux de TVA :','attr' : {'placeholder' : "Taux TVA du produit"}}) }}
+    {{ form_row(formProduit.Presentation, {'label' : 'Présentation :','attr' : {'placeholder' :
+        "Présentation brève du produit"}}) }}
+    {{ form_row(formProduit.Descriptiondetaillee, {'label' : 'Description :','attr' : {'placeholder' :
+        "Description détaillée du produit"}}) }}
+    {{ form_row(formProduit.SousCategorieProduit, {'label' : 'sous catégorie :','attr' : {'placeholder' :
+    "sous catégorie du produit"}}) }}
+    {{ form_row(formProduit.UtilisateurAdmin, {'label' : 'utilisateur:','attr' : {'placeholder' :
+        "utilisateur"}}) }}
+    {{ form_row(formProduit.Image,{'label' : 'Image de l\'article :'}
+    ) }}
+    <button type="submit" class="btn btn-success ">
+        {% if editMode %}
+            Enregistrer les modifications
+        {% else %}
+            Ajouter le produit
+        {% endif %}
+    </button>
+
+    {{ form(formProduit) }}
+{% endblock %}

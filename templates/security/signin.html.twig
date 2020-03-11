@@ -65,28 +65,47 @@
 {% block javascripts %}
 	{{parent()}}
 	<script>	
+
+		var url = window.location.href;
+
+		console.log(url);
+
+		if(url == "http://dev.eco-service.com/inscription#particulier"){
+			$('div.particulier').css("display","block");
+			$('div.entreprise').css("display","none");
+		}
+		else if(url == "http://dev.eco-service.com/inscription#entreprise"){
+			$('div.particulier').css("display","none");
+			$('div.entreprise').css("display","block");
+			$('input#registration_nom.formClient-control').attr("placeholder", "Nom du représentant");
+			$('input#registration_prenom.formClient-control').attr("placeholder", "Prénom du représentant");
+		}
+
+
+		$('fieldset.form-group').css('margin','0'); // Mise en forme entre le form Adresse et Registration
+
 		//Pour la création des profils (affiche le formulaire selon le type de compte choisi)
-$('select#form_utilisateurType').on('change', function (e) {
+	$('select#form_utilisateurType').on('change', function (e) {
 
 		var typeCompte = $('select#form_utilisateurType').find(":selected").text();
 
 		if(typeCompte == "Particulier"){
 			$('div.particulier').css("display","block");
 			$('div.entreprise').css("display","none");
+			window.history.pushState("", "", '#particulier');
 		}
 		else if(typeCompte =='Professionnel'){
 			$('div.particulier').css("display","none");
 			$('div.entreprise').css("display","block");
 			$('input#registration_nom.formClient-control').attr("placeholder", "Nom du représentant");
 			$('input#registration_prenom.formClient-control').attr("placeholder", "Prénom du représentant");
+			window.history.pushState("", "", '#entreprise');
 		}
 		else{
 			$('div.particulier').css("display","none");
 			$('div.entreprise').css("display","none");
 		}
+	});
 
-		$('fieldset.form-group').css('margin','0'); // Mise en forme entre le form Adresse et Registration
-
-		});
 </script>
 {% endblock %}

@@ -53,9 +53,24 @@ class Commande
      */
     private $Produit;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $PayPalID;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Utilisateur", inversedBy="commandes")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $User;
+
+    /**
+     * @ORM\Column(type="string", length=1000)
+     */
+    private $shipping_addr;
+
     public function __construct()
     {
-        $this->idProduit = new ArrayCollection();
         $this->Produit = new ArrayCollection();
     }
 
@@ -139,32 +154,6 @@ class Commande
     /**
      * @return Collection|Produit[]
      */
-    public function getIdProduit(): Collection
-    {
-        return $this->idProduit;
-    }
-
-    public function addIdProduit(Produit $idProduit): self
-    {
-        if (!$this->idProduit->contains($idProduit)) {
-            $this->idProduit[] = $idProduit;
-        }
-
-        return $this;
-    }
-
-    public function removeIdProduit(Produit $idProduit): self
-    {
-        if ($this->idProduit->contains($idProduit)) {
-            $this->idProduit->removeElement($idProduit);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Produit[]
-     */
     public function getProduit(): Collection
     {
         return $this->Produit;
@@ -184,6 +173,42 @@ class Commande
         if ($this->Produit->contains($produit)) {
             $this->Produit->removeElement($produit);
         }
+
+        return $this;
+    }
+
+    public function getPayPalID(): ?string
+    {
+        return $this->PayPalID;
+    }
+
+    public function setPayPalID(string $PayPalID): self
+    {
+        $this->PayPalID = $PayPalID;
+
+        return $this;
+    }
+
+    public function getUser(): ?Utilisateur
+    {
+        return $this->User;
+    }
+
+    public function setUser(?Utilisateur $User): self
+    {
+        $this->User = $User;
+
+        return $this;
+    }
+
+    public function getShippingAddr(): ?string
+    {
+        return $this->shipping_addr;
+    }
+
+    public function setShippingAddr(string $shipping_addr): self
+    {
+        $this->shipping_addr = $shipping_addr;
 
         return $this;
     }
