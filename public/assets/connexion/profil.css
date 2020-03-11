@@ -1,0 +1,35 @@
+h1 {
+    color: #f2af58;
+}
+
+.profil {
+    min-height: 450px;
+}
+
+.profil-container {
+    min-height: 390px;
+    width: 75%;
+    margin: 25px auto;
+    background-color: #8ed86e77;
+    border-radius: 5px;
+    padding: 10px 0;
+}
+
+.profil-info {
+    padding : 15px;
+}
+
+.profil-info__item {
+    padding: 10px;
+}
+
+.profil-info__button {
+
+}
+
+@media (max-width: 767px)
+{
+    .profil-container {
+        width: 100%;
+    }
+}
