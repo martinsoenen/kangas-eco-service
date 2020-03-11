@@ -82,7 +82,7 @@ class ProductController extends AbstractController
     }
 
     /**
-     * @Route("/admin/produits", name="admin-produits")
+     * @Route("/admin/produits", name="admin_produits")
      */
     public function admin_show()
     {
@@ -95,7 +95,7 @@ class ProductController extends AbstractController
     }
 
     /**
-     * @Route("/admin/ajouter-produit", name="ajouter_produit")
+     * @Route("/admin/produit/add", name="ajouter_produit")
      * @Route("/admin/produit/{id}/edit", name="modifier_produit")
      */
     public function ajouterProduit(Produit $produit = null,Request $request,EntityManagerInterface $manager)

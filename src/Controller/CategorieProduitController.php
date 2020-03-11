@@ -34,7 +34,7 @@ class CategorieProduitController extends AbstractController
     }
 
     /**
-     * @Route("/admin/produit/ajouter-categorie", name="ajouter_categorie_produit")
+     * @Route("/admin/produit/categorie/add", name="ajouter_categorie_produit")
      * @Route("/admin/produit/categorie/{id}/edit", name="modifier_categorie_produit")
      */
     public function ajouterCategorieProduit(CategorieProduit $categorieProduit = null,Request $request,EntityManagerInterface $manager)
