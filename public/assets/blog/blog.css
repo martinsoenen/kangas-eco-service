@@ -66,3 +66,32 @@
 .article-item {
     position: relative;
 }
+
+.pag .pagination{
+    justify-content: center;
+}
+
+.pag .pagination span{
+    padding: 0 8px;
+}
+
+.pag .pagination span a{
+    color: black;
+    font-size: 25px;
+    padding : 3px;
+}
+
+.pag .pagination .current {
+    background-color: #222;
+    color : white;
+    font-size: 25px;
+}
+
+.pag .pagination span:hover  {
+    background-color: #888;
+}
+
+.pag .pagination .current:hover {
+    background-color: #222;
+    color : white;
+}
