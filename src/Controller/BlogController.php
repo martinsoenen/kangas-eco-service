@@ -51,7 +51,7 @@ class BlogController extends AbstractController
     }
 
     /**
-     * @Route("/admin/blog", name="blog_admin"))
+     * @Route("/admin/article", name="blog_admin"))
      */
     public function showAdminBlog()
     {
@@ -76,7 +76,7 @@ class BlogController extends AbstractController
 
     /**
      * @Route("/admin/article/add", name="add_article_admin"))
-     * @Route("/admin/{id}/edit", name="edit_article_admin"))
+     * @Route("/admin/article/{id}/edit", name="edit_article_admin"))
      */
     public function addAdminArticles(Article $article = null,Request $request,EntityManagerInterface $manager)
     {

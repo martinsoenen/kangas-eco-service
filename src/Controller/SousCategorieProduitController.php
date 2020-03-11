@@ -16,7 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class SousCategorieProduitController extends AbstractController
 {
     /**
-     * @Route("/admin/produits/souscategorie", name="admin-souscategorie-produits")
+     * @Route("/admin/produits/souscategorie", name="admin_souscategorie_produits")
      */
     public function afficherSousCategorieProduit()
     {
@@ -29,7 +29,7 @@ class SousCategorieProduitController extends AbstractController
     }
 
     /**
-     * @Route("/admin/produit/ajouter-souscategorie", name="ajouter_souscategorie_produit")
+     * @Route("/admin/produit/souscategorie/add", name="ajouter_souscategorie_produit")
      * @Route("/admin/produit/souscategorie/{id}/edit", name="modifier_souscategorie_produit")
      */
     public function ajouterSousCategorieProduit(SousCategorieProduit $sousCategorieProduit = null,Request $request,EntityManagerInterface $manager)
