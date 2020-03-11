@@ -319,6 +319,11 @@ class Utilisateur implements UserInterface
     {
         return (string) $this->email;
     }
+
+    public function getNomPrenom(): string
+    {
+        return (string) $this->nom.' '.$this->prenom ;
+    }
     public function erasecredentials()
     {
     }

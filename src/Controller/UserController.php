@@ -11,7 +11,10 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\TelType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
@@ -212,4 +215,94 @@ class UserController extends AbstractController
             'adresse' => explode('|', $commande->getShippingAddr()),
         ]);
     }
+
+    ////////////////////ADMINISTRASTION////////////////////////////////
+
+    /**
+     * @Route("/admin/user", name="afficher_admin"))
+     */
+    public function showAdminBlog()
+    {
+        $repo = $this->getDoctrine()->getRepository(Utilisateur::class);
+        $utilisateurs = $repo->findAll();
+
+        return $this->render('user/afficherAdmin.html.twig', [
+            'controller_name' => 'UserController',
+            'utilisateurs' => $utilisateurs,
+        ]);
+
+    }
+
+    /**
+     * @Route("/admin/user/addAdmin", name="add_user_admin")
+     * @Route("/admin/user/{id}/edit", name="edit_user_admin")
+     */
+    public function ajouterUtilisateur(Utilisateur $utilisateur = null,Request $request,EntityManagerInterface $manager){
+
+        if(!$utilisateur){
+            $utilisateur = new Utilisateur();
+        }
+
+        $form = $this->createFormBuilder($utilisateur)
+
+
+            ->add('UtilisateurType', ChoiceType::class, array(
+                'label' => false,
+                'choices' => array(
+                    'Administrateur' => 'admin',
+                    'Modérateur' => 'modo',
+                    'Particulier' => 'client',
+                    'Professionnel' => 'pro',
+                ),
+                'required' => true
+            ))
+
+            ->add('email', EmailType::class)
+
+            ->add('civilite', ChoiceType::class, array(
+                'label' => false,
+                'placeholder' => 'Civilité',
+                'choices' => array(
+                    'Mr' => 'mr',
+                    'Mme' => 'mme',
+                    'Autre' => 'autre'
+                ),
+                'required' => true
+            ))
+
+            ->add('password', PasswordType::class)
+            ->add('nom',TextType::class)
+            ->add('prenom',TextType::class)
+            ->add('telephone', TelType::class )
+            ->getForm();
+
+
+        $form->handleRequest($request);
+
+
+        if($form->isSubmitted()&& $form->isValid()) {
+
+            $manager->persist($utilisateur);
+            $manager->flush();
+
+            return $this->redirectToRoute('afficher_admin');
+        }
+
+        return $this->render('user/ajouterAdmin.html.twig', [
+            'controller_name' => 'UserController',
+            'formAdmin'=> $form->createView(),
+            'editMode'=>$utilisateur!== null,
+        ]);
+    }
+
+    /**
+     * @Route("/admin/user/{id}/delete", name="delete_user_admin"))
+     */
+    public function deleteAdmin(Utilisateur $utilisateur,EntityManagerInterface $manager){
+        $manager->remove($utilisateur);
+        $manager->flush();
+
+        return $this->redirectToRoute('afficher_admin');
+    }
+
 }

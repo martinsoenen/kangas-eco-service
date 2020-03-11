@@ -120,7 +120,6 @@ class BlogController extends AbstractController
             );
             $article->setImage($newFilename);
             $article->setDate(new \DateTime());
-            // $article->setUtilisateurAdmin(null);
             $manager->persist($article);
             $manager->flush();
 
