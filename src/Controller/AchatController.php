@@ -3,24 +3,16 @@
 namespace App\Controller;
 
 use App\Entity\Commande;
-use App\Repository\CommandeRepository;
 use App\Service\Panier\PanierService;
-use PayPal\Api\Amount;
-use PayPal\Api\Details;
-use PayPal\Api\PaymentExecution;
-use PayPal\Api\Transaction;
-use PayPal\Rest\ApiContext;
 use PayPal\Api\Item;
 use PayPal\Api\ItemList;
-use PayPal\Auth\OAuthTokenCredential;
-use PayPal\Api\Payer;
 use PayPal\Api\Payment;
-use PayPal\Api\RedirectUrls;
+use PayPal\Api\PaymentExecution;
+use PayPal\Auth\OAuthTokenCredential;
+use PayPal\Rest\ApiContext;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Routing\Generator\UrlGenerator;
 
 class AchatController extends AbstractController
 {
