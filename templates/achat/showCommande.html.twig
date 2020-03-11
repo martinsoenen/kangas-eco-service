@@ -9,10 +9,18 @@
         Nom de l'utilisateur : {{ commande.user.prenom }} {{ commande.user.nom }} <br/>
         ID PayPal de la commande : {{ commande.paypalid }} <br/>
         Date de la commande : le {{ commande.date | date("d/m/Y") }} <br/>
-        Etat de la commande :   {% if commande.isSend == 0 %}
-                                    en attente de traitement
+        Etat de la commande :   {% if commande.isSend == -1 %}
+                                    annulée
                                 {% else %}
-                                    envoyée
+                                    {% if commande.isSend == 0 %}
+                                        en attente de traitement
+                                    {% else %}
+                                        {% if commande.isSend == 1 %}
+                                            envoyée
+                                        {% else %}
+                                            statut inconnu
+                                        {% endif %}
+                                    {% endif %}
                                 {% endif %}<br/>
         <br/>
         Adresse de livraison :<br/>
