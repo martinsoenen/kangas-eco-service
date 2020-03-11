@@ -42,8 +42,8 @@ class EntrepriseController extends AbstractController
                 $message = (new \Swift_Message('Demande de devis par une entreprise'))
                     ->setTo('devis@kangas.fr')
                     ->setFrom($data['email'])
-                    ->setBody('Message envoyé par ' . $data['nom']->$this->getUser()->nom . ', représentant l\'entreprise ' . $data['entreprise']->$this->getUser()->fonctionRepresentant .
-                        '<br/>Adresse d\'enlèvement : ' . $data['rue'] . ' - ' . $data['cp'] . ' - ' . $data['ville'] .
+                    ->setBody('Message envoyé par ' . $data['nom'] . ', représentant l\'entreprise ' . $data['entreprise'] .
+                        '<br/>Adresse d\'enlèvement : ' . $data['adresse'] . ' - ' . $data['cp'] . ' - ' . $data['ville'] .
                         '<br>Date d\'enlèvement : ' . date_format($data['date'], "Y/m/d") .
                         '<br/>Objets à collecter : ' . $data['objets'] .
                         '<br/>Numéro de téléphone : ' . $data['tel'] .
@@ -54,7 +54,7 @@ class EntrepriseController extends AbstractController
 
                 $mailer->send($message);
 
-                $this->addFlash('notice', 'Votre email a bien été envoyé. Nous vous repondrons au plus vite ');
+                $this->addFlash('notice', 'Votre email a bien été envoyé. Nous vous répondrons au plus vite ');
 
                 return $this->redirectToRoute('home');
             }

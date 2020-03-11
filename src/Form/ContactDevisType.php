@@ -47,16 +47,19 @@ class ContactDevisType extends AbstractType
                     'placeholder' => 'Poids de l\'objet',
                 ]
             ))
-            ->add('rue', TextType::class,array(
-                'label' => 'Rue',
+            ->add('adresse', TextType::class,array(
+                'label' => 'Adresse de récupération de l\'objet',
+                'required' => true,
+                'attr' => [
+                    'placeholder' => 'Renseignez l\'adresse de récupération de l\'objet',
+                ]
+            ))
+            ->add('cp', IntegerType::class,array(
+                'label' => 'Code Postal',
                 'required' => true,
             ))
             ->add('ville', TextType::class,array(
                 'label' => 'Ville',
-                'required' => true,
-            ))
-            ->add('cp', IntegerType::class,array(
-                'label' => 'Code Postal',
                 'required' => true,
             ))
             ->add('date', DateType::class,array(
