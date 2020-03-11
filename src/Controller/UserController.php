@@ -201,6 +201,20 @@ class UserController extends AbstractController
         }
     }
 
+    /**
+     * @Route("/profil/commande/{id}", name="show_command")
+     */
+    public function ShowCommande(CommandeRepository $repo, $id)
+    {
+        $commande = $repo->find($id);
+
+        return $this->render('achat/showCommande.html.twig', [
+            'controller_name' => 'AchatController',
+            'commande' => $commande,
+            'adresse' => explode('|', $commande->getShippingAddr()),
+        ]);
+    }
+
     ////////////////////ADMINISTRASTION////////////////////////////////
 
     /**
@@ -289,17 +303,5 @@ class UserController extends AbstractController
 
         return $this->redirectToRoute('afficher_admin');
     }
-    /**
-     * @Route("/profil/commande/{id}", name="show_command")
-     */
-    public function ShowCommande(CommandeRepository $repo, $id)
-    {
-        $commande = $repo->find($id);
 
-        return $this->render('achat/showCommande.html.twig', [
-            'controller_name' => 'AchatController',
-            'commande' => $commande,
-            'adresse' => explode('|', $commande->getShippingAddr()),
-        ]);
-    }
 }
