@@ -56,5 +56,5 @@ Pour accéder au site internet en production, vous pouvez aller sur eco-service.
 Dernière mise en prod : 11/03/2020
 
 Pour accéder au site internet en production, vous pouvez aller sur `eco-service.martinsoenen.com` ou ajouter la ligne
- `33.44.237.133 eco-service.com www.eco-service.com` à votre fichier de hosts pour pouvoir ensuite accéder au site
+ `37.44.237.50 eco-service.com www.eco-service.com` à votre fichier de hosts pour pouvoir ensuite accéder au site
   directement depuis l'URL www.eco-service.com !
