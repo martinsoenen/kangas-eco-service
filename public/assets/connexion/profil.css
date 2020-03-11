@@ -27,6 +27,17 @@ h1 {
 
 }
 
+.modif-link {
+    background-color: #f7cf9b;
+    border: none;
+    box-shadow: -2px 2px 5px 1px #222;
+}
+
+.profil-info i{
+    color: black;
+}
+
+
 @media (max-width: 767px)
 {
     .profil-container {

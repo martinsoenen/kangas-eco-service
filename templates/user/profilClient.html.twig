@@ -53,9 +53,9 @@
 							<td>{{adresse.numeroRue ~ ' '~ adresse.typeRue ~ ' '
 								~ adresse.nomRue ~ ' '~ adresse.CP ~ ' '~ adresse.Ville}}</td>
 							<td>
-								<i class="fa fa-pencil"></i>
-								<a href="/profil/adresse/{{adresse.id}}/edit">
-									Modifier</a>
+								
+								<a class="btn btn-primary modif-link" href="/profil/adresse/{{adresse.id}}/edit">
+								<i class="fa fa-pencil"></i></a>
 							</td>
 						</tr>
 					{% endfor %}
