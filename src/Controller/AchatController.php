@@ -31,16 +31,24 @@ class AchatController extends AbstractController
      */
     public function index(PanierService $panierService)
     {
-        if($this->getUser()->getUtilisateurType()=="client" ){
-            return $this->render('achat/index.html.twig', [
-                'controller_name' => 'AchatController',
-                'items' => $panierService->getPanierComplet(),
-                'total' => $panierService->getTotal()
-            ]);
-        }
-        else{
-            $this->addFlash('error', 'Vous avez un compte entreprise. Accès refusé.');
-            return $this->redirectToRoute('home');
+        if($this->getUser()!=null) {
+            if($this->getUser()->getUtilisateurType()=="client" ){
+                return $this->render('achat/index.html.twig', [
+                    'controller_name' => 'AchatController',
+                    'items' => $panierService->getPanierComplet(),
+                    'total' => $panierService->getTotal()
+                ]);
+            }
+            else{
+                $this->addFlash('error', 'Vous avez un compte entreprise. Accès refusé.');
+                return $this->redirectToRoute('home');
+            }
+        }else{
+        return $this->render('achat/index.html.twig', [
+                    'controller_name' => 'AchatController',
+                    'items' => $panierService->getPanierComplet(),
+                    'total' => $panierService->getTotal()
+                ]);
         }
     }
 
@@ -84,7 +92,7 @@ class AchatController extends AbstractController
                 'controller_name' => 'AchatController',
             ]);
         }else{
-            $this->addFlash('error', 'Veuillez vous connecter pour commander un article !!');
+            $this->addFlash('error', 'Veuillez vous connecter pour commander un article !');
             return $this->render('security/login.html.twig', [
                 'controller_name' => 'AchatController',
             ]);
