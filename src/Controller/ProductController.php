@@ -109,10 +109,12 @@ class ProductController extends AbstractController
 
             if($this->getUser()->getUtilisateurType()!="pro" ){
                 $id = $souscategorie->getId();
+                $categories = $this->getDoctrine()->getRepository(CategorieProduit::class)->findCategories();
                 $produits = $this->getDoctrine()->getRepository(Produit::class)->findProduitsBySousCategorie($id);
 
                 return $this->render('product/showBySousCategorie.html.twig', [
                     'controller_name' => 'ProductController',
+                    'categories' => $categories,
                     'souscategorie' => $souscategorie,
                     'produits' => $produits
                 ]);
@@ -121,7 +123,7 @@ class ProductController extends AbstractController
                 return $this->redirectToRoute('home');
             }
         }else{
-        
+
             $id = $souscategorie->getId();
             $produits = $this->getDoctrine()->getRepository(Produit::class)->findProduitsBySousCategorie($id);
 
@@ -139,10 +141,13 @@ class ProductController extends AbstractController
      */
     public function show(Produit $produit)
     {
-         if($this->getUser() !=null ){
+        $categories = $this->getDoctrine()->getRepository(CategorieProduit::class)->findCategories();
+
+        if($this->getUser() !=null ){
             if($this->getUser()->getUtilisateurType()!="pro" ){
                 return $this->render('product/show.html.twig', [
                     'controller_name' => 'ProductController',
+                    'categories' => $categories,
                     'produit' => $produit
                 ]);
             }
