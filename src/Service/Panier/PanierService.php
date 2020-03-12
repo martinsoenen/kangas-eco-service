@@ -43,7 +43,7 @@ class PanierService {
 
         foreach($panier as $id => $quantity) {
             $panierWithData[] = [
-                'product' => round($this->produitRepository->find($id),2),
+                'product' => $this->produitRepository->find($id),
                 'quantity' => $quantity
             ];
         }
