@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Blog - {{parent()}}{% endblock %}
+{% block title %}{% if article is defined %}{{ article.titre }} {% endif %}- {{parent()}}{% endblock %}
 
 {% block additional_stylesheets %}
     <link rel="stylesheet" type="text/css" href="{{asset('../assets/blog/blog.css')}}">
