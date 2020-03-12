@@ -2,11 +2,10 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\Request;
-
 use App\Form\ContactGeneralType;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 
 
 class EcoServiceController extends AbstractController
@@ -47,6 +46,13 @@ class EcoServiceController extends AbstractController
     public function contact(Request $request, \Swift_Mailer $mailer)
     {
         $form = $this->createForm(ContactGeneralType::class);
+        
+        if($this->getUser()!= null){
+            $user = $this->getUser();
+            $form->get('email')->setData($user->getEmail());
+            $form->get('nom')->setData($user->getNom());
+            $form->get('prenom')->setData($user->getPrenom());
+        }
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -65,7 +71,7 @@ class EcoServiceController extends AbstractController
             
             $mailer->send($message);
 
-            $this->addFlash('notice', 'Votre email a bien été envoyé. Nous vous repondrons au plus vite ');
+            $this->addFlash('sucess', 'Votre email a bien été envoyé. Nous vous repondrons au plus vite. ');
 
             return $this->redirectToRoute('home');
         }

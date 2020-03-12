@@ -4,16 +4,14 @@ namespace App\Controller;
 
 use App\Entity\Article;
 use App\Repository\ArticleRepository;
-use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManagerInterface;
-use phpDocumentor\Reflection\File;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaTypeType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 class BlogController extends AbstractController
@@ -51,7 +49,7 @@ class BlogController extends AbstractController
     }
 
     /**
-     * @Route("/admin/blog", name="blog_admin"))
+     * @Route("/admin/article", name="blog_admin"))
      */
     public function showAdminBlog()
     {
@@ -76,7 +74,7 @@ class BlogController extends AbstractController
 
     /**
      * @Route("/admin/article/add", name="add_article_admin"))
-     * @Route("/admin/{id}/edit", name="edit_article_admin"))
+     * @Route("/admin/article/{id}/edit", name="edit_article_admin"))
      */
     public function addAdminArticles(Article $article = null,Request $request,EntityManagerInterface $manager)
     {
@@ -120,7 +118,6 @@ class BlogController extends AbstractController
             );
             $article->setImage($newFilename);
             $article->setDate(new \DateTime());
-            // $article->setUtilisateurAdmin(null);
             $manager->persist($article);
             $manager->flush();
 

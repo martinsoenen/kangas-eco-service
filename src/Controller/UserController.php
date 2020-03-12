@@ -2,24 +2,23 @@
 
 namespace App\Controller;
 
-use App\Entity\Role;
-
-use Doctrine\ORM\EntityManagerInterface;
-
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-
-use Symfony\Component\Form\Extension\Core\Type\PasswordType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-
-use App\Entity\Utilisateur;
 use App\Entity\Adresse;
+use App\Entity\Commande;
+use App\Entity\Role;
+use App\Entity\Utilisateur;
 use App\Form\RegistrationTypeClient;
 use App\Form\RegistrationTypeEntreprise;
-use App\Form\AdresseType;
+use App\Repository\CommandeRepository;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\TelType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 
 class UserController extends AbstractController
@@ -31,12 +30,12 @@ class UserController extends AbstractController
      * @Route("/profil/client", name="profil_client")
      */
     public function profilClient()
-    {   
+    {
         if($this->getUser() != null){
             $UtilisateurId = $this->getUser()->getId();
 
             //Aiguillage particulier/entreprise
-            if($this->getUser()->getUtilisateurType()=="client" || $this->getUser()->getUtilisateurType()=="admin" ){
+            if($this->getUser()->getUtilisateurType()!="pro" ){
                 $userDetails = $this->getDoctrine()
                                     ->getRepository(Utilisateur::class)
                                     ->getUtilisateurClientById($UtilisateurId);
@@ -44,16 +43,22 @@ class UserController extends AbstractController
                                     ->getRepository(Adresse::class)
                                     ->getAdresseById($UtilisateurId);
 
+                $commandes = $this->getDoctrine()
+                    ->getRepository(Commande::class)
+                    ->findByUserId($this->getUser()->getId());
+
                 $form = $this->createForm(RegistrationTypeClient::class, $userDetails);
 
-                
+
                 return $this->render('user/profilClient.html.twig', [
                     'form' => $form->createView(),
                     'Adresse' => $Adresse,
+                    'commandes' => $commandes,
                     'controller_name' => 'UserController',
                 ]);
             }
             else {
+            $this->addFlash('error', 'Vous avez un compte entreprise. Accès refusé.');
                  return $this->redirectToRoute('profil_entreprise');
             }
         }
@@ -71,7 +76,7 @@ class UserController extends AbstractController
             $UtilisateurId = $this->getUser()->getId();
 
             //Aiguillage particulier/entreprise
-            if($this->getUser()->getUtilisateurType()=="client" || $this->getUser()->getUtilisateurType()=="admin") {
+            if($this->getUser()->getUtilisateurType()!="pro") {
                 $userDetails = $this->getDoctrine()
                                     ->getRepository(Utilisateur::class)
                                     ->getUtilisateurClientById($UtilisateurId);
@@ -189,6 +194,109 @@ class UserController extends AbstractController
         else {
             return $this->redirectToRoute('security_login');
         }
+    }
+
+    /**
+     * @Route("/profil/commande/{id}", name="show_command")
+     */
+    public function ShowCommande(CommandeRepository $repo, $id)
+    {
+        $commande = $repo->find($id);
+
+        return $this->render('achat/showCommande.html.twig', [
+            'controller_name' => 'AchatController',
+            'commande' => $commande,
+            'adresse' => explode('|', $commande->getShippingAddr()),
+        ]);
+    }
+
+    ////////////////////ADMINISTRASTION////////////////////////////////
+
+    /**
+     * @Route("/admin/user", name="afficher_admin"))
+     */
+    public function showAdminBlog()
+    {
+        $repo = $this->getDoctrine()->getRepository(Utilisateur::class);
+        $utilisateurs = $repo->findAll();
+
+        return $this->render('user/afficherAdmin.html.twig', [
+            'controller_name' => 'UserController',
+            'utilisateurs' => $utilisateurs,
+        ]);
+
+    }
+
+    /**
+     * @Route("/admin/user/addAdmin", name="add_user_admin")
+     * @Route("/admin/user/{id}/edit", name="edit_user_admin")
+     */
+    public function ajouterUtilisateur(Utilisateur $utilisateur = null,Request $request,EntityManagerInterface $manager){
+
+        if(!$utilisateur){
+            $utilisateur = new Utilisateur();
+        }
+
+        $form = $this->createFormBuilder($utilisateur)
+
+
+            ->add('UtilisateurType', ChoiceType::class, array(
+                'label' => false,
+                'choices' => array(
+                    'Administrateur' => 'admin',
+                    'Modérateur' => 'modo',
+                    'Particulier' => 'client',
+                    'Professionnel' => 'pro',
+                ),
+                'required' => true
+            ))
+
+            ->add('email', EmailType::class)
+
+            ->add('civilite', ChoiceType::class, array(
+                'label' => false,
+                'placeholder' => 'Civilité',
+                'choices' => array(
+                    'Mr' => 'mr',
+                    'Mme' => 'mme',
+                    'Autre' => 'autre'
+                ),
+                'required' => true
+            ))
+
+            ->add('password', PasswordType::class)
+            ->add('nom',TextType::class)
+            ->add('prenom',TextType::class)
+            ->add('telephone', TelType::class )
+            ->getForm();
+
+
+        $form->handleRequest($request);
+
+
+        if($form->isSubmitted()&& $form->isValid()) {
+
+            $manager->persist($utilisateur);
+            $manager->flush();
+
+            return $this->redirectToRoute('afficher_admin');
+        }
+
+        return $this->render('user/ajouterAdmin.html.twig', [
+            'controller_name' => 'UserController',
+            'formAdmin'=> $form->createView(),
+            'editMode'=>$utilisateur!== null,
+        ]);
+    }
+
+    /**
+     * @Route("/admin/user/{id}/delete", name="delete_user_admin"))
+     */
+    public function deleteAdmin(Utilisateur $utilisateur,EntityManagerInterface $manager){
+        $manager->remove($utilisateur);
+        $manager->flush();
+
+        return $this->redirectToRoute('afficher_admin');
     }
 
 }

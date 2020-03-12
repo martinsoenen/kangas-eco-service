@@ -2,21 +2,12 @@
 
 namespace App\Controller;
 
-use App\Entity\Article;
 use App\Entity\CategorieProduit;
-use App\Entity\Produit;
-use App\Entity\SousCategorieProduit;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
-use Symfony\Component\Form\Extension\Core\Type\NumberType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Routing\Annotation\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Validator\Constraints\File;
+use Symfony\Component\Routing\Annotation\Route;
 
 class CategorieProduitController extends AbstractController
 {
@@ -34,7 +25,7 @@ class CategorieProduitController extends AbstractController
     }
 
     /**
-     * @Route("/admin/produit/ajouter-categorie", name="ajouter_categorie_produit")
+     * @Route("/admin/produit/categorie/add", name="ajouter_categorie_produit")
      * @Route("/admin/produit/categorie/{id}/edit", name="modifier_categorie_produit")
      */
     public function ajouterCategorieProduit(CategorieProduit $categorieProduit = null,Request $request,EntityManagerInterface $manager)

@@ -25,6 +25,17 @@
         {% include 'partials/_diy-button.html.twig' %}
 
         <div class="container">
+
+        {# Pour les messages  #}
+        {% for label, messages in app.flashes %}
+            {% for message in messages %}
+                <div class="alert-{{ label }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endfor %}
+
+        {# Reste #}
         {% block body %}{% endblock %}
         </div>
 
@@ -39,6 +50,4 @@
 
     {% block body_after %}{% endblock %}
     </body>
-
-
 </html>
