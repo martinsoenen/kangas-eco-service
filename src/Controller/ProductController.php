@@ -212,7 +212,7 @@ class ProductController extends AbstractController
             $manager->remove($produit);
             $manager->flush();
 
-            return $this->redirectToRoute('admin-produits');
+            return $this->redirectToRoute('admin_produits');
         }else{
             $this->addFlash('error', 'Vous avez un compte non admin. Accès refusé.');
             return $this->redirectToRoute('home');
