@@ -86,11 +86,13 @@ class ProductController extends AbstractController
     {
         if($this->getUser()->getUtilisateurType()!="pro" ){
             $id = $categorie->getId();
+            $categories = $this->getDoctrine()->getRepository(CategorieProduit::class)->findCategories();
             $produits = $this->getDoctrine()->getRepository(Produit::class)->findProduitsByCategorie($id);
 
             return $this->render('product/showByCategorie.html.twig', [
                 'controller_name' => 'ProductController',
                 'categorie' => $categorie,
+                'categories' => $categories,
                 'produits' => $produits
             ]);
         }else{
