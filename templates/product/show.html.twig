@@ -2,19 +2,96 @@
 
 {% block title %}Produit - {{ parent() }}{% endblock %}
 
-{% block body %}
-<div>
-    <h1>{{ produit.nomProduit }}</h1>
+{% block additional_stylesheets %}
 
-    <p>
-        Présentation : {{ produit.presentation }}<br/>
-        Prix HT : {{ produit.prixUnitaireHT }}€ - TVA : {{ produit.tauxTVA }}% <br/>
-        Prix TTC : {{ (produit.prixUnitaireHT * (1 + produit.tauxTVA / 100)) }}€ <br/>
-        Description : {{ produit.descriptionDetaillee }} <br/>
-    </p>
-    <input id="{{ produit.id }}" type="number" name="quantite" value=1 >
-    <a id="{{ produit.id }}" class="btn btn-success"><i class="fa fa-shopping-cart mr-1"> Ajouter au panier</i></a>
+    <link rel="stylesheet" type="text/css" href="{{asset('../assets/product/magasin.css')}}">
+
+{% endblock %}
+
+{% block body_before %}
+<div id="menu-overlay" onclick="closeCategoryMenu()">
+{% endblock %}
+
+    {% block body %}
+        <form id="search-bar-magasin-container" class="row" action="{{ path('magasin_search') }}" method="get">
+            <input id="search-bar-magasin" type="text" name="name" id="name" required placeholder="Rechercher">
+            <button id="search-bar-magasin-button" type="submit" value="Rechercher" >
+                <i class="fa fa-search fa-lg"></i>
+            </button>
+        </form>
+
+        <div id="accueil-magasin">
+            <div class="produit-container col-sm-12">
+                <div class="produit-subcontainer">
+                    <img class="image" src="{{ asset( produit.image ) }}">
+
+                    <div id="details-produit">
+                        <h1>{{ produit.nomProduit }}</h1>
+                        <h5 class="text-center">{{ produit.SousCategorieProduit.categorieProduit.nom }} - {{ produit.SousCategorieProduit.nom }}</h5>
+
+                        <div id="details-prix-produit">
+                            <div id="details-ht-produit">
+                                <span class="details-produit-labels">Prix HT :</span> {{ produit.prixUnitaireHT }} € / Unité
+                            </div>
+                            <div id="details-tva-produit">
+                                <span class="details-produit-labels">TVA :</span> {{ produit.tauxTVA }} %
+                            </div>
+                            <div id="details-ttc-produit">
+                                <span class="details-produit-labels">Prix TTC :</span> {{ (produit.prixUnitaireHT * (1 + produit.tauxTVA / 100)) }} € / Unité
+                            </div>
+                        </div>
+                        <p id="desciption-details-produit">
+                            <span class="details-produit-labels">Description :</span> {{ produit.descriptionDetaillee }} <br/>
+                        </p>
+                    </div>
+
+                    <div class="details-produit-achat-direct">
+                        <input class="small-input" id="{{ produit.id }}" type="number" name="quantite" value=1>
+                        <a id="{{ produit.id }}" class="bouton-ajout btn btn-success">
+                            <i class="fa fa-shopping-cart mr-1"></i>Ajouter
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+
+            <a id="open-menu-button" href="javascript:openCategoryMenu()" style="cursor:pointer">
+                <i id="open-menu-button-icon" class="fa fa-caret-right fa-3x"></i>
+            </a>
+
+        </div>
+
+    {% endblock %}
+
+{% block body_after %}
 </div>
+    <div id="categories-produits-container" class="sidenav">
+        <a id="close-menu-button" href="javascript:closeCategoryMenu()" style="cursor:pointer">
+            <i id="close-menu-button-icon" class="fa fa-caret-left fa-3x"></i>
+        </a>
+        <div id="categories-produits">
+            {% for categ in categories %}
+                <div id="{{ categ.id }}" class="categorie-produits">
+                    <a data-toggle="collapse" data-parent="#categories-produits"
+                       href="#sous-categories-{{ categ.id }}">
+                        <h4 class="categorie-produits-label">
+                            {{ categ.nom }}
+                        </h4>
+                    </a>
+                    <div id="sous-categories-{{ categ.id }}" class="sous-categories-produits panel-collapse collapse">
+                        {% for souscateg in categ.sousCategorieProduits %}
+                            <div id="#sous-categorie-{{ souscateg.id }}" class="sous-categorie-produits">
+                                <a class="sous-categorie-produits-link"
+                                   href="{{ path('sous_categorie_produit', {'id': souscateg.id }) }}">
+                                    <h6>{{ souscateg.nom }}</h6>
+                                </a>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
 {% endblock %}
 
 {% block javascripts %}
@@ -32,11 +109,33 @@
                 },
                 dataType: "integer",
                 success: function(response) {
-                    console.log(response);
+                    // console.log(response);
                 }
             });
             alert('Le produit a bien été ajouté au panier');
         });
+
+        function openCategoryMenu() {
+            document.getElementById("categories-produits-container").style.width = "330px";
+            document.getElementById("categories-produits-container").style.paddingRight = "30px";
+            document.getElementById("categories-produits").style.width = "300px";
+            document.getElementById("categories-produits").style.border = "2px solid #555555dd";
+            document.getElementById("categories-produits").style.borderLeft = "0";
+            document.getElementById("close-menu-button").style.display = "block";
+            document.getElementById("menu-overlay").style.zIndex = "10";
+            document.getElementById("menu-overlay").style.opacity = "0.7";
+        }
+
+        function closeCategoryMenu() {
+            document.getElementById("categories-produits-container").style.width = "0";
+            document.getElementById("categories-produits-container").style.paddingRight = "0";
+            document.getElementById("categories-produits").style.width = "0";
+            document.getElementById("categories-produits").style.marginRight = "0";
+            document.getElementById("categories-produits").style.border = "0";
+            document.getElementById("close-menu-button").style.display = "none";
+            document.getElementById("menu-overlay").style.zIndex = "5";
+            document.getElementById("menu-overlay").style.opacity = "1";
+        }
 
     </script>
 {% endblock %}
