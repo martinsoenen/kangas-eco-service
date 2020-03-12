@@ -172,7 +172,7 @@ class ProductController extends AbstractController
      */
     public function admin_show()
     {
-        if($this->getUser()->getUtilisateurType()=="admin" ){
+        if($this->getUser() != null && $this->getUser()->getUtilisateurType()=="admin"){
             $repo = $this->getDoctrine()->getRepository(Produit::class);
             $produits = $repo->findAll();
             return $this->render('product/admin_show.html.twig', [
@@ -191,7 +191,7 @@ class ProductController extends AbstractController
      */
     public function ajouterProduit(Produit $produit = null,Request $request,EntityManagerInterface $manager)
     {
-        if($this->getUser()->getUtilisateurType()!="pro" ){
+        if($this->getUser() != null && $this->getUser()->getUtilisateurType()=="admin"){
             $editmode = true;
             if(!$produit) {
                 $produit = new Produit();
@@ -264,7 +264,7 @@ class ProductController extends AbstractController
      *  @Route("/admin/produit/{id}/delete", name="delete_produit")
      */
     public function deleteProduit(Produit $produit, EntityManagerInterface $manager){
-        if($this->getUser()->getUtilisateurType()!="pro" ){
+        if($this->getUser() != null && $this->getUser()->getUtilisateurType()=="admin"){
             $manager->remove($produit);
             $manager->flush();
 
