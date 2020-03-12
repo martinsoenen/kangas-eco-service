@@ -68,7 +68,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/profil/client/edit", name="client_edit")
+     * @Route("/profil/client/editer", name="client_edit")
      */
     public function ClientEdit(Request $request, UserPasswordEncoderInterface $encoder)
     {   
@@ -152,7 +152,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/profil/entreprise/edit", name="entreprise_edit")
+     * @Route("/profil/entreprise/editer", name="entreprise_edit")
      */
     public function EntrepriseEdit(Request $request, UserPasswordEncoderInterface $encoder)
     {   

@@ -4,12 +4,63 @@
 	{{parent()}}
 {% endblock %}
 
+{% block additional_stylesheets %}
+    <link rel="stylesheet" type="text/css" href="{{asset('../assets/connexion/profil.css')}}">
+{% endblock %}
 
 {% block body %}
-	Modifier mon adresse
-	<hr>
-	{{form_start(form)}}
-		{{form(form)}}
-		<a href="{{path('profil_client')}}" class="btn btn-danger">Abandonner</a>
-	{{form_end(form)}}
+		<div class="profil">
+			<div class="user-info profil-container">
+			{% if app.request.get('_route') == 'adresse_new' %}
+				<h1>Ajouter une adresse</h1>
+			{% else %}
+				<h1>Modifier une adresse</h1>
+			{% endif %}
+				<div class="perso profil-info">
+					{{form_start(form)}}
+						<div class="profil-info__item row">
+							<label class="col-md-4 col-12">Nom de votre adresse</label>
+							<div class="col-md-8">{{ form_widget(form.nom) }}</div>
+						</div>
+
+						<div class="profil-info__item row">
+							<label class="col-md-4 col-12">Numero de rue</label>
+							<div class="col-md-8">{{ form_widget(form.numeroRue) }}</div>
+						</div>
+
+						<div class="profil-info__item row">
+							<label class="col-md-4 col-12">Type de rue</label>
+							<div class="col-md-8">{{ form_widget(form.typeRue) }}</div>
+						</div>
+
+						<div class="profil-info__item row">
+							<label class="col-md-4 col-12">Type de rue</label>
+							<div class="col-md-8">{{ form_widget(form.nomRue) }}</div>
+						</div>
+						
+						<div class="profil-info__item row">
+							<label class="col-md-4 col-12">Nom de la rue</label>
+							<div class="col-md-8">{{ form_widget(form.CP) }}</div>
+						</div>
+						
+						<div class="profil-info__item row">
+							<label class="col-md-4 col-12">Ville</label>
+							<div class="col-md-8">{{ form_widget(form.Ville) }}</div>
+						</div>
+
+						<div class="bouton-valid">
+							<div class="profil-info__item profil-info__button row">
+								<a href="{{path('profil_client')}}" class="btn btn-danger">Abandonner</a>
+							</div>
+
+							<div class="profil-info__item profil-info__button row">
+								{{ form_row(form._token) }}
+								{{form_widget(form.save) }}
+							</div>
+						</div>
+						
+					{{form_end(form)}}
+				</div>
+			</div>
+		</div>
 {% endblock %}
