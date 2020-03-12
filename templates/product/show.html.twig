@@ -37,7 +37,8 @@
                                 <span class="details-produit-labels">TVA :</span> {{ produit.tauxTVA }} %
                             </div>
                             <div id="details-ttc-produit">
-                                <span class="details-produit-labels">Prix TTC :</span> {{ (produit.prixUnitaireHT * (1 + produit.tauxTVA / 100)) }} € / Unité
+                                <span class="details-produit-labels">Prix TTC :</span> {{ (produit.prixUnitaireHT *
+                                (1 + produit.tauxTVA / 100)) |round(2) }} € / Unité
                             </div>
                         </div>
                         <p id="desciption-details-produit">

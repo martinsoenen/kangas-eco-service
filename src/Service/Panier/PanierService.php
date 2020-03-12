@@ -43,7 +43,7 @@ class PanierService {
 
         foreach($panier as $id => $quantity) {
             $panierWithData[] = [
-                'product' => $this->produitRepository->find($id),
+                'product' => round($this->produitRepository->find($id),2),
                 'quantity' => $quantity
             ];
         }
@@ -58,7 +58,7 @@ class PanierService {
             $total += $item['product']->getPrixUnitaireHT() * (1 + $item['product']->getTauxTVA()/100) * $item['quantity'];
         }
 
-        return $total;
+        return round($total,2);
     }
 
     public function reset() {
