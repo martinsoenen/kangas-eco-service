@@ -16,7 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class SousCategorieProduitController extends AbstractController
 {
     /**
-     * @Route("/admin/produits/sous-categorie", name="admin_souscategorie_produits")
+     * @Route("/admin/produits/souscategorie", name="admin_souscategorie_produits")
      */
     public function afficherSousCategorieProduit()
     {
@@ -79,13 +79,17 @@ class SousCategorieProduitController extends AbstractController
      *  @Route("/admin/produit/souscategorie/{id}/delete", name="delete_souscategorie_produit")
      */
     public function deleteSousCategorieProduit(SousCategorieProduit $sousCategorieProduit, EntityManagerInterface $manager){
-        
+
         if($this->getUser() != null && $this->getUser()->getUtilisateurType()=="admin"){
-
-            $manager->remove($sousCategorieProduit);
-            $manager->flush();
-
-            return $this->redirectToRoute('admin-souscategorie-produits');
+            $repo = $this->getDoctrine()->getRepository(SousCategorieProduit::class);
+            $produit = $repo->findProduitsBySousCategorie($sousCategorieProduit->getId());
+            if($produit != null) {
+                $manager->remove($sousCategorieProduit);
+                $manager->flush();
+            }else{
+                $this->addFlash('error', 'Il y a un ou plusieurs produits pour cette sous catégorie, veuillez modifier le(s) produit(s)');
+           }
+        return $this->redirectToRoute('admin_souscategorie_produits');
         }else{
             $this->addFlash('error', 'Vous avez un compte non admin. Accès refusé.');
             return $this->redirectToRoute('home');

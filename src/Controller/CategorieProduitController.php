@@ -16,18 +16,12 @@ class CategorieProduitController extends AbstractController
      */
     public function afficherCategorieProduit()
     {
-        if($this->getUser() != null && $this->getUser()->getUtilisateurType()=="admin"){
-            $repo = $this->getDoctrine()->getRepository(CategorieProduit::class);
-            $categories = $repo->findAll();
-            return $this->render('product/afficherCategorieProduit.html.twig', [
-                'controller_name' => 'CategorieProduitController',
-                'categories' => $categories
-            ]);
-
-        }else{
-            $this->addFlash('error', 'Vous avez un compte non admin. Accès refusé.');
-            return $this->redirectToRoute('home');
-        }
+        $repo = $this->getDoctrine()->getRepository(CategorieProduit::class);
+        $categories = $repo->findAll();
+        return $this->render('product/afficherCategorieProduit.html.twig', [
+            'controller_name' => 'CategorieProduitController',
+            'categories' => $categories
+        ]);
     }
 
     /**
@@ -76,10 +70,14 @@ class CategorieProduitController extends AbstractController
      */
     public function deleteCategorieProduit(CategorieProduit $categorieProduit, EntityManagerInterface $manager){
         if($this->getUser() != null && $this->getUser()->getUtilisateurType()=="admin"){
-
-            $manager->remove($categorieProduit);
-            $manager->flush();
-
+            $repo = $this->getDoctrine()->getRepository(CategorieProduit::class);
+            $produit = $repo->findProduitsBySousCategorie($categorieProduit->getId());
+            if($produit != null) {
+                $manager->remove($categorieProduit);
+                $manager->flush();
+            }else{
+                $this->addFlash('error', 'Il y a un ou plusieurs produits pour cette catégorie, veuillez modifier le(s) produit(s)');
+            }
             return $this->redirectToRoute('admin-categorie-produits');
         }
         else{
