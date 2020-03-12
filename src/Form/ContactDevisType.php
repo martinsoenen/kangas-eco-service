@@ -43,14 +43,14 @@ class ContactDevisType extends AbstractType
                 'label' => 'Poids de l\'objet',
                 'required' => true,
                 'attr' => [
-                    'placeholder' => 'Poids de l\'objet en kg',
+                    'placeholder' => 'Poids de l\'objet',
                 ]
             ))
             ->add('taille', IntegerType::class,array(
                 'label' => 'Taille de l\'objet',
                 'required' => true,
                 'attr' => [
-                    'placeholder' => 'Taille de l\'objet en m³',
+                    'placeholder' => 'Taille de l\'objet',
                 ]
             ))
             ->add('image', FileType::class,array(

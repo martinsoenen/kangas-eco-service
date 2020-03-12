@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Catégorie - {{ parent() }}{% endblock %}
+{% block title %}Catégorie {% if categorie is defined %}{{ categorie.nom }} {% endif %}- {{ parent() }}{% endblock %}
 
 {% block additional_stylesheets %}
 
