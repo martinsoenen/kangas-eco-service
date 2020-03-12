@@ -3,22 +3,18 @@
 namespace App\Controller;
 
 use App\Entity\Commande;
-use App\Repository\CommandeRepository;
 use App\Service\Panier\PanierService;
 use PayPal\Api\Amount;
 use PayPal\Api\Details;
-use PayPal\Api\PaymentExecution;
-use PayPal\Api\Transaction;
-use PayPal\Rest\ApiContext;
 use PayPal\Api\Item;
 use PayPal\Api\ItemList;
-use PayPal\Auth\OAuthTokenCredential;
 use PayPal\Api\Payer;
 use PayPal\Api\Payment;
 use PayPal\Api\RedirectUrls;
+use PayPal\Api\Transaction;
+use PayPal\Auth\OAuthTokenCredential;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGenerator;
 
@@ -31,16 +27,24 @@ class AchatController extends AbstractController
      */
     public function index(PanierService $panierService)
     {
-        if($this->getUser()->getUtilisateurType()=="client" ){
-            return $this->render('achat/index.html.twig', [
-                'controller_name' => 'AchatController',
-                'items' => $panierService->getPanierComplet(),
-                'total' => $panierService->getTotal()
-            ]);
-        }
-        else{
-            $this->addFlash('error', 'Vous avez un compte entreprise. Accès refusé.');
-            return $this->redirectToRoute('home');
+        if($this->getUser()!=null) {
+            if($this->getUser()->getUtilisateurType()!="pro" ){
+                return $this->render('achat/index.html.twig', [
+                    'controller_name' => 'AchatController',
+                    'items' => $panierService->getPanierComplet(),
+                    'total' => $panierService->getTotal()
+                ]);
+            }
+            else{
+                $this->addFlash('error', 'Vous avez un compte entreprise. Accès refusé.');
+                return $this->redirectToRoute('home');
+            }
+        }else{
+        return $this->render('achat/index.html.twig', [
+                    'controller_name' => 'AchatController',
+                    'items' => $panierService->getPanierComplet(),
+                    'total' => $panierService->getTotal()
+                ]);
         }
     }
 
@@ -50,7 +54,7 @@ class AchatController extends AbstractController
     public function paiement(PanierService $panierService)
     {
         if($this->getUser()!=null) {
-            if($this->getUser()->getUtilisateurType()=="client"){
+            if($this->getUser()->getUtilisateurType()!="pro"){
                 $credentials = [
                     'id' => 'Ae0q9Y6VL5tsv0vcBvzBMv3kjg7mM50yooD8C9u2nm1HmVa5pcCa9GH-Ov7swbpl1CHru_D2G_GXCQ4O',
                     'secret' => 'EFN_usuuBumAEyMgasVcamuZCaimCZ7JJzCWqsFbYKZ08HhQ6y43jENMHLJrk8qHhYfQRzXnt2SBYVHI'
@@ -74,17 +78,46 @@ class AchatController extends AbstractController
 
                     $totalPrice += ($product['quantity'] * round(($product['product']->getPrixUnitaireHT() * (1 + $product['product']->getTauxTVA() / 100)), 2));
                 }
+                $details = (new Details())
+                    ->setSubtotal($totalPrice);
+                //            TODO:Ajouter la TVA
+                //            ->setTax();
+
+                $amount = (new Amount())
+                    ->setTotal($totalPrice)
+                    ->setCurrency('EUR')
+                    ->setDetails($details);
+
+                $transaction = (new Transaction())
+                    ->setItemList($list)
+                    ->setDescription('Achat sur le site Eco-Service')
+                    ->setAmount($amount);
+
+                $payment = new Payment();
+                $payment->setTransactions([$transaction]);
+                $payment->setIntent('sale');
+                $redirectUrls = (new RedirectUrls())
+                    ->setReturnUrl($this->generateUrl('panier_paiement_termine', [], UrlGenerator::ABSOLUTE_URL))
+                    ->setCancelUrl($this->generateUrl('panier', [], UrlGenerator::ABSOLUTE_URL));
+                $payment->setRedirectUrls($redirectUrls);
+                $payment->setPayer((new Payer())->setPaymentMethod('paypal'));
+
+                try {
+                    $payment->create($apiContext);
+                    header('Location: '.$payment->getApprovalLink());
+                } catch (\PayPal\Exception\PayPalConnectionException $e) {
+                    dump(json_decode($e->getData()));
+                }
+                return $this->render('achat/showCommande.html.twig', [
+                    'controller_name' => 'AchatController',
+                ]);
             }
             else {
                 $this->addFlash('error', 'Vous avez un compte entreprise. Accès refusé.');
                 return $this->redirectToRoute('home');
             }
-
-            return $this->render('achat/showCommande.html.twig', [
-                'controller_name' => 'AchatController',
-            ]);
         }else{
-            $this->addFlash('error', 'Veuillez vous connecter pour commander un article !!');
+            $this->addFlash('error', 'Veuillez vous connecter pour commander un article !');
             return $this->render('security/login.html.twig', [
                 'controller_name' => 'AchatController',
             ]);

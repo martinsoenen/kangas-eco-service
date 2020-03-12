@@ -2,29 +2,23 @@
 
 namespace App\Controller;
 
+use App\Entity\Adresse;
 use App\Entity\Commande;
 use App\Entity\Role;
-
+use App\Entity\Utilisateur;
+use App\Form\RegistrationTypeClient;
+use App\Form\RegistrationTypeEntreprise;
 use App\Repository\CommandeRepository;
 use Doctrine\ORM\EntityManagerInterface;
-
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\TelType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-
-use App\Entity\Utilisateur;
-use App\Entity\Adresse;
-use App\Form\RegistrationTypeClient;
-use App\Form\RegistrationTypeEntreprise;
-use App\Form\AdresseType;
 
 
 class UserController extends AbstractController
@@ -41,7 +35,7 @@ class UserController extends AbstractController
             $UtilisateurId = $this->getUser()->getId();
 
             //Aiguillage particulier/entreprise
-            if($this->getUser()->getUtilisateurType()=="client" || $this->getUser()->getUtilisateurType()=="admin" ){
+            if($this->getUser()->getUtilisateurType()!="pro" ){
                 $userDetails = $this->getDoctrine()
                                     ->getRepository(Utilisateur::class)
                                     ->getUtilisateurClientById($UtilisateurId);
@@ -82,7 +76,7 @@ class UserController extends AbstractController
             $UtilisateurId = $this->getUser()->getId();
 
             //Aiguillage particulier/entreprise
-            if($this->getUser()->getUtilisateurType()=="client" || $this->getUser()->getUtilisateurType()=="admin") {
+            if($this->getUser()->getUtilisateurType()!="pro") {
                 $userDetails = $this->getDoctrine()
                                     ->getRepository(Utilisateur::class)
                                     ->getUtilisateurClientById($UtilisateurId);
