@@ -107,3 +107,8 @@ h1 {
         width: 100%;
     }
 }
+
+.bouton-valid {
+    display: flex;
+    justify-content: space-around;
+}
