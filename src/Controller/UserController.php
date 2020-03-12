@@ -201,13 +201,18 @@ class UserController extends AbstractController
      */
     public function ShowCommande(CommandeRepository $repo, $id)
     {
-        $commande = $repo->find($id);
+        if($this->getUser() != null){
+            $commande = $repo->find($id);
 
-        return $this->render('achat/showCommande.html.twig', [
-            'controller_name' => 'AchatController',
-            'commande' => $commande,
-            'adresse' => explode('|', $commande->getShippingAddr()),
-        ]);
+            return $this->render('achat/showCommande.html.twig', [
+                'controller_name' => 'AchatController',
+                'commande' => $commande,
+                'adresse' => explode('|', $commande->getShippingAddr()),
+            ]);
+        }else{
+            $this->addFlash('error', 'Veuillez vos connecter. Accès refusé.');
+            return $this->redirectToRoute('security_login');
+        }
     }
 
     ////////////////////ADMINISTRASTION////////////////////////////////
@@ -217,13 +222,20 @@ class UserController extends AbstractController
      */
     public function showAdminBlog()
     {
-        $repo = $this->getDoctrine()->getRepository(Utilisateur::class);
-        $utilisateurs = $repo->findAll();
 
-        return $this->render('user/afficherAdmin.html.twig', [
-            'controller_name' => 'UserController',
-            'utilisateurs' => $utilisateurs,
-        ]);
+        if($this->getUser() != null && $this->getUser()->getUtilisateurType()=="admin"){
+            $repo = $this->getDoctrine()->getRepository(Utilisateur::class);
+            $utilisateurs = $repo->findAll();
+
+            return $this->render('user/afficherAdmin.html.twig', [
+                'controller_name' => 'UserController',
+                'utilisateurs' => $utilisateurs,
+            ]);
+
+         }else{
+            $this->addFlash('error', 'Veuillez vos connecter en tant qu\'administrateur. Accès refusé.');
+            return $this->redirectToRoute('security_login');
+        }
 
     }
 
@@ -233,70 +245,86 @@ class UserController extends AbstractController
      */
     public function ajouterUtilisateur(Utilisateur $utilisateur = null,Request $request,EntityManagerInterface $manager){
 
-        if(!$utilisateur){
-            $utilisateur = new Utilisateur();
+        if($this->getUser() != null && $this->getUser()->getUtilisateurType()=="admin"){
+
+
+            if(!$utilisateur){
+                $utilisateur = new Utilisateur();
+            }
+
+            $form = $this->createFormBuilder($utilisateur)
+
+
+                ->add('UtilisateurType', ChoiceType::class, array(
+                    'label' => false,
+                    'choices' => array(
+                        'Administrateur' => 'admin',
+                        'Modérateur' => 'modo',
+                        'Particulier' => 'client',
+                        'Professionnel' => 'pro',
+                    ),
+                    'required' => true
+                ))
+
+                ->add('email', EmailType::class)
+
+                ->add('civilite', ChoiceType::class, array(
+                    'label' => false,
+                    'placeholder' => 'Civilité',
+                    'choices' => array(
+                        'Mr' => 'mr',
+                        'Mme' => 'mme',
+                        'Autre' => 'autre'
+                    ),
+                    'required' => true
+                ))
+
+                ->add('password', PasswordType::class)
+                ->add('nom',TextType::class)
+                ->add('prenom',TextType::class)
+                ->add('telephone', TelType::class )
+                ->getForm();
+
+
+            $form->handleRequest($request);
+
+
+            if($form->isSubmitted()&& $form->isValid()) {
+
+                $manager->persist($utilisateur);
+                $manager->flush();
+
+                return $this->redirectToRoute('afficher_admin');
+            }
+
+            return $this->render('user/ajouterAdmin.html.twig', [
+                'controller_name' => 'UserController',
+                'formAdmin'=> $form->createView(),
+                'editMode'=>$utilisateur!== null,
+            ]);
+
+        }else{
+            $this->addFlash('error', 'Veuillez vos connecter en tant qu\'administrateur. Accès refusé.');
+            return $this->redirectToRoute('security_login');
         }
-
-        $form = $this->createFormBuilder($utilisateur)
-
-
-            ->add('UtilisateurType', ChoiceType::class, array(
-                'label' => false,
-                'choices' => array(
-                    'Administrateur' => 'admin',
-                    'Modérateur' => 'modo',
-                    'Particulier' => 'client',
-                    'Professionnel' => 'pro',
-                ),
-                'required' => true
-            ))
-
-            ->add('email', EmailType::class)
-
-            ->add('civilite', ChoiceType::class, array(
-                'label' => false,
-                'placeholder' => 'Civilité',
-                'choices' => array(
-                    'Mr' => 'mr',
-                    'Mme' => 'mme',
-                    'Autre' => 'autre'
-                ),
-                'required' => true
-            ))
-
-            ->add('password', PasswordType::class)
-            ->add('nom',TextType::class)
-            ->add('prenom',TextType::class)
-            ->add('telephone', TelType::class )
-            ->getForm();
-
-
-        $form->handleRequest($request);
-
-
-        if($form->isSubmitted()&& $form->isValid()) {
-
-            $manager->persist($utilisateur);
-            $manager->flush();
-
-            return $this->redirectToRoute('afficher_admin');
-        }
-
-        return $this->render('user/ajouterAdmin.html.twig', [
-            'controller_name' => 'UserController',
-            'formAdmin'=> $form->createView(),
-            'editMode'=>$utilisateur!== null,
-        ]);
     }
 
     /**
      * @Route("/admin/user/{id}/delete", name="delete_user_admin"))
      */
     public function deleteAdmin(Utilisateur $utilisateur,EntityManagerInterface $manager){
-        $manager->remove($utilisateur);
-        $manager->flush();
 
-        return $this->redirectToRoute('afficher_admin');
+        if($this->getUser() != null && $this->getUser()->getUtilisateurType()=="admin"){
+
+            $manager->remove($utilisateur);
+            $manager->flush();
+
+            return $this->redirectToRoute('afficher_admin');
+
+        }else{
+            $this->addFlash('error', 'Veuillez vos connecter en tant qu\'administrateur. Accès refusé.');
+            return $this->redirectToRoute('security_login');
+        }
     }
 
 }
