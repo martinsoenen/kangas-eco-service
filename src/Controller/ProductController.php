@@ -122,9 +122,12 @@ class ProductController extends AbstractController
      */
     public function show(Produit $produit)
     {
+        $categories = $this->getDoctrine()->getRepository(CategorieProduit::class)->findCategories();
+
         if($this->getUser()->getUtilisateurType()!="pro" ){
             return $this->render('product/show.html.twig', [
                 'controller_name' => 'ProductController',
+                'categories' => $categories,
                 'produit' => $produit
             ]);
         }

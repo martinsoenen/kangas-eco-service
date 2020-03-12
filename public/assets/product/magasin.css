@@ -76,7 +76,7 @@
     font-family: "Lato";
 }
 
-.produit-achat-direct .bouton-ajout i
+.produit-achat-direct .bouton-ajout i, .details-produit-achat-direct .bouton-ajout i
 {
     color: #222;
 }
@@ -287,4 +287,47 @@
 {
     color: #222222;
     font-weight: bold;
+}
+
+/*=================================================
+               Détails Produit
+=================================================*/
+
+#details-prix-produit
+{
+    margin-top: 40px;
+    text-align: right;
+}
+
+#details-ht-produit
+{
+    font-weight: bold;
+    font-size: 18px;
+}
+
+#details-tva-produit
+{
+    font-size: 16px;
+}
+
+#details-ttc-produit
+{
+    float: right;
+    width: max-content;
+    border-top: 1px solid #555;
+    margin-top: 5px;
+    padding: 5px 0 5px 40px;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+#desciption-details-produit
+{
+    margin: 80px 10px 20px 10px;
+}
+
+.details-produit-achat-direct
+{
+    float: right;
+    margin-top: -30px;
 }
