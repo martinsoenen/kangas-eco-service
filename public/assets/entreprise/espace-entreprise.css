@@ -1,0 +1,38 @@
+#nav-onglets-entreprises
+{
+    height: 60px;
+}
+
+
+#nav-onglets-entreprises.nav-pills .nav-link.active
+{
+    background-color: #8ed86e;
+    border: 2px solid #244d11;
+    color: #244d11;
+    font-weight: bold;
+    border-top: 0;
+    border-radius: 0;
+    height: 60px;
+}
+
+#nav-onglets-entreprises.nav-pills .nav-link
+{
+    justify-content: center;
+    margin: 0;
+    background-color: #8ed86e;
+    border-radius: 0;
+    height: 50px;
+}
+
+.item-entreprise
+{
+    padding: 0 2px;
+}
+
+.image-services-entreprise
+{
+    width: 100%;
+    height: auto;
+    max-height: 330px;
+    margin: 10px auto;
+}
