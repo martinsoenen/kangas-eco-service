@@ -37,6 +37,7 @@
                         </a>
                     </li>
                     {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                        <div class="profil-item ">
                         <li class="nav-item">
                             <a class="nav-link profil-button" href="{{ path('profil_client') }}">Profil
                                 <i id="profile-icon" class="link-icon fa fa-user fa-2x"></i>
@@ -47,6 +48,7 @@
                                 <i id="logout-icon" class="link-icon fa fa-sign-out fa-2x"></i>
                             </a>
                         </li>
+                        <div>
                     {% else %}
                         <li class="nav-item">
                             <a class="nav-link connexion-button" href="{{ path('security_login') }}">Connexion

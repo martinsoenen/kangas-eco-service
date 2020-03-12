@@ -136,15 +136,12 @@ thead tr {
 .connexion-button {
     position: absolute;
     right: 75px;
-    bottom: 15px;
 }
 
 .profil-button {
     position: absolute;
     right: 200px;
-    bottom: 15px;
 }
-
 
 /*=======================================================================
                                 FOOTER PART
@@ -215,16 +212,6 @@ thead tr {
     }
     h1 {
         font-size: 25px;
-    }
-    .connexion-button {
-        position: relative;
-        right: auto;
-        bottom: auto;
-    }
-    .profil-button {
-        position: relative;
-        right: auto;
-        bottom: auto;
     }
 }
 

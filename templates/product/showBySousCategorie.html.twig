@@ -2,13 +2,142 @@
 
 {% block title %}Sous-Catégorie - {{ parent() }}{% endblock %}
 
-{% block body %}
-    <div>
-        <h1>{{ souscategorie.nom }}</h1>
 
-        {% for produit in produits %}
-            <h4>{{ produit.nom_produit }}</h4>
-            <p>{{ produit.presentation }} - {{ produit.description_detaillee }}</p>
-        {% endfor %}
+{% block additional_stylesheets %}
+
+    <link rel="stylesheet" type="text/css" href="{{asset('../assets/product/magasin.css')}}">
+
+{% endblock %}
+
+{% block body_before %}
+<div id="menu-overlay" onclick="closeCategoryMenu()">
+{% endblock %}
+
+    {% block body %}
+        <form id="search-bar-magasin-container" class="row" action="{{ path('magasin_search') }}" method="get">
+            <input id="search-bar-magasin" type="text" name="name" id="name" required placeholder="Rechercher">
+            <button id="search-bar-magasin-button" type="submit" value="Rechercher" >
+                <i class="fa fa-search fa-lg"></i>
+            </button>
+        </form>
+
+        {# TODO : Pagination ici#}
+
+        <div id="accueil-magasin">
+
+            <h1 class="text-center">{{ souscategorie.categorieProduit.nom }} - {{ souscategorie.nom }}</h1>
+
+            <div id="products" class="row">
+                {% if produits != [] %}
+                    {% for produit in produits %}
+                        <div class="produit-container col-lg-4 col-md-6 col-sm-12">
+                            <a class="general-link" href="{{ path('magasin_produit', {'id' : produit.id}) }}">
+                                <div class="produit-subcontainer">
+                                    <img class="image" src="{{ asset( produit.image ) }}">
+                                    <p>{{ produit.presentation }}</p>
+                                </div>
+                                <div class="relative-subcontainer">
+                                    <div class="produit-labels">
+                                        <h5>{{ produit.nom_produit }}</h5>
+                                        <p>{{ produit.prix_unitaire_ht }} € / Unité</p>
+                                    </div>
+                                    <div class="produit-achat-direct">
+                                        <input class="small-input" id="{{ produit.id }}" type="number" name="quantite" value=1>
+                                        <a id="{{ produit.id }}" class="bouton-ajout btn btn-success">
+                                            <i class="fa fa-shopping-cart mr-1"></i>Ajouter
+                                        </a>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    Aucun produit n'a été trouvé.
+                {% endif %}
+            </div>
+
+            <a id="open-menu-button" href="javascript:openCategoryMenu()" style="cursor:pointer">
+                <i id="open-menu-button-icon" class="fa fa-caret-right fa-3x"></i>
+            </a>
+        </div>
+
+        {# TODO : Pagination ici#}
+
+    {% endblock %}
+
+{% block body_after %}
+</div>
+    <div id="categories-produits-container" class="sidenav">
+        <a id="close-menu-button" href="javascript:closeCategoryMenu()" style="cursor:pointer">
+            <i id="close-menu-button-icon" class="fa fa-caret-left fa-3x"></i>
+        </a>
+        <div id="categories-produits">
+            {% for categ in categories %}
+                <div id="{{ categ.id }}" class="categorie-produits">
+                    <a data-toggle="collapse" data-parent="#categories-produits"
+                       href="#sous-categories-{{ categ.id }}">
+                        <h4 class="categorie-produits-label">
+                            {{ categ.nom }}
+                        </h4>
+                    </a>
+                    <div id="sous-categories-{{ categ.id }}" class="sous-categories-produits panel-collapse collapse">
+                        {% for souscateg in categ.sousCategorieProduits %}
+                            <div id="#sous-categorie-{{ souscateg.id }}" class="sous-categorie-produits">
+                                <a class="sous-categorie-produits-link"
+                                   href="{{ path('sous_categorie_produit', {'id': souscateg.id }) }}">
+                                    <h6>{{ souscateg.nom }}</h6>
+                                </a>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
     </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent()}}
+    <script>
+        $('.btn.btn-success').click(function() {
+            let id = $(this).attr('id');
+            let value = $("#"+id+"[name='quantite']").val();
+
+            $.ajax({
+                url : '/panier/add/'+ id,
+                type : 'GET',
+                data : {
+                    quantite: value
+                },
+                dataType: "integer",
+                success: function(response) {
+                    // console.log(response);
+                }
+            });
+            alert('Le produit a bien été ajouté au panier');
+        });
+
+        function openCategoryMenu() {
+            document.getElementById("categories-produits-container").style.width = "330px";
+            document.getElementById("categories-produits-container").style.paddingRight = "30px";
+            document.getElementById("categories-produits").style.width = "300px";
+            document.getElementById("categories-produits").style.border = "2px solid #555555dd";
+            document.getElementById("categories-produits").style.borderLeft = "0";
+            document.getElementById("close-menu-button").style.display = "block";
+            document.getElementById("menu-overlay").style.zIndex = "10";
+            document.getElementById("menu-overlay").style.opacity = "0.7";
+        }
+
+        function closeCategoryMenu() {
+            document.getElementById("categories-produits-container").style.width = "0";
+            document.getElementById("categories-produits-container").style.paddingRight = "0";
+            document.getElementById("categories-produits").style.width = "0";
+            document.getElementById("categories-produits").style.marginRight = "0";
+            document.getElementById("categories-produits").style.border = "0";
+            document.getElementById("close-menu-button").style.display = "none";
+            document.getElementById("menu-overlay").style.zIndex = "5";
+            document.getElementById("menu-overlay").style.opacity = "1";
+        }
+
+    </script>
 {% endblock %}

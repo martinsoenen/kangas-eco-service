@@ -50,7 +50,7 @@ class CategorieProduitController extends AbstractController
 
             $manager->persist($categorieProduit);
             $manager->flush();
-            return $this->redirectToRoute('admin-categorie-produits');
+            return $this->redirectToRoute('admin_categorie_produits');
         }
 
         return $this->render('product/ajouterCategorieProduit.html.twig', [
