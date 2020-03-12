@@ -16,7 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class SousCategorieProduitController extends AbstractController
 {
     /**
-     * @Route("/admin/produits/souscategorie", name="admin_souscategorie_produits")
+     * @Route("/admin/produits/sous_categorie", name="admin_sous_categorie_produits")
      */
     public function afficherSousCategorieProduit()
     {
@@ -61,7 +61,7 @@ class SousCategorieProduitController extends AbstractController
 
                 $manager->persist($sousCategorieProduit);
                 $manager->flush();
-                return $this->redirectToRoute('admin_souscategorie_produits');
+                return $this->redirectToRoute('admin_sous_categorie_produits');
             }
 
             return $this->render('product/ajouterSousCategorieProduit.html.twig', [
@@ -89,7 +89,7 @@ class SousCategorieProduitController extends AbstractController
             }else{
                 $this->addFlash('error', 'Il y a un ou plusieurs produits pour cette sous catégorie, veuillez modifier le(s) produit(s)');
            }
-        return $this->redirectToRoute('admin_souscategorie_produits');
+        return $this->redirectToRoute('admin_sous_categorie_produits');
         }else{
             $this->addFlash('error', 'Vous avez un compte non admin. Accès refusé.');
             return $this->redirectToRoute('home');

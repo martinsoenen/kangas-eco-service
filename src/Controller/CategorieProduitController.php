@@ -16,12 +16,17 @@ class CategorieProduitController extends AbstractController
      */
     public function afficherCategorieProduit()
     {
-        $repo = $this->getDoctrine()->getRepository(CategorieProduit::class);
-        $categories = $repo->findAll();
-        return $this->render('product/afficherCategorieProduit.html.twig', [
-            'controller_name' => 'CategorieProduitController',
-            'categories' => $categories
-        ]);
+        if($this->getUser() != null && $this->getUser()->getUtilisateurType()=="admin") {
+            $repo = $this->getDoctrine()->getRepository(CategorieProduit::class);
+            $categories = $repo->findAll();
+            return $this->render('product/afficherCategorieProduit.html.twig', [
+                'controller_name' => 'CategorieProduitController',
+                'categories' => $categories
+            ]);
+        }else{
+            $this->addFlash('error', 'Vous avez un compte non admin. Accès refusé.');
+            return $this->redirectToRoute('home');
+        }
     }
 
     /**
