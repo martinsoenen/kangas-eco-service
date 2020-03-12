@@ -35,4 +35,17 @@ class UtilisateurRepository extends ServiceEntityRepository
             ->getOneOrNullResult();
         
     }
+
+     public function getAllUserAdministration(){ //Admin + Modérateurs
+            return $this->createQueryBuilder('u')
+            ->andWhere('u.utilisateurType = :admin OR u.utilisateurType = :modo')
+            ->setParameter('admin', 'admin')
+            ->setParameter('modo', 'modo')          
+            ->getQuery()
+            ->getResult();
+        
+    }
+
+
+
 }

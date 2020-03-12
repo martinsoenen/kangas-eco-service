@@ -225,7 +225,7 @@ class UserController extends AbstractController
 
         if($this->getUser() != null && $this->getUser()->getUtilisateurType()=="admin"){
             $repo = $this->getDoctrine()->getRepository(Utilisateur::class);
-            $utilisateurs = $repo->findAll();
+            $utilisateurs = $repo->getAllUserAdministration();
 
             return $this->render('user/afficherAdmin.html.twig', [
                 'controller_name' => 'UserController',
