@@ -108,10 +108,11 @@
      left: 0;
      overflow-x: hidden;
      transition: 0.6s;
-     padding-top: 60px;
+     padding: 20px 10px;
  }
 
 #categories-produits{
+    direction: rtl;
     height: 96%;
     width: 0;
     position: fixed;
@@ -125,8 +126,8 @@
     padding-top: 60px;
 }
 
-
 #categories-produits .categorie-produits {
+    direction: ltr;
     padding: 8px 8px 8px 32px;
     text-decoration: none;
     font-size: 25px;
@@ -139,7 +140,7 @@
 }
 
 @media screen and (max-height: 450px) {
-    .categories-produits {padding-top: 15px;}
+    .categories-produits {padding: 15px 0;}
     .categories-produits .categorie-produits {font-size: 18px;}
 }
 
