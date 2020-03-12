@@ -98,23 +98,35 @@ class ProductController extends AbstractController
      */
     public function sous_categorie(SousCategorieProduit $souscategorie)
     {
-        if($this->getUser()->getUtilisateurType()!="pro" ){
+        if($this->getUser() !=null ){
+
+            if($this->getUser()->getUtilisateurType()!="pro" ){
+                $id = $souscategorie->getId();
+                $categories = $this->getDoctrine()->getRepository(CategorieProduit::class)->findCategories();
+                $produits = $this->getDoctrine()->getRepository(Produit::class)->findProduitsBySousCategorie($id);
+
+                return $this->render('product/showBySousCategorie.html.twig', [
+                    'controller_name' => 'ProductController',
+                    'categories' => $categories,
+                    'souscategorie' => $souscategorie,
+                    'produits' => $produits
+                ]);
+            }else{
+                $this->addFlash('error', 'Vous avez un compte entreprise. Accès refusé.');
+                return $this->redirectToRoute('home');
+            }
+        }else{
+
             $id = $souscategorie->getId();
-            $categories = $this->getDoctrine()->getRepository(CategorieProduit::class)->findCategories();
             $produits = $this->getDoctrine()->getRepository(Produit::class)->findProduitsBySousCategorie($id);
 
             return $this->render('product/showBySousCategorie.html.twig', [
                 'controller_name' => 'ProductController',
-                'categories' => $categories,
                 'souscategorie' => $souscategorie,
                 'produits' => $produits
             ]);
-        }else{
-            $this->addFlash('error', 'Vous avez un compte entreprise. Accès refusé.');
-            return $this->redirectToRoute('home');
         }
     }
-
 
     /**
      * @Route("/magasin/produit_{id}", name="magasin_produit")
@@ -124,17 +136,25 @@ class ProductController extends AbstractController
     {
         $categories = $this->getDoctrine()->getRepository(CategorieProduit::class)->findCategories();
 
-        if($this->getUser()->getUtilisateurType()!="pro" ){
-            return $this->render('product/show.html.twig', [
-                'controller_name' => 'ProductController',
-                'categories' => $categories,
-                'produit' => $produit
-            ]);
-        }
-        else {
-            $this->addFlash('error', 'Vous avez un compte entreprise. Accès refusé.');
-            return $this->redirectToRoute('home');
-        }
+        if($this->getUser() !=null ){
+            if($this->getUser()->getUtilisateurType()!="pro" ){
+                return $this->render('product/show.html.twig', [
+                    'controller_name' => 'ProductController',
+                    'categories' => $categories,
+                    'produit' => $produit
+                ]);
+            }
+            else {
+                $this->addFlash('error', 'Vous avez un compte entreprise. Accès refusé.');
+                return $this->redirectToRoute('home');
+            }
+         }else{
+             return $this->render('product/show.html.twig', [
+                    'controller_name' => 'ProductController',
+                    'produit' => $produit
+                ]);
+         }
+
     }
 
     /**
