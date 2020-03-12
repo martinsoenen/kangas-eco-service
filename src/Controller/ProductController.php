@@ -2,21 +2,20 @@
 
 namespace App\Controller;
 
-use App\Entity\Article;
 use App\Entity\CategorieProduit;
 use App\Entity\Produit;
-use App\Entity\UtilisateurAdministration;
 use App\Entity\SousCategorieProduit;
+use App\Entity\UtilisateurAdministration;
 use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Routing\Annotation\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Constraints\File;
 
 class ProductController extends AbstractController
@@ -26,9 +25,43 @@ class ProductController extends AbstractController
      */
     public function index()
     {
-        if($this->getUser()->getUtilisateurType()=="client" ){
-       
-        $produits = $this->getDoctrine()->getRepository(Produit::class)->findAll();
+        if($this->getUser()!=null) {
+            if($this->getUser()->getUtilisateurType()!="pro" ){
+        
+            $produits = $this->getDoctrine()->getRepository(Produit::class)->findAll();
+            $categories = $this->getDoctrine()->getRepository(CategorieProduit::class)->findCategories();
+
+            return $this->render('product/index.html.twig', [
+                'controller_name' => 'ProductController',
+                'produits' => $produits,
+                'categories' => $categories
+            ]);
+            
+            }
+            else{
+                $this->addFlash('error', 'Vous avez un compte entreprise. Accès refusé.');
+                return $this->redirectToRoute('home');
+            }
+        }else{
+            $produits = $this->getDoctrine()->getRepository(Produit::class)->findAll();
+            $categories = $this->getDoctrine()->getRepository(CategorieProduit::class)->findCategories();
+
+            return $this->render('product/index.html.twig', [
+                'controller_name' => 'ProductController',
+                'produits' => $produits,
+                'categories' => $categories
+            ]);
+        }
+    }
+
+    /**
+     * @Route("/magasin/recherche", name="magasin_search", methods={"GET","POST"})
+     */
+    public function magasinRecherche(Request $request)
+    {
+//        $request->query->get('name');
+
+        $produits = $this->getDoctrine()->getRepository(Produit::class)->findBySearch($request->query->get('name'));
         $categories = $this->getDoctrine()->getRepository(CategorieProduit::class)->findCategories();
 
         return $this->render('product/index.html.twig', [
@@ -36,12 +69,6 @@ class ProductController extends AbstractController
             'produits' => $produits,
             'categories' => $categories
         ]);
-        
-        }
-        else{
-             $this->addFlash('error', 'Vous avez un compte entreprise. Accès refusé.');
-            return $this->redirectToRoute('home');
-        }
     }
 
     /**
@@ -50,7 +77,7 @@ class ProductController extends AbstractController
      */
     public function categorie(CategorieProduit $categorie)
     {
-        if($this->getUser()->getUtilisateurType()=="client" ){
+        if($this->getUser()->getUtilisateurType()!="pro" ){
             $id = $categorie->getId();
             $produits = $this->getDoctrine()->getRepository(Produit::class)->findProduitsByCategorie($id);
 
@@ -71,7 +98,7 @@ class ProductController extends AbstractController
      */
     public function sous_categorie(SousCategorieProduit $souscategorie)
     {
-        if($this->getUser()->getUtilisateurType()=="client" ){
+        if($this->getUser()->getUtilisateurType()!="pro" ){
             $id = $souscategorie->getId();
             $produits = $this->getDoctrine()->getRepository(Produit::class)->findProduitsBySousCategorie($id);
 
@@ -93,7 +120,7 @@ class ProductController extends AbstractController
      */
     public function show(Produit $produit)
     {
-        if($this->getUser()->getUtilisateurType()=="client" ){
+        if($this->getUser()->getUtilisateurType()!="pro" ){
             return $this->render('product/show.html.twig', [
                 'controller_name' => 'ProductController',
                 'produit' => $produit
@@ -106,7 +133,7 @@ class ProductController extends AbstractController
     }
 
     /**
-     * @Route("/admin/produits", name="admin-produits")
+     * @Route("/admin/produits", name="admin_produits")
      */
     public function admin_show()
     {
@@ -124,12 +151,12 @@ class ProductController extends AbstractController
     }
 
     /**
-     * @Route("/admin/ajouter-produit", name="ajouter_produit")
+     * @Route("/admin/produit/add", name="ajouter_produit")
      * @Route("/admin/produit/{id}/edit", name="modifier_produit")
      */
     public function ajouterProduit(Produit $produit = null,Request $request,EntityManagerInterface $manager)
     {
-        if($this->getUser()->getUtilisateurType()=="client" ){
+        if($this->getUser()->getUtilisateurType()!="pro" ){
             $editmode = true;
             if(!$produit) {
                 $produit = new Produit();
@@ -202,7 +229,7 @@ class ProductController extends AbstractController
      *  @Route("/admin/produit/{id}/delete", name="delete_produit")
      */
     public function deleteProduit(Produit $produit, EntityManagerInterface $manager){
-        if($this->getUser()->getUtilisateurType()=="client" ){
+        if($this->getUser()->getUtilisateurType()!="pro" ){
             $manager->remove($produit);
             $manager->flush();
 
