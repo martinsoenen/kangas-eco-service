@@ -76,7 +76,7 @@
     font-family: "Lato";
 }
 
-.produit-achat-direct .bouton-ajout i
+.produit-achat-direct .bouton-ajout i, .details-produit-achat-direct .bouton-ajout i
 {
     color: #222;
 }
@@ -89,6 +89,7 @@
 /*=================================================
                     Menu Catégories
 =================================================*/
+
 #menu-overlay
 {
     z-index: 5;
@@ -107,10 +108,11 @@
      left: 0;
      overflow-x: hidden;
      transition: 0.6s;
-     padding-top: 60px;
+     padding: 20px 10px;
  }
 
 #categories-produits{
+    direction: rtl;
     height: 96%;
     width: 0;
     position: fixed;
@@ -124,8 +126,8 @@
     padding-top: 60px;
 }
 
-
 #categories-produits .categorie-produits {
+    direction: ltr;
     padding: 8px 8px 8px 32px;
     text-decoration: none;
     font-size: 25px;
@@ -138,7 +140,7 @@
 }
 
 @media screen and (max-height: 450px) {
-    .categories-produits {padding-top: 15px;}
+    .categories-produits {padding: 15px 0;}
     .categories-produits .categorie-produits {font-size: 18px;}
 }
 
@@ -230,4 +232,103 @@
 {
     background-color: #8ed86e;
     border-radius: 30px;
+}
+
+/*=================================================
+               Barre de recherche
+=================================================*/
+
+#search-bar-magasin-container
+{
+    position: relative;
+}
+
+#search-bar-magasin
+{
+    width: 100%;
+    margin: 20px 10px 0 10px;
+    border: solid 1px #555555;
+    border-radius: 20px;
+    padding: 5px 20px;
+}
+
+#search-bar-magasin:focus
+{
+    box-shadow: 0 0 5px 0 #555;
+    border-color: #888;
+    outline: none;
+}
+
+#search-bar-magasin-button
+{
+    z-index: 2;
+    background-color: white;
+    width: 34px;
+    height: 34px;
+    position: absolute;
+    border: 2px solid transparent;
+    margin-top: 20px;
+    border-radius: 20px;
+    top: 1px;
+    right: 14px;
+    padding: 0;
+}
+
+#search-bar-magasin-button i
+{
+    color: #555555;
+    width: 36px;
+    height: 36px;
+    position: relative;
+    top: 3px;
+    right: 7px;
+}
+
+#search-bar-magasin-button:hover i
+{
+    color: #222222;
+    font-weight: bold;
+}
+
+/*=================================================
+               Détails Produit
+=================================================*/
+
+#details-prix-produit
+{
+    margin-top: 40px;
+    text-align: right;
+}
+
+#details-ht-produit
+{
+    font-weight: bold;
+    font-size: 18px;
+}
+
+#details-tva-produit
+{
+    font-size: 16px;
+}
+
+#details-ttc-produit
+{
+    float: right;
+    width: max-content;
+    border-top: 1px solid #555;
+    margin-top: 5px;
+    padding: 5px 0 5px 40px;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+#desciption-details-produit
+{
+    margin: 80px 10px 20px 10px;
+}
+
+.details-produit-achat-direct
+{
+    float: right;
+    margin-top: -30px;
 }

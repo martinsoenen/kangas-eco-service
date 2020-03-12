@@ -48,10 +48,17 @@
 							<div class="col-md-8">{{ form_widget(form.Ville) }}</div>
 						</div>
 
-						<div class="profil-info__item profil-info__button row">
-							{{ form_row(form._token) }}
-							{{form_widget(form.save) }}
+						<div class="bouton-valid">
+							<div class="profil-info__item profil-info__button row">
+								<a href="{{path('profil_client')}}" class="btn btn-danger">Abandonner</a>
+							</div>
+
+							<div class="profil-info__item profil-info__button row">
+								{{ form_row(form._token) }}
+								{{form_widget(form.save) }}
+							</div>
 						</div>
+						
 					{{form_end(form)}}
 				</div>
 			</div>

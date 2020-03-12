@@ -16,12 +16,18 @@ class CategorieProduitController extends AbstractController
      */
     public function afficherCategorieProduit()
     {
-        $repo = $this->getDoctrine()->getRepository(CategorieProduit::class);
-        $categories = $repo->findAll();
-        return $this->render('product/afficherCategorieProduit.html.twig', [
-            'controller_name' => 'CategorieProduitController',
-            'categories' => $categories
-        ]);
+        if($this->getUser() != null && $this->getUser()->getUtilisateurType()=="admin"){
+            $repo = $this->getDoctrine()->getRepository(CategorieProduit::class);
+            $categories = $repo->findAll();
+            return $this->render('product/afficherCategorieProduit.html.twig', [
+                'controller_name' => 'CategorieProduitController',
+                'categories' => $categories
+            ]);
+
+        }else{
+            $this->addFlash('error', 'Vous avez un compte non admin. Accès refusé.');
+            return $this->redirectToRoute('home');
+        }
     }
 
     /**
@@ -30,43 +36,55 @@ class CategorieProduitController extends AbstractController
      */
     public function ajouterCategorieProduit(CategorieProduit $categorieProduit = null,Request $request,EntityManagerInterface $manager)
     {
-        $editmode = true;
-        if(!$categorieProduit) {
-            $categorieProduit = new CategorieProduit();
-            $editmode = false;
+        if($this->getUser() != null && $this->getUser()->getUtilisateurType()=="admin"){
+            $editmode = true;
+            if(!$categorieProduit) {
+                $categorieProduit = new CategorieProduit();
+                $editmode = false;
+            }
+            $form = $this->createFormBuilder($categorieProduit)
+                ->add('nom',TextType::class,array('required'  => true))
+                // ->add('UtilisateurAdmin',EntityType::class,[
+                //     'class' => UtilisateurAdministration::class,
+                //     'choice_label' => 'Nom',
+                //     'required'  => true,
+                // ])
+                ->getForm();
+
+            $form->handleRequest($request);
+
+            if($form->isSubmitted()&& $form->isValid()) {
+
+                $manager->persist($categorieProduit);
+                $manager->flush();
+                return $this->redirectToRoute('admin_categorie_produits');
+            }
+
+            return $this->render('product/ajouterCategorieProduit.html.twig', [
+                'controller_name' => 'CategorieProduitController',
+                'formCategorieProduit'=> $form->createView(),
+                'editMode'=>$editmode,
+            ]);
+        }else{
+            $this->addFlash('error', 'Vous avez un compte non admin. Accès refusé.');
+            return $this->redirectToRoute('home');
         }
-        $form = $this->createFormBuilder($categorieProduit)
-            ->add('nom',TextType::class,array('required'  => true))
-            // ->add('UtilisateurAdmin',EntityType::class,[
-            //     'class' => UtilisateurAdministration::class,
-            //     'choice_label' => 'Nom',
-            //     'required'  => true,
-            // ])
-            ->getForm();
-
-        $form->handleRequest($request);
-
-        if($form->isSubmitted()&& $form->isValid()) {
-
-            $manager->persist($categorieProduit);
-            $manager->flush();
-            return $this->redirectToRoute('admin-categorie-produits');
-        }
-
-        return $this->render('product/ajouterCategorieProduit.html.twig', [
-            'controller_name' => 'CategorieProduitController',
-            'formCategorieProduit'=> $form->createView(),
-            'editMode'=>$editmode,
-        ]);
     }
 
     /**
      *  @Route("/admin/produit/categorie/{id}/delete", name="delete_categorie_produit")
      */
     public function deleteCategorieProduit(CategorieProduit $categorieProduit, EntityManagerInterface $manager){
-        $manager->remove($categorieProduit);
-        $manager->flush();
+        if($this->getUser() != null && $this->getUser()->getUtilisateurType()=="admin"){
 
-        return $this->redirectToRoute('admin-categorie-produits');
+            $manager->remove($categorieProduit);
+            $manager->flush();
+
+            return $this->redirectToRoute('admin-categorie-produits');
+        }
+        else{
+            $this->addFlash('error', 'Vous avez un compte non admin. Accès refusé.');
+            return $this->redirectToRoute('home');
+        }
     }
 }
