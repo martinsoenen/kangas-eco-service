@@ -2,21 +2,20 @@
 
 namespace App\Controller;
 
-use App\Entity\Article;
 use App\Entity\CategorieProduit;
 use App\Entity\Produit;
-use App\Entity\UtilisateurAdministration;
 use App\Entity\SousCategorieProduit;
+use App\Entity\UtilisateurAdministration;
 use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Routing\Annotation\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Constraints\File;
 
 class ProductController extends AbstractController
@@ -53,6 +52,23 @@ class ProductController extends AbstractController
                 'categories' => $categories
             ]);
         }
+    }
+
+    /**
+     * @Route("/magasin/recherche", name="magasin_search", methods={"GET","POST"})
+     */
+    public function magasinRecherche(Request $request)
+    {
+//        $request->query->get('name');
+
+        $produits = $this->getDoctrine()->getRepository(Produit::class)->findBySearch($request->query->get('name'));
+        $categories = $this->getDoctrine()->getRepository(CategorieProduit::class)->findCategories();
+
+        return $this->render('product/index.html.twig', [
+            'controller_name' => 'ProductController',
+            'produits' => $produits,
+            'categories' => $categories
+        ]);
     }
 
     /**
