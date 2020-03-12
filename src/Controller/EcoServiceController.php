@@ -94,7 +94,7 @@ class EcoServiceController extends AbstractController
             ]);
         }else{
             $this->addFlash('error', 'Veuillez vos connecter en tant qu\'administrateur. Accès refusé.');
-            return $this->redirectToRoute('security_login');
+            return $this->redirectToRoute('home');
         }
     }
 

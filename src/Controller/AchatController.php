@@ -193,7 +193,7 @@ class AchatController extends AbstractController
     }
 
     /**
-     * @Route("/panier/add/{id}", name="panier_add", methods={"GET","HEAD"})
+     * @Route("/panier/ajouter/{id}", name="panier_add", methods={"GET","HEAD"})
      */
     public function add(Request $request, $id, PanierService $panierService)
     {
@@ -207,7 +207,7 @@ class AchatController extends AbstractController
     }
 
     /**
-     * @Route("/panier/remove/{id}", name="panier_remove")
+     * @Route("/panier/retirer/{id}", name="panier_remove")
      */
     public function remove($id, PanierService $panierService)
     {
