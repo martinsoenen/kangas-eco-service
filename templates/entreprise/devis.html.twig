@@ -3,6 +3,19 @@
 {% block title %}Devis en ligne - {{ parent() }}{% endblock %}
 
 {% block body %}
+
+<ul id="nav-onglets-entreprises" class="nav nav-pills row" id="pills-tab">
+	<li class="nav-item item-entreprise  col-6">
+		<a class="nav-link w-100" id="services-tab" href="{{path('entreprise_services')}}">Nos Services
+		</a>
+	</li>
+	<li class="nav-item item-entreprise active col-6">
+		<a class="nav-link active w-100" id="devis-contact-tab" href="{{path('entreprise_devis')}}">Devis en ligne</a>
+	</li>
+</ul>
+
+
+
     <h1>Devis en ligne </h1>
     {{ form_start(form) }}
         {{form_row(form.entreprise)}}
@@ -11,6 +24,8 @@
         {{form_row(form.tel)}}
         {{form_row(form.objets)}}
         {{form_row(form.poids)}}
+        {{form_row(form.taille)}}
+        {{form_row(form.image)}}
         {{form_row(form.adresse)}}
         {{form_row(form.cp)}}
         {{form_row(form.ville)}}

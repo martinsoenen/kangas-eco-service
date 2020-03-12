@@ -10,6 +10,18 @@
 <section class="container">
     <div class="row ">
         <h1>{{ article.titre }}</h1>
+        <h6>
+            Ajouté
+            {% set difference = date("now" ).diff(date(article.date)) %}
+            {% set leftDays = difference.days %}
+            {% if leftDays == 0 %}
+                aujourd'hui
+            {% elseif leftDays == 1 %}
+                il y a 1 jour
+            {% else %}
+                il y a {{ leftDays }} jours
+            {% endif %}
+        </h6>
         <div class="article-item">
             <img src="https://via.placeholder.com/700x500/" class="card-img-top" alt="...">
             <div class="offset-md-1 col-md-10">
