@@ -54,7 +54,7 @@ class SousCategorieProduitController extends AbstractController
 
             $manager->persist($sousCategorieProduit);
             $manager->flush();
-            return $this->redirectToRoute('admin-souscategorie-produits');
+            return $this->redirectToRoute('admin_souscategorie_produits');
         }
 
         return $this->render('product/ajouterSousCategorieProduit.html.twig', [
