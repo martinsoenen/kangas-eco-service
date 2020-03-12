@@ -32,7 +32,7 @@
                         <div class="produit-container col-lg-4 col-md-6 col-sm-12">
                             <a class="general-link" href="{{ path('magasin_produit', {'id' : produit.id}) }}">
                                 <div class="produit-subcontainer">
-                                    <img class="image" src="{{ asset( produit.image ) }}">
+                                    <img class="image" src="{{ asset('../uploads/images/produits/'~ produit.image ) }}">
                                     <p>{{ produit.presentation }}</p>
                                 </div>
                                 <div class="relative-subcontainer">
