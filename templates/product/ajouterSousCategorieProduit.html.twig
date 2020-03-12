@@ -3,9 +3,11 @@
 {% block body %}
     {{ form_start(formSousCategorieProduit) }}
 
-    {{ form_row(formSousCategorieProduit.nom, {'label' : 'Nom du produit :','attr' : {'placeholder' : "Nom"}}) }}
-    {{ form_row(formSousCategorieProduit.CategorieProduit, {'label' : 'utilisateur:','attr' : {'placeholder' :
-        "utilisateur"}}) }}
+    {{ form_row(formSousCategorieProduit.CategorieProduit, {'label' : 'Categorie :','attr' : {'placeholder' :
+        "Categorie"}}) }}
+    {{ form_row(formSousCategorieProduit.nom, {'label' : 'Nom de la sous categorie :','attr' : {'placeholder' :
+        "Nom de la sous categorie"}}) }}
+
     <button type="submit" class="btn btn-success ">
         {% if editMode %}
             Enregistrer les modifications

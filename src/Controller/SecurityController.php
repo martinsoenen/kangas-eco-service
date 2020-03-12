@@ -14,6 +14,8 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Csrf\TokenGenerator\TokenGeneratorInterface;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+
 
 class SecurityController extends AbstractController
 {
@@ -63,13 +65,15 @@ class SecurityController extends AbstractController
                 $em->persist($Utilisateur);
                 $em->flush();
 
-                 return $this->redirectToRoute('home');
+                $this->addFlash('sucess', 'Votre compte a bien été créé !');
+                return $this->redirectToRoute('home');
             }
             if ($formAdresse->isSubmitted() && $formAdresse->isValid()) { 
                 $Adresse->setUtilisateur($Utilisateur);
                 $em->persist($Adresse);
                 $em->flush();
 
+                $this->addFlash('sucess', 'Votre compte a bien été créé !');
                 return $this->redirectToRoute('home');
             }
 
@@ -170,17 +174,24 @@ class SecurityController extends AbstractController
      * @Route("/deconnexion/", name="security_logout")
      */
     public function logout(){
-
+        $this->addFlash('sucess', 'Vous avez été déconnecté.');
     }
 
     /**
      * @Route("/connexion/", name="security_login")
      */
-    public function login(){
+    public function login(AuthenticationUtils $authenticationUtils){
+        
+
+        $error = $authenticationUtils->getLastAuthenticationError();
 
         if($this->getUser() == null){
+            if ($error)
+                $this->addFlash('error', 'Mot de passe ou adresse e-mail invalide' );
+                
             return $this->render('security/login.html.twig', [
                 'controller_name' => 'SecurityController',
+                'error'         => $error,
             ]);
         }
         else{
