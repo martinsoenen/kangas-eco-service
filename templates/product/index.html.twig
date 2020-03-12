@@ -17,11 +17,11 @@
 {% for categ in categories %}
     <div class="dropdown">
         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <a class="dropdown-item" href="{{ path('categorie-produit', {'id': categ.id }) }}">{{ categ.nom }}</a>  {# TODO front : vérifier si le lien est fonctionnel car je ne peux pas#}
+            <a class="dropdown-item" href="{{ path('categorie_produit', {'id': categ.id }) }}">{{ categ.nom }}</a>
         </button>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
             {% for souscateg in categ.sousCategorieProduits %}
-                <a class="dropdown-item" href="{{ path('sous-categorie-produit', {'id': souscateg.id }) }}">{{ souscateg.nom }}</a> {# TODO front : vérifier si le lien est fonctionnel car je ne peux pas #}
+                <a class="dropdown-item" href="{{ path('sous_categorie_produit', {'id': souscateg.id }) }}">{{ souscateg.nom }}</a>
             {% endfor %}
         </div>
     </div>
