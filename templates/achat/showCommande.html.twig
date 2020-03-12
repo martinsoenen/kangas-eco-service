@@ -50,7 +50,7 @@
                         <td>{{ item.nomProduit }}</td>
                         <td>{{ item.prixUnitaireHT }}€</td>
                         <td>{{ item.tauxTVA }}%</td>
-                        <td>{{ item.prixUnitaireHT * (1 + item.tauxTVA / 100) }}€</td>
+                        <td>{{ item.prixUnitaireHT * (1 + item.tauxTVA / 100) |round(2)}}€</td>
     {#                                    <td>{{ item.quantity }}</td>#}
 {#                        <td>{{ (item.prixUnitaireHT * (1 + item.tauxTVA / 100)) }}€</td>#}
                     </tr>
