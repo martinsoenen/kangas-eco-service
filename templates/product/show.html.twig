@@ -23,7 +23,7 @@
         <div id="accueil-magasin">
             <div class="produit-container col-sm-12">
                 <div class="produit-subcontainer">
-                    <img class="image" src="{{ asset( produit.image ) }}">
+                    <img class="image" src="{{ asset('../uploads/images/produits/'~ produit.image ) }}">
 
                     <div id="details-produit">
                         <h1>{{ produit.nomProduit }}</h1>
@@ -37,7 +37,8 @@
                                 <span class="details-produit-labels">TVA :</span> {{ produit.tauxTVA }} %
                             </div>
                             <div id="details-ttc-produit">
-                                <span class="details-produit-labels">Prix TTC :</span> {{ (produit.prixUnitaireHT * (1 + produit.tauxTVA / 100)) }} € / Unité
+                                <span class="details-produit-labels">Prix TTC :</span> {{ (produit.prixUnitaireHT *
+                                (1 + produit.tauxTVA / 100)) |round(2) }} € / Unité
                             </div>
                         </div>
                         <p id="desciption-details-produit">
@@ -63,13 +64,20 @@
 
     {% endblock %}
 
-{% block body_after %}
+    {% block body_after %}
 </div>
     <div id="categories-produits-container" class="sidenav">
         <a id="close-menu-button" href="javascript:closeCategoryMenu()" style="cursor:pointer">
             <i id="close-menu-button-icon" class="fa fa-caret-left fa-3x"></i>
         </a>
         <div id="categories-produits">
+            <div id="accueil-magasin-link" class="categorie-produits">
+                <a href="{{ path('magasin') }}">
+                    <h4 class="categorie-produits-label">
+                        Accueil magasin
+                    </h4>
+                </a>
+            </div>
             {% for categ in categories %}
                 <div id="{{ categ.id }}" class="categorie-produits">
                     <a data-toggle="collapse" data-parent="#categories-produits"
@@ -79,8 +87,14 @@
                         </h4>
                     </a>
                     <div id="sous-categories-{{ categ.id }}" class="sous-categories-produits panel-collapse collapse">
+                        <div id="self-{{ categ.id }}" class="sous-categorie-produits">
+                            <a class="sous-categorie-produits-link"
+                               href="{{ path('categorie_produit', {'id': categ.id }) }}">
+                                <h6>Toute la Catégorie</h6>
+                            </a>
+                        </div>
                         {% for souscateg in categ.sousCategorieProduits %}
-                            <div id="#sous-categorie-{{ souscateg.id }}" class="sous-categorie-produits">
+                            <div id="sous-categorie-{{ souscateg.id }}" class="sous-categorie-produits">
                                 <a class="sous-categorie-produits-link"
                                    href="{{ path('sous_categorie_produit', {'id': souscateg.id }) }}">
                                     <h6>{{ souscateg.nom }}</h6>
