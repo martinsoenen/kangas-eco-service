@@ -23,7 +23,7 @@
         <div id="accueil-magasin">
             <div class="produit-container col-sm-12">
                 <div class="produit-subcontainer">
-                    <img class="image" src="{{ asset( produit.image ) }}">
+                    <img class="image" src="{{ asset('../uploads/images/produits/'~ produit.image ) }}">
 
                     <div id="details-produit">
                         <h1>{{ produit.nomProduit }}</h1>
