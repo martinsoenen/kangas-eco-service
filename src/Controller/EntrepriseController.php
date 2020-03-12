@@ -42,8 +42,15 @@ class EntrepriseController extends AbstractController
 
                 $form->handleRequest($request);
                 if ($form->isSubmitted() && $form->isValid()) {
-
                     $data = $form->getData();
+                    $ImageFile = $form->get('image')->getData();
+                    $originalFilename = pathinfo($ImageFile->getClientOriginalName(), PATHINFO_FILENAME);
+                    $newFilename = $originalFilename.'-'.uniqid().'.'.$ImageFile->guessExtension();
+                    $ImageFile->move(
+                        $this->getParameter('image_devis_directory'),
+                        $newFilename
+                    );
+                    $data['image'] = $newFilename;
                     $message = (new \Swift_Message('Demande de devis par une entreprise'))
                         ->setTo('devis@kangas.fr')
                         ->setFrom($data['email'])
@@ -53,7 +60,7 @@ class EntrepriseController extends AbstractController
                             '<br/>Objets à collecter : ' . $data['objets'] .
                             '<br/>Poids de l\'objet à collecter : ' . $data['poids'] .
                             '<br/>Taille de l\'objet à collecter : ' . $data['taille'] .
-                            '<br/>Image de l\'objet : ' . $data['image'] .
+                            '<br/>Image de l\'objet : www.eco-service.martinsoenen.com/uploads/images/devis/' . $data['image'] .
                             '<br/>Numéro de téléphone : ' . $data['tel'] .
                             '<br/>Commentaire supplémentaire : ' . $data['commentaire']
                             , 'text/html'
