@@ -27,38 +27,20 @@ class ProductController extends AbstractController
      */
     public function index(PaginatorInterface $paginator, Request $request)
     {
-        if($this->getUser()!=null) {
-            if($this->getUser()->getUtilisateurType()!="pro" ){
-        
-            $produits = $this->getDoctrine()->getRepository(Produit::class)->findAll();
-                $pagination = $paginator->paginate(
-                    $produits,
-                    $request->query->getInt('page', 1),
-                    self::NB_BLOGS_PER_PAGE
-                );
-            $categories = $this->getDoctrine()->getRepository(CategorieProduit::class)->findCategories();
+        $produits = $this->getDoctrine()->getRepository(Produit::class)->findAll();
+            $pagination = $paginator->paginate(
+                $produits,
+                $request->query->getInt('page', 1),
+                self::NB_BLOGS_PER_PAGE
+            );
+        $categories = $this->getDoctrine()->getRepository(CategorieProduit::class)->findCategories();
 
-            return $this->render('product/index.html.twig', [
-                'controller_name' => 'ProductController',
-                'produits' => $pagination,
-                'categories' => $categories
-            ]);
-            
-            }
-            else{
-                $this->addFlash('error', 'Vous avez un compte entreprise. Accès refusé.');
-                return $this->redirectToRoute('home');
-            }
-        }else{
-            $produits = $this->getDoctrine()->getRepository(Produit::class)->findAll();
-            $categories = $this->getDoctrine()->getRepository(CategorieProduit::class)->findCategories();
+        return $this->render('product/index.html.twig', [
+            'controller_name' => 'ProductController',
+            'produits' => $pagination,
+            'categories' => $categories
+        ]);
 
-            return $this->render('product/index.html.twig', [
-                'controller_name' => 'ProductController',
-                'produits' => $produits,
-                'categories' => $categories
-            ]);
-        }
     }
 
     /**
@@ -84,21 +66,16 @@ class ProductController extends AbstractController
      */
     public function categorie(CategorieProduit $categorie)
     {
-        if($this->getUser()->getUtilisateurType()!="pro" ){
-            $id = $categorie->getId();
-            $categories = $this->getDoctrine()->getRepository(CategorieProduit::class)->findCategories();
-            $produits = $this->getDoctrine()->getRepository(Produit::class)->findProduitsByCategorie($id);
+        $id = $categorie->getId();
+        $categories = $this->getDoctrine()->getRepository(CategorieProduit::class)->findCategories();
+        $produits = $this->getDoctrine()->getRepository(Produit::class)->findProduitsByCategorie($id);
 
-            return $this->render('product/showByCategorie.html.twig', [
-                'controller_name' => 'ProductController',
-                'categorie' => $categorie,
-                'categories' => $categories,
-                'produits' => $produits
-            ]);
-        }else{
-            $this->addFlash('error', 'Vous avez un compte entreprise. Accès refusé.');
-            return $this->redirectToRoute('home');
-        }
+        return $this->render('product/showByCategorie.html.twig', [
+            'controller_name' => 'ProductController',
+            'categorie' => $categorie,
+            'categories' => $categories,
+            'produits' => $produits
+        ]);
     }
 
     /**
@@ -107,34 +84,16 @@ class ProductController extends AbstractController
      */
     public function sous_categorie(SousCategorieProduit $souscategorie)
     {
-        if($this->getUser() !=null ){
+        $id = $souscategorie->getId();
+        $categories = $this->getDoctrine()->getRepository(CategorieProduit::class)->findCategories();
+        $produits = $this->getDoctrine()->getRepository(Produit::class)->findProduitsBySousCategorie($id);
 
-            if($this->getUser()->getUtilisateurType()!="pro" ){
-                $id = $souscategorie->getId();
-                $categories = $this->getDoctrine()->getRepository(CategorieProduit::class)->findCategories();
-                $produits = $this->getDoctrine()->getRepository(Produit::class)->findProduitsBySousCategorie($id);
-
-                return $this->render('product/showBySousCategorie.html.twig', [
-                    'controller_name' => 'ProductController',
-                    'categories' => $categories,
-                    'souscategorie' => $souscategorie,
-                    'produits' => $produits
-                ]);
-            }else{
-                $this->addFlash('error', 'Vous avez un compte entreprise. Accès refusé.');
-                return $this->redirectToRoute('home');
-            }
-        }else{
-
-            $id = $souscategorie->getId();
-            $produits = $this->getDoctrine()->getRepository(Produit::class)->findProduitsBySousCategorie($id);
-
-            return $this->render('product/showBySousCategorie.html.twig', [
-                'controller_name' => 'ProductController',
-                'souscategorie' => $souscategorie,
-                'produits' => $produits
-            ]);
-        }
+        return $this->render('product/showBySousCategorie.html.twig', [
+            'controller_name' => 'ProductController',
+            'categories' => $categories,
+            'souscategorie' => $souscategorie,
+            'produits' => $produits
+        ]);
     }
 
     /**
@@ -157,7 +116,7 @@ class ProductController extends AbstractController
      */
     public function admin_show()
     {
-        if($this->getUser()->getUtilisateurType()=="admin" ){
+        if($this->getUser() != null && $this->getUser()->getUtilisateurType()=="admin"){
             $repo = $this->getDoctrine()->getRepository(Produit::class);
             $produits = $repo->findAll();
             return $this->render('product/admin_show.html.twig', [
@@ -176,7 +135,7 @@ class ProductController extends AbstractController
      */
     public function ajouterProduit(Produit $produit = null,Request $request,EntityManagerInterface $manager)
     {
-        if($this->getUser()->getUtilisateurType()!="pro" ){
+        if($this->getUser() != null && $this->getUser()->getUtilisateurType()=="admin"){
             $editmode = true;
             if(!$produit) {
                 $produit = new Produit();
@@ -249,11 +208,11 @@ class ProductController extends AbstractController
      *  @Route("/admin/produit/{id}/delete", name="delete_produit")
      */
     public function deleteProduit(Produit $produit, EntityManagerInterface $manager){
-        if($this->getUser()->getUtilisateurType()!="pro" ){
+        if($this->getUser() != null && $this->getUser()->getUtilisateurType()=="admin"){
             $manager->remove($produit);
             $manager->flush();
 
-            return $this->redirectToRoute('admin-produits');
+            return $this->redirectToRoute('admin_produits');
         }else{
             $this->addFlash('error', 'Vous avez un compte non admin. Accès refusé.');
             return $this->redirectToRoute('home');
