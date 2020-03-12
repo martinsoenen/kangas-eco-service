@@ -63,9 +63,10 @@ class EcoServiceController extends AbstractController
                 ->setTo('contact@kangas.fr')
                 ->setFrom($data['email'])
                 ->setBody(
+                    'Bonjour, vous avez reçu un nouveau message via le formulaire de contact de votre site. ' . '<br>'.
                     'Message : ' . $data['message']. '<br>'.
                     'Envoyé par ' .$data['nom'] . $data['prenom']. '<br>'.
-                    $data['email'],
+                    'Mail de contact de la personne : '.$data['email'],
                     'text/html'
                 );
             
