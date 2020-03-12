@@ -7,6 +7,7 @@ use App\Entity\Produit;
 use App\Entity\SousCategorieProduit;
 use App\Entity\UtilisateurAdministration;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -20,20 +21,26 @@ use Symfony\Component\Validator\Constraints\File;
 
 class ProductController extends AbstractController
 {
+    const NB_BLOGS_PER_PAGE = 12;
     /**
      * @Route("/magasin", name="magasin")
      */
-    public function index()
+    public function index(PaginatorInterface $paginator, Request $request)
     {
         if($this->getUser()!=null) {
             if($this->getUser()->getUtilisateurType()!="pro" ){
         
             $produits = $this->getDoctrine()->getRepository(Produit::class)->findAll();
+                $pagination = $paginator->paginate(
+                    $produits,
+                    $request->query->getInt('page', 1),
+                    self::NB_BLOGS_PER_PAGE
+                );
             $categories = $this->getDoctrine()->getRepository(CategorieProduit::class)->findCategories();
 
             return $this->render('product/index.html.twig', [
                 'controller_name' => 'ProductController',
-                'produits' => $produits,
+                'produits' => $pagination,
                 'categories' => $categories
             ]);
             
