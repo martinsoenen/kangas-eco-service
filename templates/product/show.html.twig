@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Produit - {{ parent() }}{% endblock %}
+{% block title %}{% if produit is defined %}{{ produit.nomProduit }} {% endif %}- {{ parent() }}{% endblock %}
 
 {% block additional_stylesheets %}
 
