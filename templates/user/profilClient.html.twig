@@ -1,101 +1,106 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Profil -{{parent()}}{% endblock %}
+{% block title %}Profil -{{ parent() }}{% endblock %}
 
 {% block additional_stylesheets %}
-    <link rel="stylesheet" type="text/css" href="{{asset('../assets/connexion/profil.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('../assets/connexion/profil.css') }}">
 {% endblock %}
 
 {% block body %}
-<div class="profil">
-	<div class="profil-container">
-		<h1>Compte Particulier</h1>
-		<div class="user-info profil-info">
-			<div class="perso">
-				<div class="profil-info__item row">
-					<label class="col-md-4 col-12">Civilité</label>
-					<div class="col-md-8">{{ form_widget(form.civilite, {'disabled':'disabled'}) }}</div>
-				</div>
+    <div class="profil">
+        <div class="profil-container">
+            <h1>Compte Particulier</h1>
+            <div class="user-info profil-info">
+                <div class="perso">
+                    <div class="profil-info__item row">
+                        <label class="col-md-4 col-12">Civilité</label>
+                        <div class="col-md-8">{{ form_widget(form.civilite, {'disabled':'disabled'}) }}</div>
+                    </div>
 
-				<div class="profil-info__item row">
-					<label class="col-md-4 col-12">Nom</label>
-					<div class="col-md-8">{{ form_widget(form.nom, { 'disabled':'disabled'}) }}</div>
-				</div>
+                    <div class="profil-info__item row">
+                        <label class="col-md-4 col-12">Nom</label>
+                        <div class="col-md-8">{{ form_widget(form.nom, { 'disabled':'disabled'}) }}</div>
+                    </div>
 
-				<div class="profil-info__item row">
-					<label class="col-md-4 col-12">Prénom</label>
-					<div class="col-md-8">{{form_widget(form.prenom, {'disabled':'disabled'}) }}</div>
-				</div>
+                    <div class="profil-info__item row">
+                        <label class="col-md-4 col-12">Prénom</label>
+                        <div class="col-md-8">{{ form_widget(form.prenom, {'disabled':'disabled'}) }}</div>
+                    </div>
 
-				<div class="profil-info__item row">
-					<label class="col-md-4 col-12">Téléphone</label>
-					<div class="col-md-8">{{form_widget(form.telephone, {'disabled':'disabled'}) }}</div>
-				</div>
+                    <div class="profil-info__item row">
+                        <label class="col-md-4 col-12">Téléphone</label>
+                        <div class="col-md-8">{{ form_widget(form.telephone, {'disabled':'disabled'}) }}</div>
+                    </div>
 
-				<div class="profil-info__item row">
-					<label class="col-md-4 col-12">E-mail</label>
-					<div class="col-md-8">{{form_widget(form.email, {'disabled':'disabled'}) }}</div>
-				</div>
-				<div class="profil-info__item row">
-				<a  class="btn btn-outline-success modif-link offset-lg-8 col-lg-4 offset-md-6 col-md-6 offset-sm-4 col-sm-8 offset-1 col-10" href="{{ path('client_edit') }}">Modifier mes informations</a>
-				</div>
-			</div>
-			<hr>
-			<div class="container-address-add">	
-				<i class="fa fa-address-book"></i> 
-				<p>Mes adresses</p>
-				<a href="{{path('adresse_new')}}" class="btn btn-secondary modif-link">Ajouter une adresse</a>
-			</div>
-			<div class="table-responsive">
-				<table class="table">
-					<tbody>
-					{% for adresse in Adresse %}
-						<tr>
-							<td>{{adresse.nom}}</td>
-							<td>{{adresse.numeroRue ~ ' '~ adresse.typeRue ~ ' '
-								~ adresse.nomRue ~ ' '~ adresse.CP ~ ' '~ adresse.Ville}}</td>
-							<td class="container-btn-modif">
-								<a class="btn btn-primary modif-link" href="/profil/adresse/{{adresse.id}}/edit">
-								<i class="fa fa-pencil"></i></a>
-							</td>
-						</tr>
-					{% endfor %}
-					</tbody>
-				</table>
-			</div>
-			<hr>
-			<p>
-				<i class="fa fa-address-book"></i> Historique des commandes
-			</p>
-			<div class="table-responsive">
-				<table class="table">
-					<tbody>
-						{% for commande in commandes %}
-							{% dump(commande) %}
-							<tr>
-								<td>{{ commande.date | date("d/m/Y") }}</td>
-								<td>
-									{% if commande.isSend == -1 %}
-										annulée
-									{% else %}
-										{% if commande.isSend == 0 %}
-											en attente de traitement
-										{% else %}
-											{% if commande.isSend == 1 %}
-												envoyée
-											{% else %}
-												statut inconnu
-											{% endif %}
-										{% endif %}
-									{% endif %}
-								</td>
-								<td><button type="button" class="btn btn-primary"><a href="{{ path('show_command', {'id' : commande.id}) }}">Voir</a></button></td>
-							</tr>
-						{% endfor %}
-					</tbody>
-				</table>
-			</div>
-		</div>
-	</div>
-</div>
+                    <div class="profil-info__item row">
+                        <label class="col-md-4 col-12">E-mail</label>
+                        <div class="col-md-8">{{ form_widget(form.email, {'disabled':'disabled'}) }}</div>
+                    </div>
+                    <div class="profil-info__item row">
+                        <a class="btn btn-outline-success modif-link offset-lg-8 col-lg-4 offset-md-6 col-md-6 offset-sm-4 col-sm-8 offset-1 col-10"
+                           href="{{ path('client_edit') }}">Modifier mes informations</a>
+                    </div>
+                </div>
+                <hr>
+                <div class="container-address-add">
+                    <i class="fa fa-address-book"></i>
+                    <p>Mes adresses</p>
+                    <a href="{{ path('adresse_new') }}" class="btn btn-secondary modif-link">Ajouter une adresse</a>
+                </div>
+                <div class="table-responsive">
+                    <table class="table">
+                        <tbody>
+                        {% for adresse in Adresse %}
+                            <tr>
+                                <td>{{ adresse.nom }}</td>
+                                <td>{{ adresse.numeroRue ~ ' '~ adresse.typeRue ~ ' '
+                                    ~ adresse.nomRue ~ ' '~ adresse.CP ~ ' '~ adresse.Ville }}</td>
+                                <td class="container-btn-modif">
+                                    <a class="btn btn-primary modif-link" href="/profil/adresse/{{ adresse.id }}/edit">
+                                        <i class="fa fa-pencil"></i></a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <hr>
+                <p>
+                    <i class="fa fa-address-book"></i> Historique des commandes
+                </p>
+                <div class="table-responsive">
+                    <table class="table">
+                        <tbody>
+                        {% for commande in commandes %}
+                            {% dump(commande) %}
+                            <tr>
+                                <td>{{ commande.date | date("d/m/Y") }}</td>
+                                <td>
+                                    {% if commande.isSend == -1 %}
+                                        annulée
+                                    {% else %}
+                                        {% if commande.isSend == 0 %}
+                                            en attente de traitement
+                                        {% else %}
+                                            {% if commande.isSend == 1 %}
+                                                envoyée
+                                            {% else %}
+                                                statut inconnu
+                                            {% endif %}
+                                        {% endif %}
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-primary"><a
+                                                href="{{ path('show_command', {'id' : commande.id}) }}">Voir</a>
+                                    </button>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

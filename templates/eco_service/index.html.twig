@@ -4,7 +4,7 @@
 {% block title %}Accueil - {{ parent() }}{% endblock %}
 
 {% block additional_stylesheets %}
-    <link rel="stylesheet" type="text/css" href="{{asset('../assets/eco_service/Accueil.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('../assets/eco_service/Accueil.css') }}">
 {% endblock %}
 
 {% block body %}
@@ -16,13 +16,13 @@
         </ol>
         <div class="carousel-inner">
             <div class="carousel-item active">
-                <img class="d-block w-100" src={{asset('http://placehold.it/1920x768')}} >
+                <img class="d-block w-100" src={{ asset('http://placehold.it/1920x768') }}>
             </div>
             <div class="carousel-item">
-                <img class="d-block w-100" src={{asset('http://placehold.it/1920x768')}}>
+                <img class="d-block w-100" src={{ asset('http://placehold.it/1920x768') }}>
             </div>
             <div class="carousel-item">
-                <img class="d-block w-100" src={{asset('http://placehold.it/1920x768')}} >
+                <img class="d-block w-100" src={{ asset('http://placehold.it/1920x768') }}>
             </div>
         </div>
         <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
@@ -39,10 +39,12 @@
         <div class="row">
             <div class="col-sm-12">
                 <h1>Bienvenue chez Eco-Service</h1>
-                <p>Eco-Service est une entreprise spécialisée dans 
-                la revente de produits recyclés (appareils électriques et électroniques usagés, outils industriels, déchets organiques) 
-                à partir de déchets que nous récupérons dans les centres relais ou dans nos entreprises partenaires.
-                Nous nous engageons au quotidien dans la création de produits eco-responsables et zéro déchet dans le but d'avoir une consommation plus respectueuse de l'environnement.
+                <p>Eco-Service est une entreprise spécialisée dans
+                    la revente de produits recyclés (appareils électriques et électroniques usagés, outils industriels,
+                    déchets organiques)
+                    à partir de déchets que nous récupérons dans les centres relais ou dans nos entreprises partenaires.
+                    Nous nous engageons au quotidien dans la création de produits eco-responsables et zéro déchet dans
+                    le but d'avoir une consommation plus respectueuse de l'environnement.
                 </p>
                 <p>
                     Si vous êtes un professionnel, vous pouvez faire une demande de recyclage et
@@ -55,9 +57,9 @@
         </div>
     </div>
     <div id="boutonParticulier" class="bouton-accueil" align="center">
-            <a class="btn btn-outline-secondary" href="{{ path('magasin') }}">Je suis un particulier</a>
+        <a class="btn btn-outline-secondary" href="{{ path('magasin') }}">Je suis un particulier</a>
     </div>
     <div id="boutonEntreprise" class="bouton-accueil" align="center">
-            <a class="btn btn-outline-secondary" href="{{ path('entreprise_services') }}">Je suis un professionel</a>
+        <a class="btn btn-outline-secondary" href="{{ path('entreprise_services') }}">Je suis un professionel</a>
     </div>
 {% endblock %}

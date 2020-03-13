@@ -1,36 +1,36 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{% if article is defined %}{{ article.titre }} {% endif %}- {{parent()}}{% endblock %}
+{% block title %}{% if article is defined %}{{ article.titre }} {% endif %}- {{ parent() }}{% endblock %}
 
 {% block additional_stylesheets %}
-    <link rel="stylesheet" type="text/css" href="{{asset('../assets/blog/blog.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('../assets/blog/blog.css') }}">
 {% endblock %}
 
 {% block body %}
-<section class="container">
-    <div class="row ">
-        <h1>{{ article.titre }}</h1>
-        <h6>
-            Ajouté
-            {% set difference = date("now" ).diff(date(article.date)) %}
-            {% set leftDays = difference.days %}
-            {% if leftDays == 0 %}
-                aujourd'hui
-            {% elseif leftDays == 1 %}
-                il y a 1 jour
-            {% else %}
-                il y a {{ leftDays }} jours
-            {% endif %}
-        </h6>
-        <div class="article-item">
-            <img src="{{ asset('../uploads/images/articles/'~ article.image ) }}" class="card-img-top">
-            <div class="offset-md-1 col-md-10">
-                <p class="article-text">{{ article.text }}</p>
-                <div class="retour-cont">
-                    <a href="{{ path('blog') }}" class="btn btn-primary article-retour">Retour</a>
+    <section class="container">
+        <div class="row ">
+            <h1>{{ article.titre }}</h1>
+            <h6>
+                Ajouté
+                {% set difference = date("now" ).diff(date(article.date)) %}
+                {% set leftDays = difference.days %}
+                {% if leftDays == 0 %}
+                    aujourd'hui
+                {% elseif leftDays == 1 %}
+                    il y a 1 jour
+                {% else %}
+                    il y a {{ leftDays }} jours
+                {% endif %}
+            </h6>
+            <div class="article-item">
+                <img src="{{ asset('../uploads/images/articles/'~ article.image ) }}" class="card-img-top">
+                <div class="offset-md-1 col-md-10">
+                    <p class="article-text">{{ article.text }}</p>
+                    <div class="retour-cont">
+                        <a href="{{ path('blog') }}" class="btn btn-primary article-retour">Retour</a>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 {% endblock %}

@@ -21,27 +21,27 @@ class RegistrationTypeEntreprise extends AbstractType
             ->add('email', EmailType::class)
             ->add('emailConfirm', EmailType::class)
             ->add('password', PasswordType::class)
-            ->add('passwordConfirm',PasswordType::class)
-            ->add('nom',TextType::class)
-            ->add('prenom',TextType::class)
-            ->add('raisonSociale',TextType::class,array(
+            ->add('passwordConfirm', PasswordType::class)
+            ->add('nom', TextType::class)
+            ->add('prenom', TextType::class)
+            ->add('raisonSociale', TextType::class, array(
                 'required' => true
             ))
-            ->add('siret', IntegerType::class,array(
+            ->add('siret', IntegerType::class, array(
                 'required' => true
             ))
             ->add('telephone')
-            ->add('fonctionRepresentant',TextType::class,array(
+            ->add('fonctionRepresentant', TextType::class, array(
                 'required' => true
             ))
             ->add('conditions', CheckboxType::class)
             ->add('save', SubmitType::class, array(
                 'label' => 'Valider',
-                'attr' => array('title' => 'Valider les modifications' ,'class' => 'btn btn-outline-success'
+                'attr' => array('title' => 'Valider les modifications', 'class' => 'btn btn-outline-success'
                 ),
-           ))
-        ;
+            ));
     }
+
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([

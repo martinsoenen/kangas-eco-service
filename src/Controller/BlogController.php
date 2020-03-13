@@ -17,6 +17,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class BlogController extends AbstractController
 {
     const NB_BLOGS_PER_PAGE = 6;
+
     /**
      * @Route("/blog", name="blog")
      * @Route("/blog/index", name="blog_index")
@@ -60,9 +61,9 @@ class BlogController extends AbstractController
             'controller_name' => 'BlogController',
             'articles' => $articles,
         ]);
-
     }
-      /**
+
+    /**
      * @Route("/admin/articles", name="articles_admin"))
      */
     public function showAdminArticles()
@@ -76,15 +77,14 @@ class BlogController extends AbstractController
      * @Route("/admin/article/add", name="add_article_admin"))
      * @Route("/admin/article/{id}/edit", name="edit_article_admin"))
      */
-    public function addAdminArticles(Article $article = null,Request $request,EntityManagerInterface $manager)
+    public function addAdminArticles(Article $article = null, Request $request, EntityManagerInterface $manager)
     {
-        if(!$article) {
+        if (!$article) {
             $article = new Article();
         }
         $form = $this->createFormBuilder($article)
-
-            ->add('Titre', TextType::class,array('required'  => true))
-            ->add('Text', TextareaType::class,array('required'  => true))
+            ->add('Titre', TextType::class, array('required' => true))
+            ->add('Text', TextareaType::class, array('required' => true))
             ->add('Image', FileType::class, [
                 'label' => 'Image',
                 'mapped' => false,
@@ -108,7 +108,7 @@ class BlogController extends AbstractController
         $form->handleRequest($request);
 
 
-        if($form->isSubmitted()&& $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $ImageFile = $form->get('Image')->getData();
             $originalFilename = pathinfo($ImageFile->getClientOriginalName(), PATHINFO_FILENAME);
             $newFilename = $originalFilename.'-'.uniqid().'.'.$ImageFile->guessExtension();
@@ -126,17 +126,17 @@ class BlogController extends AbstractController
 
         return $this->render('blog/ajouterArticles.html.twig', [
             'controller_name' => 'BlogController',
-            'formArticle'=> $form->createView(),
-            'editMode'=>$article->getId() !== null,
+            'formArticle' => $form->createView(),
+            'editMode' => $article->getId() !== null,
         ]);
     }
-
 
 
     /**
      * @Route("/admin/article/{id}/delete", name="delete_article"))
      */
-    public function deleteAdminArticles(Article $article,EntityManagerInterface $manager){
+    public function deleteAdminArticles(Article $article, EntityManagerInterface $manager)
+    {
         $manager->remove($article);
         $manager->flush();
 

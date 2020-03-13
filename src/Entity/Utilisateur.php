@@ -40,12 +40,12 @@ class Utilisateur implements UserInterface
     private $civilite;
 
     /**
-    * @ORM\Column(type="string", length=255)
-    * @Assert\Regex(
-    *   pattern = "/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/m",
-    *   match=true,
-    *   message="Votre mot de passe doit comporter au moins huit caractères, dont des lettres majuscules et minuscules, un chiffre et un caractère spécial."
-    * )
+     * @ORM\Column(type="string", length=255)
+     * @Assert\Regex(
+     *   pattern = "/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/m",
+     *   match=true,
+     *   message="Votre mot de passe doit comporter au moins huit caractères, dont des lettres majuscules et minuscules, un chiffre et un caractère spécial."
+     * )
      * Assert\EqualTo(propertyPath="passwordConfirm")
      */
     private $password;
@@ -93,7 +93,7 @@ class Utilisateur implements UserInterface
      *   min = 10,
      *   minMessage="Veuillez saisir un numéro de téléphone valide",
      * )
-     *  @Assert\Length(
+     * @Assert\Length(
      *   max = 10,
      *   maxMessage="Veuillez saisir un numéro de téléphone valide",
      * )
@@ -114,12 +114,12 @@ class Utilisateur implements UserInterface
     private $conditions;
 
     /**
-      * Assert\EqualTo(propertyPath="password") 
-    */
+     * Assert\EqualTo(propertyPath="password")
+     */
     private $passwordConfirm;
     /**
-      * Assert\EqualTo(propertyPath=email) 
-    */
+     * Assert\EqualTo(propertyPath=email)
+     */
     private $emailConfirm;
 
     /**
@@ -245,7 +245,7 @@ class Utilisateur implements UserInterface
 
         return $this;
     }
-  
+
     /**
      * @return Collection|Adresse[]
      */
@@ -300,7 +300,7 @@ class Utilisateur implements UserInterface
 
         return $this;
     }
-    
+
     public function getEmailConfirm(): ?string
     {
         return $this->emailConfirm;
@@ -315,22 +315,25 @@ class Utilisateur implements UserInterface
 
     public function getUsername(): string
     {
-        return (string) $this->email;
+        return (string)$this->email;
     }
 
     public function getNomPrenom(): string
     {
-        return (string) $this->nom.' '.$this->prenom ;
+        return (string)$this->nom.' '.$this->prenom;
     }
+
     public function erasecredentials()
     {
     }
+
     public function getSalt()
     {
-        
+
     }
 
-    public function getRoles(){
+    public function getRoles()
+    {
         return ['ROLE_USER'];
     }
 
@@ -384,6 +387,5 @@ class Utilisateur implements UserInterface
                 $commande->setUser(null);
             }
         }
-
     }
 }

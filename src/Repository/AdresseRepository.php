@@ -19,12 +19,13 @@ class AdresseRepository extends ServiceEntityRepository
         parent::__construct($registry, Adresse::class);
     }
 
-      public function getAdresseById($id){
-        return $this->createQueryBuilder('a') 
-            ->leftJoin('a.Utilisateur','adr')
-            ->addSelect('adr')           
+    public function getAdresseById($id)
+    {
+        return $this->createQueryBuilder('a')
+            ->leftJoin('a.Utilisateur', 'adr')
+            ->addSelect('adr')
             ->andWhere('a.Utilisateur = :val')
-            ->setParameter('val', $id)           
+            ->setParameter('val', $id)
             ->getQuery()
             ->getResult();
     }

@@ -7,17 +7,17 @@
     <tbody>
     {% for categorie in categories %}
         <tr>
-            <td>{{categorie.nom}}</td>
+            <td>{{ categorie.nom }}</td>
             <td>
-                <bouton onclick="window.location.href = '/admin/produit/categorie/{{categorie.id}}/edit';">
+                <bouton onclick="window.location.href = '/admin/produit/categorie/{{ categorie.id }}/edit';">
                     <i class="fa fa-pencil fa-2x"></i>
                 </bouton>
-                <bouton onclick="window.location.href = '/admin/produit/categorie/{{categorie.id}}/delete';">
+                <bouton onclick="window.location.href = '/admin/produit/categorie/{{ categorie.id }}/delete';">
                     <i class="fa fa-trash fa-2x"></i>
                 </bouton>
             </td>
         </tr>
     {% endfor %}
-    <a class="btn btn-outline-secondary" href="{{ path('ajouter_categorie_produit')}}">Ajouter une catégorie</a>
+    <a class="btn btn-outline-secondary" href="{{ path('ajouter_categorie_produit') }}">Ajouter une catégorie</a>
     </tbody>
 {% endblock %}

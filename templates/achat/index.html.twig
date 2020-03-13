@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Panier - {{parent()}}{% endblock %}
+{% block title %}Panier - {{ parent() }}{% endblock %}
 
 {% block body %}
     <div class="p-3">
@@ -10,47 +10,51 @@
     {% if items | length > 0 %}
         <table class="table">
             <thead>
-                <tr>
-                    <th>Produit</th>
-                    <th>Prix</th>
-                    <th>Quantité</th>
-                    <th>Total</th>
-                    <th></th>
-                </tr>
+            <tr>
+                <th>Produit</th>
+                <th>Prix</th>
+                <th>Quantité</th>
+                <th>Total</th>
+                <th></th>
+            </tr>
             </thead>
             <tbody>
-                {% for item in items %}
-                    <tr>
-                        <td>{{ item.product.nomProduit }}</td>
-                        <td>{{ item.product.prixUnitaireHT * (1 + item.product.tauxTVA / 100) }}€</td>
-                        <td>  
-                            <input id="{{ item.product.id }}" type="number" name="quantite" value={{ item.quantity }} > 
-                            <a id="{{ item.product.id }}" class="btn btn-success update"><i class="fa fa-shopping-cart mr-1"> Mettre à jour le panier</i></a>
-                        </td>
-                        <td>{{ (item.product.prixUnitaireHT * ( 1 + item.product.tauxTVA / 100 )) * item.quantity }}€</td>
-                        <td>
-                            <a href="{{ path('panier_remove', {'id': item.product.id}) }}" class="btn btn-danger btn-sm">
-                                <i class="fa fa-trash"></i>
-                            </a>
-                        </td>
-                    </tr>
-                {% endfor %}
+            {% for item in items %}
+                <tr>
+                    <td>{{ item.product.nomProduit }}</td>
+                    <td>{{ item.product.prixUnitaireHT * (1 + item.product.tauxTVA / 100) }}€</td>
+                    <td>
+                        <input id="{{ item.product.id }}" type="number" name="quantite" value={{ item.quantity }}>
+                        <a id="{{ item.product.id }}" class="btn btn-success update"><i
+                                    class="fa fa-shopping-cart mr-1"> Mettre à jour le panier</i></a>
+                    </td>
+                    <td>{{ (item.product.prixUnitaireHT * ( 1 + item.product.tauxTVA / 100 )) * item.quantity }}€</td>
+                    <td>
+                        <a href="{{ path('panier_remove', {'id': item.product.id}) }}" class="btn btn-danger btn-sm">
+                            <i class="fa fa-trash"></i>
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
             </tbody>
             <tfoot>
             <tr>
                 <td colspan="3" class="text-right"> Total :</td>
-                <td>{{ total }}€ </td>
-                
+                <td>{{ total }}€</td>
+
             </tr>
             </tfoot>
         </table>
 
-        <a class="btn btn-success" href="{{path('panier')}}">Mettre à jour le total</a>
+        <a class="btn btn-success" href="{{ path('panier') }}">Mettre à jour le total</a>
         <a href="{{ path('panier_paiement') }}" class="btn btn-success"><i class="fa fa-paypal"> Payer</i></a>
 
         {% if app.environment == 'dev' %}
-            <p>Le faux compte client à utiliser sur PayPal est : <code>sb-nnod81071114@personal.example.com</code> / <code>)f;xy-R2</code></p>
-            <p>Le faux compte boutique à utiliser sur PayPal est : <code>sb-5ex4471058141@business.example.com</code> / <code>6QM3eHy<</code> (accès sur le site <a href="https://www.sandbox.paypal.com">www.sandbox.paypal.com</a>)</p>
+            <p>Le faux compte client à utiliser sur PayPal est : <code>sb-nnod81071114@personal.example.com</code> /
+                <code>)f;xy-R2</code></p>
+            <p>Le faux compte boutique à utiliser sur PayPal est : <code>sb-5ex4471058141@business.example.com</code> /
+                <code>6QM3eHy<</code> (accès sur le site <a
+                        href="https://www.sandbox.paypal.com">www.sandbox.paypal.com</a>)</p>
             <p>Svp ne faites pas de grosse commande et surtout NE METTEZ PAS DE VRAI COMPTE CLIENT</p>
         {% endif %}
     {% else %}
@@ -59,9 +63,9 @@
 {% endblock %}
 
 {% block javascripts %}
-	{{ parent()}}
-	<script>
-		$('.btn.btn-success.update').click(function () {
+    {{ parent() }}
+    <script>
+        $('.btn.btn-success.update').click(function () {
             let id = $(this).attr('id');
             let value = $("#" + id + "[name='quantite']").val();
 
@@ -73,22 +77,22 @@
                 },
                 dataType: "integer",
                 success: function (response) {
-                    
+
                 }
             });
             $.ajax({
-                url : '/panier/add/'+ id,
-                type : 'GET',
-                data : {
+                url: '/panier/add/' + id,
+                type: 'GET',
+                data: {
                     quantite: value
                 },
                 dataType: "integer",
-                success: function(response) {
+                success: function (response) {
                     // console.log(response);
                 }
-            });       
-            
-            alert('La quantité a bien été mise à jour'); 
+            });
+
+            alert('La quantité a bien été mise à jour');
         });
-	</script>
+    </script>
 {% endblock %}
