@@ -1,28 +1,52 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Profil -{{parent()}}
+{% block title %}Profil -{{ parent() }}
 {% endblock %}
+
+{% block additional_stylesheets %}
+    <link rel="stylesheet" type="text/css" href="{{ asset('../assets/connexion/profil.css') }}">
+{% endblock %}
+
 {% block body %}
+    <div class="profil">
+        <div class="profil-container">
+            <h1>Compte Entreprise</h1>
+            <div class="user-info profil-info">
 
-<p>Compte Entreprise</p>
-<hr>
-<div class="user-info">
-        <label>Numéro de siret</label>
-        {{ form_widget(form.siret, {'disabled':'disabled'}) }}
-        <label>Raison sociale</label>
-        {{ form_widget(form.raisonSociale, { 'disabled':'disabled'}) }}
-        <label>Fontion du représentant</label>
-        {{form_widget(form.fonctionRepresentant, {'disabled':'disabled'}) }}
-        <label>Nom du représentant</label>
-        {{form_widget(form.nom, {'disabled':'disabled'}) }}
-        <label>Prénom du représentant</label>
-        {{form_widget(form.prenom, {'disabled':'disabled'}) }}
-        <label>Téléphone</label>
-        {{form_widget(form.telephone, {'disabled':'disabled'}) }}
-        <label>E-mail</label>
-        {{form_widget(form.email, {'disabled':'disabled'}) }}
-        <a class="btn btn-outline-success" href="{{ path('entreprise_edit') }}">Modifier mes informations</a>
+                <div class="profil-info__item row">
+                    <label class="col-md-4 col-12">Numéro de SIRET</label>
+                    <div class="col-md-8">{{ form_widget(form.siret, {'disabled':'disabled'}) }}</div>
+                </div>
+                <div class="profil-info__item row">
+                    <label class="col-md-4 col-12">Raison sociale</label>
+                    <div class="col-md-8">{{ form_widget(form.raisonSociale, { 'disabled':'disabled'}) }}</div>
+                </div>
+                <div class="profil-info__item row">
+                    <label class="col-md-4 col-12">Fonction du représentant</label>
+                    <div class="col-md-8">{{ form_widget(form.fonctionRepresentant, {'disabled':'disabled'}) }}</div>
+                </div>
+                <div class="profil-info__item row">
+                    <label class="col-md-4 col-12">Nom du représentant</label>
+                    <div class="col-md-8">{{ form_widget(form.nom, {'disabled':'disabled'}) }}</div>
+                </div>
+                <div class="profil-info__item row">
+                    <label class="col-md-4 col-12">Prénom du représentant</label>
+                    <div class="col-md-8">{{ form_widget(form.prenom, {'disabled':'disabled'}) }}</div>
+                </div>
+                <div class="profil-info__item row">
+                    <label class="col-md-4 col-12">Téléphone</label>
+                    <div class="col-md-8 col-12">{{ form_widget(form.telephone, {'disabled':'disabled'}) }}</div>
+                </div>
+                <div class="profil-info__item row">
+                    <label class="col-md-4 col-12">E-mail</label>
+                    <div class="col-md-8">{{ form_widget(form.email, {'disabled':'disabled'}) }}</div>
+                </div>
 
-</div>
-</p>
+                <div class="profil-info__item row profil-info__button">
+                    <a class="btn btn-outline-success modif-link offset-lg-8 col-lg-4 offset-md-6 col-md-6 offset-sm-4 col-sm-8 offset-1 col-10"
+                       href="{{ path('entreprise_edit') }}">Modifier mes informations</a>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

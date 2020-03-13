@@ -18,33 +18,4 @@ class SousCategorieProduitRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, SousCategorieProduit::class);
     }
-
-    // /**
-    //  * @return SousCategorieProduit[] Returns an array of SousCategorieProduit objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('s.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?SousCategorieProduit
-    {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

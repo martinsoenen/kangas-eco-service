@@ -6,13 +6,13 @@
             <div class="footer-element col">
 
                 <p class="underlined bold">Nous rejoindre</p>
-                <a href="https://www.facebook.com/" title="Rejoignez-nous sur Facebook !">
+                <a href="https://www.facebook.com/" target="_blank" title="Rejoignez-nous sur Facebook !">
                     <i class="social-link-icon fa fa-facebook fa-2x"></i>
                 </a>
-                <a href="https://www.linkedin.com" title="Rejoignez-nous sur LinkedIn !">
+                <a href="https://www.linkedin.com" target="_blank" title="Rejoignez-nous sur LinkedIn !">
                     <i class="social-link-icon fa fa-linkedin fa-2x"></i>
                 </a>
-                <a href="https://www.instagram.com" title="Rejoignez-nous sur Instagram !">
+                <a href="https://www.instagram.com" target="_blank" title="Rejoignez-nous sur Instagram !">
                     <i class="social-link-icon fa fa-instagram fa-2x"></i>
                 </a>
 
@@ -22,26 +22,31 @@
             <div class="footer-element col">
                 <p class="underlined bold">Qui sommes-nous ?</p>
                 <a href="{{ path('qui-sommes-nous') }}" class="gray-href" title="Apprenez-en plus sur notre société">Eco-Service</a><br/>
-                <a href="http://www.kangas.fr" class="gray-href" title="Vous vous demandez qui a créé ce site ? Cliquez ici!">Kangas</a><br/>
-                <a href="{{ path('cgu-cgv') }}" class="gray-href" title="Apprenez-en plus sur nos conditions générales d'utilisation et conditions générales de vente">Consulter les CGU et les CGV</a>
+                <a href="http://www.kangas.fr" target="_blank" class="gray-href"
+                   title="Vous vous demandez qui a créé ce site ? Cliquez ici!">Kangas</a><br/>
+                <a href="{{ path('cgu-cgv') }}" class="gray-href"
+                   title="Apprenez-en plus sur nos conditions générales d'utilisation et conditions générales de vente">Consulter
+                    les CGU et les CGV</a>
             </div>
 
             <!-- Contacts -->
             <div class="footer-element col" id="last-element">
                 <p class="underlined bold">Contacts</p>
-                <a href="{{ path('contact') }}" class="gray-href" title="Contactez-nous directement ici.">Nous contacter</a><br/>
-                <a href="{{ path('faq') }}" class="gray-href" title="Besoin d'aide ? Cliquez ici pour consulter notre FAQ.">Besoin d'aide ?</a>
+                <a href="{{ path('contact') }}" class="gray-href" title="Contactez-nous directement ici.">Nous
+                    contacter</a><br/>
+                <a href="{{ path('faq') }}" class="gray-href"
+                   title="Besoin d'aide ? Cliquez ici pour consulter notre FAQ.">Besoin d'aide ?</a>
             </div>
         </div>
-        <a class="footer-element-item flex-fill" href="{{ path("home") }}" title="Retour à l'accueil" >
-            <img src="{{asset('../assets/img/Logo_Eco-Service_Line.png')}}"  height="40" border="0">
+        <a class="footer-element-item flex-fill" href="{{ path("home") }}" title="Retour à l'accueil">
+            <img src="{{ asset('../assets/img/Logo_Eco-Service_Line.png') }}" height="40" border="0">
         </a>
         <div id="copyright">
-            <i class="fa fa-copyright"></i>  <label>Kangas, 2019 - 2020</label>
+            <i class="fa fa-copyright"></i> <label>Kangas, 2019 - 2020</label>
         </div>
 
     </div>
-</div>
+    </div>
 
 
 {% endblock %}

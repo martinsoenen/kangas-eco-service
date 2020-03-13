@@ -1,69 +1,75 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Commande {% if commande is defined %}n°{{ commande.id }} {% endif %}- {{parent()}}{% endblock %}
+{% block title %}Commande {% if commande is defined %}n°{{ commande.id }} {% endif %}- {{ parent() }}{% endblock %}
+
+{% block additional_stylesheets %}
+    <link rel="stylesheet" type="text/css" href="{{asset('../assets/Adresse/adresse.css')}}">
+{% endblock %}
 
 {% block body %}
     {% if commande is defined %}
-        Récapitulatif de votre commande numéro {{ commande.id }} <br/>
-        <br/>
-        Nom de l'utilisateur : {{ commande.user.prenom }} {{ commande.user.nom }} <br/>
-        ID PayPal de la commande : {{ commande.paypalid }} <br/>
-        Date de la commande : le {{ commande.date | date("d/m/Y") }} <br/>
-        Etat de la commande :   {% if commande.isSend == -1 %}
-                                    annulée
-                                {% else %}
-                                    {% if commande.isSend == 0 %}
-                                        en attente de traitement
+        <div class="container-commande">
+            <h1>Récapitulatif de votre commande numéro {{ commande.id }}</h1>
+
+            
+            <div class="item-commande"><p>Nom de l'utilisateur : </p><p class="result"> {{ commande.user.prenom }} {{ commande.user.nom }}</p></div>
+            <div class="item-commande"><p>ID PayPal de la commande : </p><p class="result">{{ commande.paypalid }}</p></div>
+            <div class="item-commande"><p>Date de la commande : le </p><p class="result">{{ commande.date | date("d/m/Y") }}</p></div>
+            <div class="item-commande"><p>Etat de la commande :   </p><p class="result">{% if commande.isSend == -1 %}
+                                        annulée
                                     {% else %}
-                                        {% if commande.isSend == 1 %}
-                                            envoyée
+                                        {% if commande.isSend == 0 %}
+                                            en attente de traitement
                                         {% else %}
-                                            statut inconnu
+                                            {% if commande.isSend == 1 %}
+                                                envoyée
+                                            {% else %}
+                                                statut inconnu
+                                            {% endif %}
                                         {% endif %}
                                     {% endif %}
-                                {% endif %}<br/>
-        <br/>
-        Adresse de livraison :<br/>
-        {% for adresse in adresse %}
-            {{ adresse }}<br/>
-        {% endfor %}
-        <br/>
-        Nombre d'articles : {{ commande.nbArticles }} <br/>
-        Montant HT : {{ commande.montantHT }}€ <br/>
-        Montant TVA : {{ commande.montantTVA }}€ <br/>
-        Montant total : {{ commande.montantTotalTTC }}€ <br/>
-        <br/>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Produit</th>
-                    <th>Prix HT</th>
-                    <th>TVA</th>
-                    <th>Prix TTC</th>
-{#                    <th>Quantité</th>#}
-{#                    <th>Total</th>#}
-                </tr>
-            </thead>
-            <tbody>
-                {% for item in commande.produit %}
+            </p></div>
+            <div class="item-commande">
+            <p>Adresse de livraison :</p>
+            <p class="result">
+            {% for adresse in adresse %}
+                {{ adresse }} 
+            {% endfor %}
+            </p>
+            </div>
+            <div class="item-commande"><p>Nombre d'articles : </p><p class="result"> {{ commande.nbArticles }} </p></div>
+            <div class="item-commande"><p>Montant HT : </p><p class="result"> {{ commande.montantHT }}€ </p></div>
+            <div class="item-commande"><p>Montant TVA : </p><p class="result"> {{ commande.montantTVA }}% </p></div>
+            <div class="item-commande"><p>Montant TTC : </p><p class="result"> {{ commande.montantTotalTTC }}€ </p></div>
+            
+            <table class="table">
+                <thead>
                     <tr>
-                        <td>{{ item.nomProduit }}</td>
-                        <td>{{ item.prixUnitaireHT }}€</td>
-                        <td>{{ item.tauxTVA }}%</td>
-                        <td>{{ item.prixUnitaireHT * (1 + item.tauxTVA / 100) }}€</td>
-    {#                                    <td>{{ item.quantity }}</td>#}
-{#                        <td>{{ (item.prixUnitaireHT * (1 + item.tauxTVA / 100)) }}€</td>#}
+                        <th>Produit</th>
+                        <th>Prix HT</th>
+                        <th>TVA</th>
+                        <th>Prix TTC</th>
                     </tr>
-                {% endfor %}
-            </tbody>
-            <tfoot>
-                <tr>
-                    <td colspan="3" class="text-right"> Montant total :</td>
-                    <td>{{ commande.montantTotalTTC }}€</td>
-                    <td></td>
-                </tr>
-            </tfoot>
-        </table>
+                </thead>
+                <tbody>
+                    {% for item in commande.produit %}
+                        <tr>
+                            <td>{{ item.nomProduit }}</td>
+                            <td>{{ item.prixUnitaireHT }}€</td>
+                            <td>{{ item.tauxTVA }}%</td>
+                            <td>{{ item.prixUnitaireHT * (1 + item.tauxTVA / 100) |round(2)}}€</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="3" class="text-right"> Montant total :</td>
+                        <td>{{ commande.montantTotalTTC }}€</td>
+                        <td></td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
     {% else %}
         Impossible d'afficher la commande.
     {% endif %}

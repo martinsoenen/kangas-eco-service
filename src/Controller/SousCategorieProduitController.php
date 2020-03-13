@@ -32,42 +32,43 @@ class SousCategorieProduitController extends AbstractController
      * @Route("/admin/produit/souscategorie/add", name="ajouter_souscategorie_produit")
      * @Route("/admin/produit/souscategorie/{id}/edit", name="modifier_souscategorie_produit")
      */
-    public function ajouterSousCategorieProduit(SousCategorieProduit $sousCategorieProduit = null,Request $request,EntityManagerInterface $manager)
+    public function ajouterSousCategorieProduit(SousCategorieProduit $sousCategorieProduit = null, Request $request, EntityManagerInterface $manager)
     {
         $editmode = true;
-        if(!$sousCategorieProduit) {
+        if (!$sousCategorieProduit) {
             $sousCategorieProduit = new sousCategorieProduit();
             $editmode = false;
         }
         $form = $this->createFormBuilder($sousCategorieProduit)
-            ->add('nom',TextType::class,array('required'  => true))
-            ->add('CategorieProduit',EntityType::class,[
+            ->add('nom', TextType::class, array('required' => true))
+            ->add('CategorieProduit', EntityType::class, [
                 'class' => CategorieProduit::class,
                 'choice_label' => 'Nom',
-                'required'  => true,
+                'required' => true,
             ])
             ->getForm();
 
         $form->handleRequest($request);
 
-        if($form->isSubmitted()&& $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
 
             $manager->persist($sousCategorieProduit);
             $manager->flush();
-            return $this->redirectToRoute('admin-souscategorie-produits');
+            return $this->redirectToRoute('admin_souscategorie_produits');
         }
 
         return $this->render('product/ajouterSousCategorieProduit.html.twig', [
             'controller_name' => 'SousCategorieProduitController',
-            'formSousCategorieProduit'=> $form->createView(),
-            'editMode'=>$editmode,
+            'formSousCategorieProduit' => $form->createView(),
+            'editMode' => $editmode,
         ]);
     }
 
     /**
-     *  @Route("/admin/produit/souscategorie/{id}/delete", name="delete_souscategorie_produit")
+     * @Route("/admin/produit/souscategorie/{id}/delete", name="delete_souscategorie_produit")
      */
-    public function deleteSousCategorieProduit(SousCategorieProduit $sousCategorieProduit, EntityManagerInterface $manager){
+    public function deleteSousCategorieProduit(SousCategorieProduit $sousCategorieProduit, EntityManagerInterface $manager)
+    {
         $manager->remove($sousCategorieProduit);
         $manager->flush();
 

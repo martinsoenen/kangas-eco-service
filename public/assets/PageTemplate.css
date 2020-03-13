@@ -11,7 +11,7 @@
     margin: 5px;
 }
 
-.alert-sucess {
+.alert-success {
     padding: 20px;
     background-color: #4CAF50;
     color: white;
@@ -136,15 +136,12 @@ thead tr {
 .connexion-button {
     position: absolute;
     right: 75px;
-    bottom: 15px;
 }
 
 .profil-button {
     position: absolute;
     right: 200px;
-    bottom: 15px;
 }
-
 
 /*=======================================================================
                                 FOOTER PART
@@ -216,16 +213,17 @@ thead tr {
     h1 {
         font-size: 25px;
     }
-    .connexion-button {
-        position: relative;
-        right: auto;
-        bottom: auto;
-    }
+
     .profil-button {
         position: relative;
-        right: auto;
-        bottom: auto;
+        right: 0;
     }
+
+    .connexion-button {
+        position: relative;
+        right: 0;
+    }
+
 }
 
 @media (min-width: 768px) {
@@ -240,7 +238,7 @@ thead tr {
     #shopping-cart-icon {
         position: absolute;
         right: 20px;
-        bottom: 10px;
+        bottom: 15px;
         padding: .5rem 1rem !important;
     }
     #profile-icon {

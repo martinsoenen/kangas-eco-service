@@ -39,15 +39,15 @@ class EcoServiceController extends AbstractController
             'controller_name' => 'EcoServiceController',
         ]);
     }
-    
+
     /**
      * @Route("/contact", name="contact")
      */
     public function contact(Request $request, \Swift_Mailer $mailer)
     {
         $form = $this->createForm(ContactGeneralType::class);
-        
-        if($this->getUser()!= null){
+
+        if ($this->getUser() != null) {
             $user = $this->getUser();
             $form->get('email')->setData($user->getEmail());
             $form->get('nom')->setData($user->getNom());
@@ -56,22 +56,23 @@ class EcoServiceController extends AbstractController
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-        
+
             $data = $form->getData();
 
-             $message = (new \Swift_Message('Contact Eco-Service'))
+            $message = (new \Swift_Message('Contact Eco-Service'))
                 ->setTo('contact@kangas.fr')
                 ->setFrom($data['email'])
                 ->setBody(
-                    'Message : ' . $data['message']. '<br>'.
-                    'Envoyé par ' .$data['nom'] . $data['prenom']. '<br>'.
-                    $data['email'],
+                    'Bonjour, vous avez reçu un nouveau message via le formulaire de contact de votre site. '.'<br>'.
+                    'Message : '.$data['message'].'<br>'.
+                    'Envoyé par '.$data['nom'].$data['prenom'].'<br>'.
+                    'Mail de contact de la personne : '.$data['email'],
                     'text/html'
                 );
-            
+
             $mailer->send($message);
 
-            $this->addFlash('sucess', 'Votre email a bien été envoyé. Nous vous repondrons au plus vite. ');
+            $this->addFlash('success', 'Votre email a bien été envoyé. Nous vous répondrons au plus vite. ');
 
             return $this->redirectToRoute('home');
         }
@@ -88,9 +89,14 @@ class EcoServiceController extends AbstractController
      */
     public function admin_index()
     {
-        return $this->render('eco_service/admin_index.html.twig', [
-            'controller_name' => 'EcoServiceController',
-        ]);
+        if ($this->getUser() != null && $this->getUser()->getUtilisateurType() == "admin") {
+            return $this->render('eco_service/admin_index.html.twig', [
+                'controller_name' => 'EcoServiceController',
+            ]);
+        } else {
+            $this->addFlash('error', 'Veuillez vous connecter en tant qu\'administrateur. Accès refusé.');
+            return $this->redirectToRoute('security_login');
+        }
     }
 
     /**

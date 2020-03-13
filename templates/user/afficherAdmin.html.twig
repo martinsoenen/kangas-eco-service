@@ -1,32 +1,39 @@
 {% extends 'base.html.twig' %}
 
-{% block body %}
-    <table class="table" >
-        <thead class="thead-light">
-        <tr>
-            <th scope="col">Nom</th>
-            <th scope="col">Prénom</th>
-            <th scope="col">Role</th>
-            <th scope="col">Options</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for utilisateur in utilisateurs %}
-        <tr>
-            <td>{{utilisateur.nom}}</td>
-            <td>{{utilisateur.prenom}}</td>
-            <td>{{utilisateur.utilisateurType}}</td>
-            <td>
-                <bouton onclick="window.location.href = '/admin/user/{{utilisateur.id}}/edit';">
-                    <i class="fa fa-pencil fa-2x"></i>
-                </bouton>
-                <bouton onclick="window.location.href = '/admin/user/{{utilisateur.id}}/delete';">
-                    <i class="fa fa-trash fa-2x"></i>
-                </bouton>
-            </td>
-        </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+{% block additional_stylesheets %}
 
+    <link rel="stylesheet" type="text/css" href="{{asset('../assets/admin.css')}}">
+
+{% endblock %}
+
+{% block body %}
+    <div id="admin-users" >
+        <table class="table">
+            <thead class="thead-light">
+            <tr>
+                <th scope="col">Nom</th>
+                <th scope="col">Prénom</th>
+                <th scope="col">Rôle</th>
+                <th scope="col">Options</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for utilisateur in utilisateurs %}
+                <tr>
+                    <td>{{ utilisateur.nom }}</td>
+                    <td>{{ utilisateur.prenom }}</td>
+                    <td>{{ utilisateur.utilisateurType }}</td>
+                    <td>
+                        <i class="fa fa-pencil fa-2x"
+                           onclick="window.location.href = '/admin/user/{{ utilisateur.id }}/edit';"></i>
+
+                        <i class="fa fa-trash fa-2x"
+                           onclick="window.location.href = '/admin/user/{{ utilisateur.id }}/delete';"></i>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <div class="btn" onclick="window.location.href = '{{ path('add_user_admin') }}';">Ajouter un admin</div>
+    </div>
 {% endblock %}

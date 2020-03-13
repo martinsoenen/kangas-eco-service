@@ -4,7 +4,7 @@
 
 {% block additional_stylesheets %}
 
-    <link rel="stylesheet" type="text/css" href="{{asset('../assets/entreprise/espace-entreprise.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('../assets/entreprise/espace-entreprise.css') }}">
 
 {% endblock %}
 
@@ -13,100 +13,57 @@
     <div id="espace-entreprise">
         <ul id="nav-onglets-entreprises" class="nav nav-pills row" id="pills-tab">
             <li class="nav-item item-entreprise active col-6">
-                <a class="nav-link active w-100" id="services-tab" data-toggle="pill" href="#services">Nos Services </a>
+                <a class="nav-link active w-100" id="services-tab" href="{{ path('entreprise_services') }}">Nos
+                    Services</a>
             </li>
             <li class="nav-item item-entreprise col-6">
-                <a class="nav-link w-100" id="devis-contact-tab" data-toggle="pill" href="#devis-contact">Devis en ligne</a>
+                <a class="nav-link w-100" id="devis-contact-tab" href="{{path('entreprise_devis')}}">Demande de devis</a>
             </li>
         </ul>
 
-
         <div class="tab-content">
-            {# TODO : Mettre du vrai texte #}
             <div id="services" class="tab-pane active">
                 <div class="text-center">
                     <h2>Eco Service propose de nombreuses solutions</h2>
                     <img class="image-services-entreprise" src={{ asset('../assets/img/collecte-dechets.jpg') }}>
-                    <h4>Collecte de déchets</h4>
+                    <h3>Collecte de déchets</h3>
                     <p class="">
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda autem consectetur
-                        dolorem iusto maiores molestias obcaecati officiis repudiandae sequi ut.
-                        Dolorem ducimus fuga inventore placeat porro possimus sed vel.
-                        Animi assumenda dolores eos molestias nesciunt quae quia repellendus sunt.
-                        Animi aspernatur autem, consequatur corporis culpa dicta eaque error est eum iste omnis
-                        porro reiciendis veniam? Dolorem, incidunt inventore ipsa laboriosam laborum quos repudiandae.
-                        At commodi dignissimos laborum modi quos totam vel vero vitae. Alias aliquam minus mollitia
-                        perferendis quasi quisquam quos sint. Aliquam consequatur, cum doloremque eius facilis hic
-                        maxime minus molestiae quaerat quidem quis repellendus, reprehenderit saepe.
-                        Ab accusamus, consequatur, distinctio dolores eveniet illum ipsum modi neque perferendis
-                        porro quas repudiandae veniam? A ad atque autem commodi consequatur cupiditate dignissimos
-                        doloremque eaque earum, in laborum laudantium minima modi neque nisi, nobis officia quisquam
-                        quod repellat reprehenderit repudiandae similique sit soluta temporibus tenetur totam ut.
-                        Debitis eligendi iusto libero minima nihil. Consequatur facilis molestias necessitatibus non
-                        numquam praesentium, reiciendis?
+                        Eco service propose une solution très avantageuse pour nos entreprises partenaires. En effet, nous
+                        récuperons tous vos déchets gratuitements. Pour cela, nous vous invitons à vous inscrire en tant qu'entreprise
+                        sur ce site internet puis de remplir le formulaire dans la section "demande de devis".
+                        Vous pouvez ainsi indiquer toutes les caractéristiques de votre demande et nous arrangerons pour
+                        les respecter au mieux.
+                        C'est un partenariat gagnant-gagnant pour tous !
                     </p>
                 </div>
                 <br>
                 <div class="text-center">
                     <img class="image-services-entreprise" src={{ asset('../assets/img/recyclage.jpg') }}>
-                    <h4>Traitement des déchets</h4>
+                    <h3>Traitement des déchets</h3>
                     <p class="">
-                        Accusantium cum deleniti deserunt dolorem eius enim, error
-                        et eveniet, labore laboriosam molestiae neque non numquam perferendis quis sunt voluptate
-                        voluptatem? A culpa deserunt dignissimos, dolore, eveniet impedit inventore itaque libero
-                        magnam maiores minima minus modi nesciunt perferendis provident quasi quidem reiciendis
-                        repellendus, similique sint sit voluptatem voluptatibus! Ad aperiam architecto blanditiis
-                        cum, dolor dolorem dolores error eveniet expedita in incidunt magni modi nemo numquam pariatur
-                        porro possimus quam repellat repudiandae rerum. Corporis eos fugit impedit inventore iusto
-                        maiores modi, nemo omnis provident ratione recusandae repudiandae rerum saepe?
-                        Accusamus accusantium aperiam consequuntur dolor doloribus ducimus ea, esse facilis
-                        in iusto libero nulla, officiis ut? Ab amet dolore eos facilis iure magnam molestiae
-                        optio praesentium qui quibusdam, sequi sint! Atque culpa cupiditate dolorem fugiat
-                        illum inventore ipsum, libero minus natus nobis perspiciatis quam quia quos repellat
-                        repellendus repudiandae, rerum sint sit totam velit voluptas voluptate voluptatem?
-                        Culpa cupiditate fuga laborum provident quas quis voluptas voluptates! Amet animi architecto
-                        consequatur debitis, dolore earum expedita facere impedit laboriosam libero magnam molestiae
-                        nemo nobis pariatur quam quidem quis quod ratione reiciendis repellat rerum sed soluta
-                        suscipit tenetur velit veritatis voluptates. Consectetur deserunt earum exercitationem
-                        itaque officia quae unde! Accusantium assumenda, blanditiis cupiditate, debitis in ipsam
-                        molestias mollitia officia perspiciatis porro quasi qui quis reprehenderit saepe soluta
-                        temporibus tenetur ullam velit, vitae voluptatem? Debitis expedita neque optio reprehenderit,
-                        similique voluptatem. Ab ad assumenda autem deleniti deserunt dicta doloremque explicabo
-                        facere fuga id magni maxime minus natus omnis perspiciatis placeat praesentium quia quisquam,
-                        quo quos reprehenderit repudiandae sunt ullam. Ab accusantium aliquam blanditiis dolore
-                        doloremque fuga maxime quasi vel veniam voluptatum.
+                    Eco-service collecte vos déchets et les achemine jusqu’à ses centres de tri. Là, ils sont immédiatement pesés.
+                    Les containers de papiers et cartons – qui constituent 85% des déchets de bureau – font l’objet d’un sur-tri
+                    afin avant d’être transporté vers nos partenaires papetiers qui les recyclent.
+                    Les containers d’autres déchets sont, eux, transférés directement vers nos autres partenaires spécialisés ;
+                    chaque type de déchets suit des méthodes de recyclage bien spécifiques.
                     </p>
                 </div>
                 <br>
                 <div class="text-center">
                     <img class="image-services-entreprise" src={{ asset('../assets/img/fabrication-alt.jpg') }}>
-                    <h4>Fabrication</h4>
+                    <h3>Fabrication</h3>
                     <p class="">
-                        Alias amet dolorem, eos impedit laboriosam
-                        laudantium minus nostrum quam, quos recusandae soluta voluptas voluptatibus, voluptatum.
-                        Ad adipisci aspernatur consequatur distinctio ea incidunt nemo obcaecati, pariatur quidem rem
-                        sequi voluptate voluptatem voluptates. Aut fuga in mollitia praesentium sapiente sequi soluta
-                        voluptatum? Minus nulla odio ratione voluptate voluptates! Alias aliquam animi consequatur
-                        cumque delectus doloribus eius exercitationem fugiat fugit, in maiores nihil pariatur
-                        praesentium quis quisquam reiciendis repellat rerum soluta sunt, temporibus unde vel voluptatem?
-                        Eos iste laborum praesentium tempore unde. Adipisci, amet at consequuntur dolorum enim ipsum
-                        iure necessitatibus praesentium quam quibusdam quo quod rem sed! Alias autem ducimus eius
-                        facilis harum incidunt iusto laborum odit officia omnis possimus provident, quae, quaerat
-                        quam quasi qui quibusdam quod ratione recusandae soluta tempora tenetur ullam veritatis
-                        voluptatem voluptatum! Aliquam aliquid, aperiam asperiores aspernatur consequuntur culpa,
-                        dicta eius enim eos facilis illo iste laboriosam libero molestiae natus nemo nisi nostrum
-                        officiis optio porro quaerat, quam recusandae repellat sunt tempore unde voluptas?
-                        Ea enim molestiae voluptate. Cum doloribus explicabo fuga nam, nesciunt nulla numquam
-                        repellat! Aliquam aliquid dicta, dolorem, fuga impedit, maiores molestiae natus necessitatibus
-                        neque optio quam quidem quis rem sunt tenetur?
+                    En quoi sont transformés tous ces matériaux à recycler ?
+                    Certains déchets recyclables renaîtront sur leur forme première, d’autres seront transformés et réintégrés dans des biens totalement différents. Ainsi :
+                    Les papiers et cartons sont recyclés à 80% sous forme de papier : journaux, prospectus, cahiers…
+                    Les plastiques – PEHD et le PET – servent à produire de nouvelles bouteilles et bidons en plastique. Mais, on peut fabriquer avec bien d’autres produits comme des pots de fleurs, des bancs, des pare-chocs de voiture ou encore des vêtements en fibres synthétiques ou des rembourrages de couettes ou d’oreillers.
+                    Le verre est utilisé essentiellement pour fabriquer de nouveaux contenants en verre mais entre aussi dans la fabrication d’autres produits comme la laine de verre, un isolant bien connu.
+                    Les métaux – acier et aluminium – peuvent être recyclés en boîtes de conserve et canettes ou être utilisés dans diverses industries pour la fabrication de boules de pétanques, de pièce de moteur d’automobile, de machines à laver, de fer à repasser, etc
                     </p>
                 </div>
             </div>
 
             <div id="devis-contact" class="tab-pane">
-
-                {# TODO : Copier le code de Khadidja #}
-
             </div>
         </div>
     </div>

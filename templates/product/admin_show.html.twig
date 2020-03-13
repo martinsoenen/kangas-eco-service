@@ -2,21 +2,30 @@
 
 {% block title %}Produit - Admin - {{ parent() }}{% endblock %}
 
+{% block additional_stylesheets %}
+
+    <link rel="stylesheet" type="text/css" href="{{ asset('../assets/admin.css') }}">
+
+{% endblock %}
+
 {% block body %}
-<h1>Page d'administration des produits</h1>
-    <tbody>
-    {% for produit in produits %}
-        <tr>
-            <td>{{produit.nomProduit}}</td>
-            <td>
-                <bouton onclick="window.location.href = '/admin/produit/{{produit.id}}/edit';">
-                    <i class="fa fa-pencil fa-2x"></i>
-                </bouton>
-                <bouton onclick="window.location.href = '/admin/produit/{{produit.id}}/delete';">
-                    <i class="fa fa-trash fa-2x"></i>
-                </bouton>
-            </td>
-        </tr>
-    {% endfor %}
-    </tbody>
+    <div id="admin-produits">
+        <h1>Page d'administration des produits</h1>
+        <tbody>
+        {% for produit in produits %}
+            <tr>
+                <td>{{ produit.nomProduit }}</td>
+                <td>
+                    <bouton onclick="window.location.href = '/admin/produit/{{ produit.id }}/edit';">
+                        <i class="fa fa-pencil fa-2x"></i>
+                    </bouton>
+                    <bouton onclick="window.location.href = '/admin/produit/{{ produit.id }}/delete';">
+                        <i class="fa fa-trash fa-2x"></i>
+                    </bouton>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+        <div class="btn" onclick="window.location.href = '{{ path('ajouter_produit') }}';">Ajouter un produit</div>
+    </div>
 {% endblock %}

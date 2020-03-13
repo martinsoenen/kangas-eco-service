@@ -1,15 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Profil -
-	{{parent()}}
-{% endblock %}
+{% block title %}Profil - {{ parent() }}{% endblock %}
 
 
 {% block body %}
-	Modifier mon adresse
-	<hr>
-	{{form_start(form)}}
-		{{form(form)}}
-		<a href="{{path('profil_client')}}" class="btn btn-danger">Abandonner</a>
-	{{form_end(form)}}
+    Modifier mon adresse
+    <hr>
+    {{ form_start(form) }}
+    {{ form(form) }}
+    <a href="{{ path('profil_client') }}" class="btn btn-danger">Abandonner</a>
+    {{ form_end(form) }}
 {% endblock %}
