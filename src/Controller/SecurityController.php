@@ -124,7 +124,12 @@ class SecurityController extends AbstractController
                 ->setTo($user->getEmail())
                 ->setFrom('contact@kangas.fr')
                 ->setBody(
-                    "Cliquez ici pour réinitialiser votre mot de passe : ".$url,
+                    "Bonjour,<br/>
+                            <br/>
+                            Cliquez ici pour réinitialiser votre mot de passe : <a href=\"".$url."\" target='_blank'>$url</a>.<br/>
+                            <br/>
+                            Bien cordialement,<br/>
+                            L'équipe Kangas",
                     'text/html'
                 );
 
