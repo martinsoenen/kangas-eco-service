@@ -3,22 +3,22 @@
 {% block body %}
     {{ form_start(formAdmin) }}
 
-        {{ form_row(formAdmin.UtilisateurType, {'label' : 'Type d\'Administrateur :'}) }}
-        {{ form_row(formAdmin.nom, {'label' : 'Nom de l\'utilisateur :','attr' : {'placeholder' : "Nom"}}) }}
-        {{ form_row(formAdmin.prenom, {'label' : 'Prenom de l\'utilisateur :','attr' : {'placeholder' : "Prénom"}}) }}
-        {{ form_row(formAdmin.civilite, {'label' : 'Civilite :','attr' : {'placeholder' : "Prénom"}}) }}
-        {{ form_row(formAdmin.email, {'label' : 'Adresse mail de l\'utilisateur :','attr' : {'placeholder' :
-            "Adresse mail"}}) }}
-        {{ form_row(formAdmin.telephone, {'label' : 'Telephone de l\'utilisateur :','attr' : {'placeholder' :
-            "Téléphone"}}) }}
-        {{ form_row(formAdmin.password, {'label' : 'Mot de passe :','attr' : {'placeholder' : "Mot de passe"}}) }}
-        <button type="submit" class="btn btn-success ">
-            {% if editMode %}
+    {{ form_row(formAdmin.UtilisateurType, {'label' : 'Type d\'Administrateur :'}) }}
+    {{ form_row(formAdmin.nom, {'label' : 'Nom de l\'utilisateur :','attr' : {'placeholder' : "Nom"}}) }}
+    {{ form_row(formAdmin.prenom, {'label' : 'Prenom de l\'utilisateur :','attr' : {'placeholder' : "Prénom"}}) }}
+    {{ form_row(formAdmin.civilite, {'label' : 'Civilite :','attr' : {'placeholder' : "Prénom"}}) }}
+    {{ form_row(formAdmin.email, {'label' : 'Adresse mail de l\'utilisateur :','attr' : {'placeholder' :
+        "Adresse mail"}}) }}
+    {{ form_row(formAdmin.telephone, {'label' : 'Telephone de l\'utilisateur :','attr' : {'placeholder' :
+        "Téléphone"}}) }}
+    {{ form_row(formAdmin.password, {'label' : 'Mot de passe :','attr' : {'placeholder' : "Mot de passe"}}) }}
+    <button type="submit" class="btn btn-success ">
+        {% if editMode %}
             Enregistrer les modifications
-            {% else %}
+        {% else %}
             Ajouter l'utilisateur
-            {% endif %}
-        </button>
+        {% endif %}
+    </button>
 
     {{ form(formAdmin) }}
 {% endblock %}

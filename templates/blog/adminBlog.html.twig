@@ -1,31 +1,31 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-	<table class="table" >
-		<thead class="thead-light">
-		<tr>
-			<th scope="col">Nom Article</th>
-			<th scope="col">Date Article</th>
-			<th scope="col">Options</th>
-		</tr>
-		</thead>
-		<tbody>
-		{% for article in articles %}
-			<tr>
-				<td>{{article.titre}}</td>
-				<td>{{article.date|date("d/m/Y")}}</td>
-				<td>
-					<bouton onclick="window.location.href = '/admin/article/{{article.id}}/edit';">
-						<i class="fa fa-pencil fa-2x"></i>
-					</bouton>
-					<bouton onclick="window.location.href = '/admin/article/{{article.id}}/delete';">
-						<i class="fa fa-trash fa-2x"></i>
-					</bouton>
-				</td>
-			</tr>
-		{% endfor %}
-		<a class="btn btn-outline-secondary" href="{{ path('add_article_admin')}}">Ajouter un article</a>
-		</tbody>
-	</table>
+    <table class="table">
+        <thead class="thead-light">
+        <tr>
+            <th scope="col">Nom Article</th>
+            <th scope="col">Date Article</th>
+            <th scope="col">Options</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for article in articles %}
+            <tr>
+                <td>{{ article.titre }}</td>
+                <td>{{ article.date|date("d/m/Y") }}</td>
+                <td>
+                    <bouton onclick="window.location.href = '/admin/article/{{ article.id }}/edit';">
+                        <i class="fa fa-pencil fa-2x"></i>
+                    </bouton>
+                    <bouton onclick="window.location.href = '/admin/article/{{ article.id }}/delete';">
+                        <i class="fa fa-trash fa-2x"></i>
+                    </bouton>
+                </td>
+            </tr>
+        {% endfor %}
+        <a class="btn btn-outline-secondary" href="{{ path('add_article_admin') }}">Ajouter un article</a>
+        </tbody>
+    </table>
 {% endblock %}
 

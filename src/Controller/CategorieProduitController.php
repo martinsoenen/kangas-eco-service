@@ -28,25 +28,20 @@ class CategorieProduitController extends AbstractController
      * @Route("/admin/produit/categorie/add", name="ajouter_categorie_produit")
      * @Route("/admin/produit/categorie/{id}/edit", name="modifier_categorie_produit")
      */
-    public function ajouterCategorieProduit(CategorieProduit $categorieProduit = null,Request $request,EntityManagerInterface $manager)
+    public function ajouterCategorieProduit(CategorieProduit $categorieProduit = null, Request $request, EntityManagerInterface $manager)
     {
         $editmode = true;
-        if(!$categorieProduit) {
+        if (!$categorieProduit) {
             $categorieProduit = new CategorieProduit();
             $editmode = false;
         }
         $form = $this->createFormBuilder($categorieProduit)
-            ->add('nom',TextType::class,array('required'  => true))
-            // ->add('UtilisateurAdmin',EntityType::class,[
-            //     'class' => UtilisateurAdministration::class,
-            //     'choice_label' => 'Nom',
-            //     'required'  => true,
-            // ])
+            ->add('nom', TextType::class, array('required' => true))
             ->getForm();
 
         $form->handleRequest($request);
 
-        if($form->isSubmitted()&& $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
 
             $manager->persist($categorieProduit);
             $manager->flush();
@@ -55,15 +50,16 @@ class CategorieProduitController extends AbstractController
 
         return $this->render('product/ajouterCategorieProduit.html.twig', [
             'controller_name' => 'CategorieProduitController',
-            'formCategorieProduit'=> $form->createView(),
-            'editMode'=>$editmode,
+            'formCategorieProduit' => $form->createView(),
+            'editMode' => $editmode,
         ]);
     }
 
     /**
-     *  @Route("/admin/produit/categorie/{id}/delete", name="delete_categorie_produit")
+     * @Route("/admin/produit/categorie/{id}/delete", name="delete_categorie_produit")
      */
-    public function deleteCategorieProduit(CategorieProduit $categorieProduit, EntityManagerInterface $manager){
+    public function deleteCategorieProduit(CategorieProduit $categorieProduit, EntityManagerInterface $manager)
+    {
         $manager->remove($categorieProduit);
         $manager->flush();
 

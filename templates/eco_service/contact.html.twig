@@ -4,10 +4,10 @@
 
 {% block body %}
     {{ form_start(form) }}
-        {{form_row(form.email)}}
-        {{form_row(form.nom)}}
-        {{form_row(form.prenom)}}
-        {{form_row(form.message)}}
-        {{form_row(form.conditions, {'label' : 'J\'accepte les CGU et les CGV d\'Eco-Service','attr' :{'class':'formClient-check-input'}})}}
+    {{ form_row(form.email) }}
+    {{ form_row(form.nom) }}
+    {{ form_row(form.prenom) }}
+    {{ form_row(form.message) }}
+    {{ form_row(form.conditions, {'label' : 'J\'accepte les CGU et les CGV d\'Eco-Service','attr' :{'class':'formClient-check-input'}}) }}
     {{ form_end(form) }}
 {% endblock %}

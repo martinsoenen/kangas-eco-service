@@ -22,18 +22,18 @@ class ProduitRepository extends ServiceEntityRepository
     public function findBySearch($search): ?array
     {
         return $this->createQueryBuilder('p')
-            ->where('p.nomProduit LIKE \'%' . $search . '%\'')
+            ->where('p.nomProduit LIKE \'%'.$search.'%\'')
             ->getQuery()
-            ->getResult()
-            ;
+            ->getResult();
     }
 
     /**
      * @return Produit[] Returns an array of Produit objects
      */
-    public function findProduitsByCategorie(int $id) {
+    public function findProduitsByCategorie(int $id)
+    {
         $entityManager = $this->getEntityManager()->getConnection();
-        $sql ='
+        $sql = '
             SELECT p.id, p.sous_categorie_produit_id, p.nom_produit, p.prix_unitaire_ht, p.taux_tva, p.presentation, p.description_detaillee, p.image, cp.id, cp.nom, scp.nom
             FROM produit p
             INNER JOIN sous_categorie_produit scp ON p.sous_categorie_produit_id = scp.id
@@ -51,9 +51,10 @@ class ProduitRepository extends ServiceEntityRepository
     /**
      * @return Produit[] Returns an array of Produit objects
      */
-    public function findProduitsBySousCategorie(int $id) {
+    public function findProduitsBySousCategorie(int $id)
+    {
         $entityManager = $this->getEntityManager()->getConnection();
-        $sql ='
+        $sql = '
             SELECT p.id, p.sous_categorie_produit_id, p.nom_produit, p.prix_unitaire_ht, p.taux_tva, p.presentation, p.description_detaillee, p.image, scp.id, scp.nom
             FROM produit p
             INNER JOIN sous_categorie_produit scp ON p.sous_categorie_produit_id = scp.id

@@ -4,7 +4,7 @@
 {% block title %}Accueil - {{ parent() }}{% endblock %}
 
 {% block additional_stylesheets %}
-    <link rel="stylesheet" type="text/css" href="{{asset('../assets/eco_service/Accueil.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('../assets/eco_service/Accueil.css') }}">
 {% endblock %}
 
 {% block body %}
@@ -55,9 +55,9 @@
         </div>
     </div>
     <div id="boutonParticulier" class="bouton-accueil" align="center">
-            <a class="btn btn-outline-secondary" href="{{ path('magasin') }}">Je suis un particulier</a>
+        <a class="btn btn-outline-secondary" href="{{ path('magasin') }}">Je suis un particulier</a>
     </div>
     <div id="boutonEntreprise" class="bouton-accueil" align="center">
-            <a class="btn btn-outline-secondary" href="{{ path('entreprise_services') }}">Je suis un professionel</a>
+        <a class="btn btn-outline-secondary" href="{{ path('entreprise_services') }}">Je suis un professionel</a>
     </div>
 {% endblock %}

@@ -43,7 +43,7 @@ class Adresse
      *   min = 5,
      *   minMessage="Veuillez saisir un code postal valide",
      * )
-     *  @Assert\Length(
+     * @Assert\Length(
      *   max = 5,
      *   maxMessage="Veuillez saisir un code postal valide",
      * )
@@ -150,5 +150,5 @@ class Adresse
         return $this;
     }
 
-    
+
 }
