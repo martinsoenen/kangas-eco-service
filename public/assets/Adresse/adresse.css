@@ -1,0 +1,55 @@
+.adresse {
+    width: 100%;
+    text-align: right;
+}
+
+.adresse-label {
+    width : 40%;
+}
+
+.container-commande{
+    min-height: 390px;
+    width: 75%;
+    margin: 25px auto;
+    background-color: #8ed86e77;
+    border-radius: 5px;
+    padding: 10px 0;
+}
+
+h1 {
+    color: #f2af58;
+}
+
+.item-commande {
+    display: flex;
+    width: 90%;
+    margin: auto;
+}
+
+.result {
+    margin-left: auto;
+}
+
+@media (max-width : 991px) {
+    .item-commande {
+        flex-direction: column;
+    }
+    
+    .result {
+        margin: -10px 0 40px 10px;
+    }
+}
+
+@media (max-width : 767px) {
+    .container-commande {
+        width: 100%;
+    }
+
+    .item-commande {
+        font-size: 14px;
+    }
+    
+    .table {
+        font-size: 12px;
+    }
+}
