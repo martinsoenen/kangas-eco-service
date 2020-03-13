@@ -34,19 +34,19 @@
                                     <img class="image" src="{{ asset('../uploads/images/produits/'~ produit.image ) }}">
                                     <p>{{ produit.presentation }}</p>
                                 </div>
-                                <div class="relative-subcontainer">
-                                    <div class="produit-labels">
-                                        <h5>{{ produit.nomProduit }}</h5>
-                                        <p>{{ produit.prixUnitaireHT }} € / Unité</p>
-                                    </div>
-                                    <div class="produit-achat-direct">
-                                        <input class="small-input" id="{{ produit.id }}" type="number" name="quantite" value=1>
-                                        <a id="{{ produit.id }}" class="bouton-ajout btn btn-success">
-                                            <i class="fa fa-shopping-cart mr-1"></i>Ajouter
-                                        </a>
-                                    </div>
-                                </div>
                             </a>
+                            <div class="relative-subcontainer">
+                                <div class="produit-labels">
+                                    <h5>{{ produit.nomProduit }}</h5>
+                                    <p>{{ produit.prixUnitaireHT }} € / Unité</p>
+                                </div>
+                                <div class="produit-achat-direct">
+                                    <input class="small-input" id="{{ produit.id }}" type="number" name="quantite" value=1>
+                                    <a id="{{ produit.id }}" class="bouton-ajout btn btn-success">
+                                        <i class="fa fa-shopping-cart mr-1"></i>Ajouter
+                                    </a>
+                                </div>
+                            </div>
                         </div>
                     {% endfor %}
                 {% else %}
