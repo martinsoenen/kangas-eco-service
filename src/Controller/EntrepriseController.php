@@ -39,8 +39,15 @@ class EntrepriseController extends AbstractController
 
                 $form->handleRequest($request);
                 if ($form->isSubmitted() && $form->isValid()) {
-
                     $data = $form->getData();
+                    $ImageFile = $form->get('image')->getData();
+                    $originalFilename = pathinfo($ImageFile->getClientOriginalName(), PATHINFO_FILENAME);
+                    $newFilename = $originalFilename.'-'.uniqid().'.'.$ImageFile->guessExtension();
+                    $ImageFile->move(
+                        $this->getParameter('image_devis_directory'),
+                        $newFilename
+                    );
+                    $data['image'] = $newFilename;
                     $message = (new \Swift_Message('Demande de devis par une entreprise'))
                         ->setTo('devis@kangas.fr')
                         ->setFrom($data['email'])

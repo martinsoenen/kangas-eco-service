@@ -332,3 +332,38 @@
     float: right;
     margin-top: -30px;
 }
+
+
+.pag .pagination{
+    margin: 15px 0;
+    justify-content: center;
+}
+
+.pag .pagination span {
+    height: 40px;
+    width: 40px;
+    text-align: center;
+    margin: 0 5px;
+    border-radius: 25px;
+}
+
+.pag .pagination span a{
+    color: black;
+    font-size: 25px;
+}
+
+.pag .pagination .current {
+    background-color: #8ed86e;
+    color : black;
+    font-size: 25px;
+}
+
+.pag .pagination span:hover  {
+    text-align: center;
+    background-color: #8ed86e77;
+    border-radius: 25px;
+}
+
+.pag .pagination .current:hover {
+    background-color: #8ed86e;
+}

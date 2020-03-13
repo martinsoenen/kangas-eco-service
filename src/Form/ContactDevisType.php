@@ -12,6 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\File;
 
 
 class ContactDevisType extends AbstractType
@@ -53,14 +54,24 @@ class ContactDevisType extends AbstractType
                     'placeholder' => 'Taille de l\'objet',
                 ]
             ))
-            ->add('image', FileType::class, array(
-                'label' => 'Photo de l\'objet',
+            ->add('image', FileType::class, [
+                'label' => 'Image',
+                'mapped' => false,
                 'required' => true,
-                'attr' => [
-                    'placeholder' => 'Insérer une photo de l\'objet à collecter',
-                ]
-            ))
-            ->add('adresse', TextType::class, array(
+                'constraints' => [
+                    new File([
+                        'maxSize' => '2048k',
+                        'mimeTypes' => [
+                            "image/png",
+                            "image/jpeg",
+                            "image/jpg",
+                            "image/gif",
+                        ],
+                        'mimeTypesMessage' => 'Uploadez un format d\'image valide (jpg, jped, png ou gif)'
+                    ])
+                ],
+            ])
+            ->add('adresse', TextType::class,array(
                 'label' => 'Adresse de récupération de l\'objet',
                 'required' => true,
                 'attr' => [
