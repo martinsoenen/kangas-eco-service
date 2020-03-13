@@ -1,0 +1,80 @@
+#accueil-admin,
+#admin-add-produit,
+#admin-add-blog,
+#admin-add-categorie,
+#admin-add-sous-categorie,
+#add-admin-user
+{
+    margin: 20px 0;
+}
+
+#accueil-admin .btn,
+#admin-users .btn,
+#add-admin-user button,
+#admin-add-blog button,
+#admin-add-produit button,
+#admin-add-categorie button,
+#admin-add-sous-categorie button,
+#admin-blog .btn,
+#admin-produits .btn,
+#admin-categories .btn,
+#admin-sous-categories .btn
+{
+    background-color: white;
+    padding: 10px;
+    margin: 10px 0;
+    border: solid 1px #555;
+    border-radius: 50px;
+    color: #222222;
+}
+
+#accueil-admin .btn
+{
+    width: 400px;
+    padding-left: 30px;
+    text-align: left;
+}
+
+#accueil-admin .btn:hover,
+#admin-users .btn:hover,
+#add-admin-user button:hover,
+#admin-add-blog button:hover,
+#admin-add-produit button:hover,
+#admin-add-categorie button:hover,
+#admin-add-sous-categorie button:hover,
+#admin-blog .btn:hover,
+#admin-produits .btn:hover,
+#admin-categories .btn:hover,
+#admin-sous-categories .btn:hover
+{
+    background-color: white;
+    box-shadow: 0 0 5px 1px #555;
+    font-weight: bold;
+    color: #222222;
+}
+
+#accueil-admin i
+{
+    padding: 0 1px;
+    margin: 10px 0;
+    width: 40px;
+    color: #222222;
+}
+
+
+#accueil-admin ul
+{
+    list-style-type: none;
+}
+
+#admin-users i
+{
+    color: #555;
+    margin: 0 30px;
+}
+
+#admin-users i:hover
+{
+    cursor: pointer;
+    font-weight: bold;
+}

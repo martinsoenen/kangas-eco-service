@@ -2,23 +2,30 @@
 
 {% block title %}SousCatégories - Produit - Admin - {{ parent() }}{% endblock %}
 
+{% block additional_stylesheets %}
+
+    <link rel="stylesheet" type="text/css" href="{{asset('../assets/admin.css')}}">
+
+{% endblock %}
+
 {% block body %}
-    <h1>Page d'administration des SousCategories Produit</h1>
-    <tbody>
-    {% for souscategorie in souscategories %}
-        <tr>
-            <td>{{souscategorie.nom}}</td>
-            <td>
-                <bouton onclick="window.location.href = '/admin/produit/souscategorie/{{souscategorie.id}}/edit';">
-                    <i class="fa fa-pencil fa-2x"></i>
-                </bouton>
-                <bouton onclick="window.location.href = '/admin/produit/souscategorie/{{souscategorie.id}}/delete';">
-                    <i class="fa fa-trash fa-2x"></i>
-                </bouton>
-            </td>
-        </tr>
-    {% endfor %}
-    <a class="btn btn-outline-secondary" href="{{ path('ajouter_souscategorie_produit')}}">Ajouter une
-        sous catégorie</a>
-    </tbody>
+    <div id="admin-sous-categories">
+        <h1>Page d'administration des Sous-Categories Produit</h1>
+        <tbody>
+        {% for souscategorie in souscategories %}
+            <tr>
+                <td>{{ souscategorie.nom }}</td>
+                <td>
+                    <bouton onclick="window.location.href = '/admin/produit/souscategorie/{{ souscategorie.id }}/edit';">
+                        <i class="fa fa-pencil fa-2x"></i>
+                    </bouton>
+                    <bouton onclick="window.location.href = '/admin/produit/souscategorie/{{ souscategorie.id }}/delete';">
+                        <i class="fa fa-trash fa-2x"></i>
+                    </bouton>
+                </td>
+            </tr>
+        {% endfor %}
+        <div class="btn" onclick="window.location.href = '{{ path('ajouter_souscategorie_produit') }}';">Ajouter une sous catégorie</div>
+        </tbody>
+    </div>
 {% endblock %}
