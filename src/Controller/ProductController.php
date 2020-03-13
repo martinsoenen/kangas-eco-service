@@ -48,7 +48,6 @@ class ProductController extends AbstractController
      */
     public function magasinRecherche(Request $request)
     {
-
         $produits = $this->getDoctrine()->getRepository(Produit::class)->findBySearch($request->query->get('name'));
         $categories = $this->getDoctrine()->getRepository(CategorieProduit::class)->findCategories();
 
@@ -115,14 +114,14 @@ class ProductController extends AbstractController
      */
     public function admin_show()
     {
-        if ($this->getUser() != null && $this->getUser()->getUtilisateurType() == "admin") {
+        if ($this->getUser() != null && $this->getUser()->getUtilisateurType() == "admin") { // Si l'utilisateur est administrateur
             $repo = $this->getDoctrine()->getRepository(Produit::class);
             $produits = $repo->findAll();
             return $this->render('product/admin_show.html.twig', [
                 'controller_name' => 'ProductController',
                 'produits' => $produits
             ]);
-        } else {
+        } else { // Sinon l'accès lui est refusé
             $this->addFlash('error', 'Vous avez un compte qui n\'est pas administrateur. Accès refusé.');
             return $this->redirectToRoute('home');
         }
@@ -134,7 +133,7 @@ class ProductController extends AbstractController
      */
     public function ajouterProduit(Produit $produit = null, Request $request, EntityManagerInterface $manager)
     {
-        if ($this->getUser() != null && $this->getUser()->getUtilisateurType() == "admin") {
+        if ($this->getUser() != null && $this->getUser()->getUtilisateurType() == "admin") { // Si l'utilisateur est administrateur
             $editmode = true;
             if (!$produit) {
                 $produit = new Produit();
@@ -192,7 +191,7 @@ class ProductController extends AbstractController
                 'formProduit' => $form->createView(),
                 'editMode' => $editmode,
             ]);
-        } else {
+        } else { // Sinon l'accès lui est refusé
             $this->addFlash('error', 'Vous avez un compte qui n\'est pas administrateur. Accès refusé.');
             return $this->redirectToRoute('home');
         }
@@ -203,12 +202,12 @@ class ProductController extends AbstractController
      */
     public function deleteProduit(Produit $produit, EntityManagerInterface $manager)
     {
-        if ($this->getUser() != null && $this->getUser()->getUtilisateurType() == "admin") {
+        if ($this->getUser() != null && $this->getUser()->getUtilisateurType() == "admin") { // Si l'utilisateur est administrateur
             $manager->remove($produit);
             $manager->flush();
 
             return $this->redirectToRoute('admin_produits');
-        } else {
+        } else { // Sinon l'accès lui est refusé
             $this->addFlash('error', 'Vous avez un compte qui n\'est pas administrateur. Accès refusé.');
             return $this->redirectToRoute('home');
         }

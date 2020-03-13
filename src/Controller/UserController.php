@@ -31,11 +31,11 @@ class UserController extends AbstractController
      */
     public function profilClient()
     {
-        if ($this->getUser() != null) {
+        if ($this->getUser() != null) { // Si l'utilisateur est identifié
             $UtilisateurId = $this->getUser()->getId();
 
             //Aiguillage particulier/entreprise
-            if ($this->getUser()->getUtilisateurType() != "pro") {
+            if ($this->getUser()->getUtilisateurType() != "pro") { // Si l'utilisateur n'est pas un pro on affiche le profil
                 $userDetails = $this->getDoctrine()
                     ->getRepository(Utilisateur::class)
                     ->getUtilisateurClientById($UtilisateurId);
@@ -55,10 +55,10 @@ class UserController extends AbstractController
                     'commandes' => $commandes,
                     'controller_name' => 'UserController',
                 ]);
-            } else {
+            } else { // Si c'est une entreprise, on redirige le client vers le profil entreprise
                 return $this->redirectToRoute('profil_entreprise');
             }
-        } else {
+        } else { // Si l'utilisateur n'est pas identifié on lui demande de se connecter
             $this->addFlash('error', 'Vous n\'êtes pas connecté. Veuillez vous inscrire.');
             return $this->redirectToRoute('security_login');
         }
@@ -69,11 +69,11 @@ class UserController extends AbstractController
      */
     public function ClientEdit(Request $request, UserPasswordEncoderInterface $encoder)
     {
-        if ($this->getUser() != null) {
+        if ($this->getUser() != null) { // Si l'utilisateur est identifié
             $UtilisateurId = $this->getUser()->getId();
 
             //Aiguillage particulier/entreprise
-            if ($this->getUser()->getUtilisateurType() != "pro") {
+            if ($this->getUser()->getUtilisateurType() != "pro") { // Si l'utilisateur n'est pas un pro on affiche le profil
                 $userDetails = $this->getDoctrine()
                     ->getRepository(Utilisateur::class)
                     ->getUtilisateurClientById($UtilisateurId);
@@ -103,13 +103,16 @@ class UserController extends AbstractController
                     'Adresse' => $Adresse,
                     'controller_name' => 'UserController',
                 ]);
-            } else {
+            } else { // Si c'est une entreprise, on redirige le client vers le profil entreprise
                 return $this->redirectToRoute('profil_entreprise');
             }
-        } else {
+        } else { // Si l'utilisateur n'est pas identifié on lui demande de se connecter
+            $this->addFlash('error', 'Vous n\'êtes pas connecté. Veuillez vous inscrire.');
             return $this->redirectToRoute('security_login');
         }
     }
+
+
 
     ////////////////////ENTREPRISE////////////////////////////////
 
@@ -118,10 +121,10 @@ class UserController extends AbstractController
      */
     public function profilEnteprise()
     {
-        if ($this->getUser() != null) {
+        if ($this->getUser() != null) { // Si l'utilisateur est identifié
 
             //Aiguillage particulier/entreprise
-            if ($this->getUser()->getUtilisateurType() == "pro") {
+            if ($this->getUser()->getUtilisateurType() == "pro") { // Si l'utilisateur a un compte pro on affiche le profil
 
                 $UtilisateurId = $this->getUser()->getId();
                 $userDetails = $this->getDoctrine()
@@ -134,10 +137,11 @@ class UserController extends AbstractController
                     'form' => $form->createView(),
                     'controller_name' => 'UserController',
                 ]);
-            } else {
+            } else { // Si l'utilisateur n'a pas un compte pro on redirige vers le profil client
                 return $this->redirectToRoute('profil_client');
             }
-        } else {
+        } else { // Si l'utilisateur n'est pas identifié on lui demande de se connecter
+            $this->addFlash('error', 'Vous n\'êtes pas connecté. Veuillez vous inscrire.');
             return $this->redirectToRoute('security_login');
         }
     }
@@ -147,11 +151,11 @@ class UserController extends AbstractController
      */
     public function EntrepriseEdit(Request $request, UserPasswordEncoderInterface $encoder)
     {
-        if ($this->getUser() != null) {
+        if ($this->getUser() != null) { // Si l'utilisateur est identifié
             $UtilisateurId = $this->getUser()->getId();
 
             //Aiguillage particulier/entreprise
-            if ($this->getUser()->getUtilisateurType() == "pro") {
+            if ($this->getUser()->getUtilisateurType() == "pro") { // Si l'utilisateur a un compte pro on affiche le profil
                 $userDetails = $this->getDoctrine()
                     ->getRepository(Utilisateur::class)
                     ->getUtilisateurProById($UtilisateurId);
@@ -177,10 +181,11 @@ class UserController extends AbstractController
                     'form' => $form->createView(),
                     'controller_name' => 'UserController',
                 ]);
-            } else {
+            } else { // Si l'utilisateur n'a pas un compte pro on redirige vers le profil client
                 return $this->redirectToRoute('profil_entreprise');
             }
-        } else {
+        } else { // Si l'utilisateur n'est pas identifié on lui demande de se connecter
+            $this->addFlash('error', 'Vous n\'êtes pas connecté. Veuillez vous inscrire.');
             return $this->redirectToRoute('security_login');
         }
     }
@@ -190,7 +195,7 @@ class UserController extends AbstractController
      */
     public function ShowCommande(CommandeRepository $repo, $id)
     {
-        if ($this->getUser() != null) {
+        if ($this->getUser() != null) { // Si l'utilisateur est identifié
             $commande = $repo->find($id);
 
             return $this->render('achat/showCommande.html.twig', [
@@ -198,20 +203,20 @@ class UserController extends AbstractController
                 'commande' => $commande,
                 'adresse' => explode('|', $commande->getShippingAddr()),
             ]);
-        } else {
+        } else { // Sinon l'accès lui est refusé
             $this->addFlash('error', 'Veuillez vous connecter. Accès refusé.');
             return $this->redirectToRoute('security_login');
         }
     }
 
-    ////////////////////ADMINISTRASTION////////////////////////////////
+    ////////////////////ADMINISTRATION////////////////////////////////
 
     /**
      * @Route("/admin/user", name="afficher_admin"))
      */
     public function showAdminBlog()
     {
-        if ($this->getUser() != null && $this->getUser()->getUtilisateurType() == "admin") {
+        if ($this->getUser() != null && $this->getUser()->getUtilisateurType() == "admin") { // Si l'utilisateur est connecté en tant qu'admin
             $repo = $this->getDoctrine()->getRepository(Utilisateur::class);
             $utilisateurs = $repo->getAllUserAdministration();
 
@@ -231,7 +236,7 @@ class UserController extends AbstractController
      */
     public function ajouterUtilisateur(Utilisateur $utilisateur = null, Request $request, EntityManagerInterface $manager)
     {
-        if ($this->getUser() != null && $this->getUser()->getUtilisateurType() == "admin") {
+        if ($this->getUser() != null && $this->getUser()->getUtilisateurType() == "admin") { // Si l'utilisateur est connecté en tant qu'admin
 
             if (!$utilisateur) {
                 $utilisateur = new Utilisateur();
@@ -291,7 +296,7 @@ class UserController extends AbstractController
      */
     public function deleteAdmin(Utilisateur $utilisateur, EntityManagerInterface $manager)
     {
-        if ($this->getUser() != null && $this->getUser()->getUtilisateurType() == "admin") {
+        if ($this->getUser() != null && $this->getUser()->getUtilisateurType() == "admin") { // Si l'utilisateur est connecté en tant qu'admin
 
             $manager->remove($utilisateur);
             $manager->flush();

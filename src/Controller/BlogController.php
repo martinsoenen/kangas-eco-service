@@ -79,65 +79,75 @@ class BlogController extends AbstractController
      */
     public function addAdminArticles(Article $article = null, Request $request, EntityManagerInterface $manager)
     {
-        if (!$article) {
-            $article = new Article();
+        if ($this->getUser() != null && $this->getUser()->getUtilisateurType() == "admin") { // Si l'utilisateur est admin il peut ajouter ou éditer un article
+            if (!$article) {
+                $article = new Article();
+            }
+            $form = $this->createFormBuilder($article)
+                ->add('Titre', TextType::class, array('required' => true))
+                ->add('Text', TextareaType::class, array('required' => true))
+                ->add('Image', FileType::class, [
+                    'label' => 'Image',
+                    'mapped' => false,
+                    'required' => true,
+                    'constraints' => [
+                        new \Symfony\Component\Validator\Constraints\File([
+                            'maxSize' => '2048k',
+                            'mimeTypes' => [
+                                "image/png",
+                                "image/jpeg",
+                                "image/jpg",
+                                "image/gif",
+                            ],
+                            'mimeTypesMessage' => 'Uploadez un format d\'image valide (jpg, jped, png ou gif)'
+                        ])
+                    ],
+                ])
+                ->getForm();
+
+            $form->handleRequest($request);
+
+            if ($form->isSubmitted() && $form->isValid()) {
+                $ImageFile = $form->get('Image')->getData();
+                $originalFilename = pathinfo($ImageFile->getClientOriginalName(), PATHINFO_FILENAME);
+                $newFilename = $originalFilename.'-'.uniqid().'.'.$ImageFile->guessExtension();
+                $ImageFile->move(
+                    $this->getParameter('image_article_directory'),
+                    $newFilename
+                );
+                $article->setImage($newFilename);
+                $article->setDate(new \DateTime());
+                $manager->persist($article);
+                $manager->flush();
+
+                return $this->redirectToRoute('blog_admin');
+            }
+
+            return $this->render('blog/ajouterArticles.html.twig', [
+                'controller_name' => 'BlogController',
+                'formArticle' => $form->createView(),
+                'editMode' => $article->getId() !== null,
+            ]);
+
+        } else { // Sinon il ne peut pas
+            $this->addFlash('error','Vous n\'avez pas les droits pour accéder à cette page.');
+            $this->redirectToRoute('home');
         }
-        $form = $this->createFormBuilder($article)
-            ->add('Titre', TextType::class, array('required' => true))
-            ->add('Text', TextareaType::class, array('required' => true))
-            ->add('Image', FileType::class, [
-                'label' => 'Image',
-                'mapped' => false,
-                'required' => true,
-                'constraints' => [
-                    new \Symfony\Component\Validator\Constraints\File([
-                        'maxSize' => '2048k',
-                        'mimeTypes' => [
-                            "image/png",
-                            "image/jpeg",
-                            "image/jpg",
-                            "image/gif",
-                        ],
-                        'mimeTypesMessage' => 'Uploadez un format d\'image valide (jpg, jped, png ou gif)'
-                    ])
-                ],
-            ])
-            ->getForm();
-
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $ImageFile = $form->get('Image')->getData();
-            $originalFilename = pathinfo($ImageFile->getClientOriginalName(), PATHINFO_FILENAME);
-            $newFilename = $originalFilename.'-'.uniqid().'.'.$ImageFile->guessExtension();
-            $ImageFile->move(
-                $this->getParameter('image_article_directory'),
-                $newFilename
-            );
-            $article->setImage($newFilename);
-            $article->setDate(new \DateTime());
-            $manager->persist($article);
-            $manager->flush();
-
-            return $this->redirectToRoute('blog_admin');
-        }
-
-        return $this->render('blog/ajouterArticles.html.twig', [
-            'controller_name' => 'BlogController',
-            'formArticle' => $form->createView(),
-            'editMode' => $article->getId() !== null,
-        ]);
     }
-
 
     /**
      * @Route("/admin/article/{id}/delete", name="delete_article"))
      */
     public function deleteAdminArticles(Article $article, EntityManagerInterface $manager)
     {
-        $manager->remove($article);
-        $manager->flush();
+        if ($this->getUser() != null && $this->getUser()->getUtilisateurType() == "admin") { // Si l'utilisateur est admin il peut ajouter ou éditer un article
+            $manager->remove($article);
+            $manager->flush();
 
-        return $this->redirectToRoute('blog_admin');
+            return $this->redirectToRoute('blog_admin');
+        } else { // Sinon il ne peut pas
+            $this->addFlash('error','Vous n\'avez pas les droits pour accéder à cette page.');
+            $this->redirectToRoute('home');
+        }
     }
 }

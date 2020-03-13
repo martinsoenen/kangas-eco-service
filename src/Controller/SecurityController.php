@@ -24,7 +24,7 @@ class SecurityController extends AbstractController
      */
     public function SignIn(Request $request, UserPasswordEncoderInterface $encoder)
     {
-        if ($this->getUser() == null) {
+        if ($this->getUser() == null) { // Si l'utilisateur n'est pas connecté
             $Utilisateur = new Utilisateur();
             $Adresse = new Adresse();
 
@@ -84,7 +84,7 @@ class SecurityController extends AbstractController
                 'typeCompte' => $typeCompte->createView(),
                 'controller_name' => 'SecurityController',
             ]);
-        } else {
+        } else { // Sinon on lui refuse l'accès
             $this->addFlash('error', 'Vous êtes déja connecté !');
             return $this->redirectToRoute('home');
         }
@@ -185,10 +185,9 @@ class SecurityController extends AbstractController
      */
     public function login(AuthenticationUtils $authenticationUtils)
     {
-
         $error = $authenticationUtils->getLastAuthenticationError();
 
-        if ($this->getUser() == null) {
+        if ($this->getUser() == null) { // Si l'utilisateur n'est pas connecté
             if ($error)
                 $this->addFlash('error', 'Mot de passe ou adresse e-mail invalide.');
 
@@ -196,7 +195,7 @@ class SecurityController extends AbstractController
                 'controller_name' => 'SecurityController',
                 'error' => $error,
             ]);
-        } else {
+        } else { // Sinon l'accès lui est refusé
             $this->addFlash('error', 'Vous êtes déja connecté.');
             return $this->redirectToRoute('home');
         }

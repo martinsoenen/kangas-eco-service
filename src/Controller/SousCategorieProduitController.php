@@ -20,12 +20,17 @@ class SousCategorieProduitController extends AbstractController
      */
     public function afficherSousCategorieProduit()
     {
-        $repo = $this->getDoctrine()->getRepository(SousCategorieProduit::class);
-        $souscategories = $repo->findAll();
-        return $this->render('product/afficherSousCategorieProduit.html.twig', [
-            'controller_name' => 'SousCategorieProduitController',
-            'souscategories' => $souscategories
-        ]);
+        if ($this->getUser() != null && $this->getUser()->getUtilisateurType() == "admin") { // Si l'utilisateur est administrateur
+            $repo = $this->getDoctrine()->getRepository(SousCategorieProduit::class);
+            $souscategories = $repo->findAll();
+            return $this->render('product/afficherSousCategorieProduit.html.twig', [
+                'controller_name' => 'SousCategorieProduitController',
+                'souscategories' => $souscategories
+            ]);
+        } else { // Sinon l'accès lui est refusé
+            $this->addFlash('error', 'Vous avez un compte non admin. Accès refusé.');
+            return $this->redirectToRoute('home');
+        }
     }
 
     /**
@@ -34,34 +39,39 @@ class SousCategorieProduitController extends AbstractController
      */
     public function ajouterSousCategorieProduit(SousCategorieProduit $sousCategorieProduit = null, Request $request, EntityManagerInterface $manager)
     {
-        $editmode = true;
-        if (!$sousCategorieProduit) {
-            $sousCategorieProduit = new sousCategorieProduit();
-            $editmode = false;
+        if ($this->getUser() != null && $this->getUser()->getUtilisateurType() == "admin") { // Si l'utilisateur est administrateur
+            $editmode = true;
+            if (!$sousCategorieProduit) {
+                $sousCategorieProduit = new sousCategorieProduit();
+                $editmode = false;
+            }
+            $form = $this->createFormBuilder($sousCategorieProduit)
+                ->add('nom', TextType::class, array('required' => true))
+                ->add('CategorieProduit', EntityType::class, [
+                    'class' => CategorieProduit::class,
+                    'choice_label' => 'Nom',
+                    'required' => true,
+                ])
+                ->getForm();
+
+            $form->handleRequest($request);
+
+            if ($form->isSubmitted() && $form->isValid()) {
+
+                $manager->persist($sousCategorieProduit);
+                $manager->flush();
+                return $this->redirectToRoute('admin_souscategorie_produits');
+            }
+
+            return $this->render('product/ajouterSousCategorieProduit.html.twig', [
+                'controller_name' => 'SousCategorieProduitController',
+                'formSousCategorieProduit' => $form->createView(),
+                'editMode' => $editmode,
+            ]);
+        } else { // Sinon l'accès lui est refusé
+            $this->addFlash('error', 'Vous avez un compte non admin. Accès refusé.');
+            return $this->redirectToRoute('home');
         }
-        $form = $this->createFormBuilder($sousCategorieProduit)
-            ->add('nom', TextType::class, array('required' => true))
-            ->add('CategorieProduit', EntityType::class, [
-                'class' => CategorieProduit::class,
-                'choice_label' => 'Nom',
-                'required' => true,
-            ])
-            ->getForm();
-
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-
-            $manager->persist($sousCategorieProduit);
-            $manager->flush();
-            return $this->redirectToRoute('admin_souscategorie_produits');
-        }
-
-        return $this->render('product/ajouterSousCategorieProduit.html.twig', [
-            'controller_name' => 'SousCategorieProduitController',
-            'formSousCategorieProduit' => $form->createView(),
-            'editMode' => $editmode,
-        ]);
     }
 
     /**
@@ -69,9 +79,14 @@ class SousCategorieProduitController extends AbstractController
      */
     public function deleteSousCategorieProduit(SousCategorieProduit $sousCategorieProduit, EntityManagerInterface $manager)
     {
-        $manager->remove($sousCategorieProduit);
-        $manager->flush();
+        if ($this->getUser() != null && $this->getUser()->getUtilisateurType() == "admin") { // Si l'utilisateur est administrateur
+            $manager->remove($sousCategorieProduit);
+            $manager->flush();
 
-        return $this->redirectToRoute('admin-souscategorie-produits');
+            return $this->redirectToRoute('admin-souscategorie-produits');
+        } else { // Sinon l'accès lui est refusé
+            $this->addFlash('error', 'Vous avez un compte non admin. Accès refusé.');
+            return $this->redirectToRoute('home');
+        }
     }
 }
