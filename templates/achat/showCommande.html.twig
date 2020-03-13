@@ -40,7 +40,7 @@
             <div class="item-commande"><p>Nombre d'articles : </p><p class="result"> {{ commande.nbArticles }} </p></div>
             <div class="item-commande"><p>Montant HT : </p><p class="result"> {{ commande.montantHT }}€ </p></div>
             <div class="item-commande"><p>Montant TVA : </p><p class="result"> {{ commande.montantTVA }}% </p></div>
-            <div class="item-commande"><p>Montant total : </p><p class="result"> {{ commande.montantTotalTTC }}€ </p></div>
+            <div class="item-commande"><p>Montant TTC : </p><p class="result"> {{ commande.montantTotalTTC }}€ </p></div>
             
             <table class="table">
                 <thead>
@@ -49,8 +49,6 @@
                         <th>Prix HT</th>
                         <th>TVA</th>
                         <th>Prix TTC</th>
-    {#                    <th>Quantité</th>#}
-    {#                    <th>Total</th>#}
                     </tr>
                 </thead>
                 <tbody>
@@ -60,8 +58,6 @@
                             <td>{{ item.prixUnitaireHT }}€</td>
                             <td>{{ item.tauxTVA }}%</td>
                             <td>{{ item.prixUnitaireHT * (1 + item.tauxTVA / 100) |round(2)}}€</td>
-        {#                                    <td>{{ item.quantity }}</td>#}
-    {#                        <td>{{ (item.prixUnitaireHT * (1 + item.tauxTVA / 100)) }}€</td>#}
                         </tr>
                     {% endfor %}
                 </tbody>
