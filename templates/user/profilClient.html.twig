@@ -76,15 +76,15 @@
 								<td>{{ commande.date | date("d/m/Y") }}</td>
 								<td>
 									{% if commande.isSend == -1 %}
-										annulée
+										Annulée
 									{% else %}
 										{% if commande.isSend == 0 %}
-											en attente de traitement
+											En attente de traitement
 										{% else %}
 											{% if commande.isSend == 1 %}
-												envoyée
+												Envoyée
 											{% else %}
-												statut inconnu
+												Statut inconnu
 											{% endif %}
 										{% endif %}
 									{% endif %}
