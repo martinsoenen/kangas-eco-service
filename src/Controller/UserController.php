@@ -230,7 +230,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/admin/user/addAdmin", name="add_user_admin")
+     * @Route("/admin/user/add_admin", name="add_user_admin")
      * @Route("/admin/user/{id}/edit", name="edit_user_admin")
      */
     public function ajouterUtilisateur(Utilisateur $utilisateur = null, Request $request, EntityManagerInterface $manager)
@@ -288,8 +288,8 @@ class UserController extends AbstractController
                 'editMode' => $utilisateur !== null,
             ]);
         } else {
-            $this->addFlash('error', 'Veuillez vos connecter en tant qu\'administrateur. Accès refusé.');
-            return $this->redirectToRoute('security_login');
+            $this->addFlash('error', 'Veuillez vous connecter en tant qu\'administrateur. Accès refusé.');
+            return $this->redirectToRoute('home');
         }
     }
 
