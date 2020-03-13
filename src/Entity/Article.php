@@ -35,7 +35,7 @@ class Article
      * @ORM\Column(type="string", length=255)
      */
     private $image;
-    
+
 
     public function getId(): ?int
     {
@@ -90,5 +90,5 @@ class Article
         return $this;
     }
 
-   
+
 }
