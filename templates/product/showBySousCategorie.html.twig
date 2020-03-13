@@ -20,7 +20,9 @@
             </button>
         </form>
 
-        {# TODO : Pagination ici#}
+        <div class="navigation pag">
+            {{ knp_pagination_render(produits) }}
+        </div>
 
         <div id="accueil-magasin">
 
@@ -61,7 +63,9 @@
             </a>
         </div>
 
-        {# TODO : Pagination ici#}
+        <div class="navigation pag">
+            {{ knp_pagination_render(produits) }}
+        </div>
 
     {% endblock %}
 
