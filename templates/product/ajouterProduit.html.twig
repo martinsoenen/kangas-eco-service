@@ -1,7 +1,14 @@
 {% extends 'base.html.twig' %}
 
+{% block additional_stylesheets %}
+
+    <link rel="stylesheet" type="text/css" href="{{asset('../assets/admin.css')}}">
+
+{% endblock %}
+
 {% block body %}
-    {{ form_start(formProduit) }}
+    <div id="admin-add-produit">
+        {{ form_start(formProduit) }}
 
     {{ form_row(formProduit.Nomproduit, {'label' : 'Nom du produit :','attr' : {'placeholder' : "Nom"}}) }}
     {{ form_row(formProduit.PrixunitaireHT, {'label' : 'Prix unitaire HT :','attr' : {'placeholder' : "Prix HT"}}) }}
@@ -22,5 +29,6 @@
         {% endif %}
     </button>
 
-    {{ form(formProduit) }}
+        {{ form(formProduit) }}
+    </div>
 {% endblock %}

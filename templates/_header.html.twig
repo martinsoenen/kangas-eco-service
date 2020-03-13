@@ -1,6 +1,6 @@
 {% block header %}
     <div id="header">
-        <nav class="navbar navbar-expand-md container-md">
+        <nav class="navbar navbar-expand-md container-lg container-fluid-md">
             <!-- Logo -->
             <a href="{{ path("home") }}" title="Retour à l'accueil">
                 <img src="{{ asset('../assets/img/Logo_Eco-Service_Line.png') }}" id="header-logo" border="0">
@@ -35,7 +35,7 @@
                         </a>
                     </li>
                     {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-                    <div class="profil-item ">
+                        
                         <li class="nav-item">
                             <a class="nav-link profil-button" href="{{ path('profil_client') }}">Profil
                                 <i id="profile-icon" class="link-icon fa fa-user fa-2x"></i>
@@ -46,14 +46,14 @@
                                 <i id="logout-icon" class="link-icon fa fa-sign-out fa-2x"></i>
                             </a>
                         </li>
-                        <div>
-                            {% else %}
-                                <li class="nav-item">
-                                    <a class="nav-link connexion-button" href="{{ path('security_login') }}">Connexion
-                                        <i id="login-icon" class="link-icon fa fa-sign-in fa-2x"></i>
-                                    </a>
-                                </li>
-                            {% endif %}
+                        
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link connexion-button" href="{{ path('security_login') }}">Connexion
+                                <i id="login-icon" class="link-icon fa fa-sign-in fa-2x"></i>
+                            </a>
+                        </li>     
+                    {% endif %}
                 </ul>
             </div>
 

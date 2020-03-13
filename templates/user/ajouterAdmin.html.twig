@@ -1,24 +1,39 @@
 {% extends 'base.html.twig' %}
 
+{% block additional_stylesheets %}
+
+    <link rel="stylesheet" type="text/css" href="{{asset('../assets/admin.css')}}">
+
+{% endblock %}
+
 {% block body %}
-    {{ form_start(formAdmin) }}
+    <div id="add-admin-user">
+        {{ form_start(formAdmin) }}
 
-    {{ form_row(formAdmin.UtilisateurType, {'label' : 'Type d\'administrateur :'}) }}
-    {{ form_row(formAdmin.nom, {'label' : 'Nom de l\'utilisateur :','attr' : {'placeholder' : "Nom"}}) }}
-    {{ form_row(formAdmin.prenom, {'label' : 'Prénom de l\'utilisateur :','attr' : {'placeholder' : "Prénom"}}) }}
-    {{ form_row(formAdmin.civilite, {'label' : 'Civilité :','attr' : {'placeholder' : "Prénom"}}) }}
-    {{ form_row(formAdmin.email, {'label' : 'Adresse mail de l\'utilisateur :','attr' : {'placeholder' :
-        "Adresse mail"}}) }}
-    {{ form_row(formAdmin.telephone, {'label' : 'Téléphone de l\'utilisateur :','attr' : {'placeholder' :
-        "Téléphone"}}) }}
-    {{ form_row(formAdmin.password, {'label' : 'Mot de passe :','attr' : {'placeholder' : "Mot de passe"}}) }}
-    <button type="submit" class="btn btn-success ">
-        {% if editMode %}
-            Enregistrer les modifications
-        {% else %}
-            Ajouter l'utilisateur
-        {% endif %}
-    </button>
+        {{ form_row(formAdmin.UtilisateurType, {'label' : 'Type d\'Utilisateur :'}) }}
 
-    {{ form(formAdmin) }}
+        {{ form_row(formAdmin.nom, {'label' : 'Nom de l\'utilisateur :','attr' : {'placeholder' : "Nom"}}) }}
+
+        {{ form_row(formAdmin.prenom, {'label' : 'Prénom de l\'utilisateur :','attr' : {'placeholder' : "Prénom"}}) }}
+
+        {{ form_row(formAdmin.civilite, {'label' : 'Civilité :','attr' : {'placeholder' : "Prénom"}}) }}
+
+        {{ form_row(formAdmin.email, {'label' : 'Adresse mail de l\'utilisateur :','attr' : {'placeholder' :
+            "Adresse mail"}}) }}
+
+        {{ form_row(formAdmin.telephone, {'label' : 'Téléphone de l\'utilisateur :','attr' : {'placeholder' :
+            "Téléphone"}}) }}
+
+        {{ form_row(formAdmin.password, {'label' : 'Mot de passe :','attr' : {'placeholder' : "Mot de passe"}}) }}
+
+        <button type="submit" class="btn btn-success ">
+            {% if editMode %}
+                Enregistrer les modifications
+            {% else %}
+                Ajouter l'utilisateur
+            {% endif %}
+        </button>
+
+        {{ form(formAdmin) }}
+    </div>
 {% endblock %}

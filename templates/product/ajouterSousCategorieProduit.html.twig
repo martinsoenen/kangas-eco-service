@@ -1,20 +1,28 @@
 {% extends 'base.html.twig' %}
 
+{% block additional_stylesheets %}
+
+    <link rel="stylesheet" type="text/css" href="{{asset('../assets/admin.css')}}">
+
+{% endblock %}
+
 {% block body %}
-    {{ form_start(formSousCategorieProduit) }}
+    <div id="admin-add-sous-categorie">
+        {{ form_start(formSousCategorieProduit) }}
 
-    {{ form_row(formSousCategorieProduit.CategorieProduit, {'label' : 'Categorie :','attr' : {'placeholder' :
-        "Categorie"}}) }}
-    {{ form_row(formSousCategorieProduit.nom, {'label' : 'Nom de la sous categorie :','attr' : {'placeholder' :
-        "Nom de la sous categorie"}}) }}
+        {{ form_row(formSousCategorieProduit.CategorieProduit, {'label' : 'Categorie :','attr' : {'placeholder' :
+            "Categorie"}}) }}
+        {{ form_row(formSousCategorieProduit.nom, {'label' : 'Nom de la sous categorie :','attr' : {'placeholder' :
+            "Nom de la sous categorie"}}) }}
 
-    <button type="submit" class="btn btn-success ">
-        {% if editMode %}
-            Enregistrer les modifications
-        {% else %}
-            Ajouter la sous-catégorie
-        {% endif %}
-    </button>
+        <button type="submit" class="btn btn-success ">
+            {% if editMode %}
+                Enregistrer les modifications
+            {% else %}
+                Ajouter la sous-catégorie
+            {% endif %}
+        </button>
 
-    {{ form(formSousCategorieProduit) }}
+        {{ form(formSousCategorieProduit) }}
+    </div>
 {% endblock %}

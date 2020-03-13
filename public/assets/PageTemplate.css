@@ -213,6 +213,17 @@ thead tr {
     h1 {
         font-size: 25px;
     }
+
+    .profil-button {
+        position: relative;
+        right: 0;
+    }
+
+    .connexion-button {
+        position: relative;
+        right: 0;
+    }
+
 }
 
 @media (min-width: 768px) {

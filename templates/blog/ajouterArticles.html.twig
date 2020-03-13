@@ -1,21 +1,29 @@
 {% extends 'base.html.twig' %}
 
+{% block additional_stylesheets %}
+
+    <link rel="stylesheet" type="text/css" href="{{asset('../assets/admin.css')}}">
+
+{% endblock %}
+
 {% block body %}
-    {{ form_start(formArticle) }}
+    <div id="admin-add-blog">
+        {{ form_start(formArticle) }}
 
 
-    {{ form_row(formArticle.Titre, {'label' : 'Titre de l\'article :','attr' : {'placeholder' : "Titre"}}) }}
-    {{ form_row(formArticle.Text, {'label' : 'Contenu de l\'article :','attr' : {'placeholder' : "Contenu "}}) }}
-    {{ form_row(formArticle.Image,{'label' : 'Image de l\'article :','attr' : {'placeholder' : "Image  "}}
-    ) }}
+        {{ form_row(formArticle.Titre, {'label' : 'Titre de l\'article :','attr' : {'placeholder' : "Titre"}}) }}
+        {{ form_row(formArticle.Text, {'label' : 'Contenu de l\'article :','attr' : {'placeholder' : "Contenu "}}) }}
+        {{ form_row(formArticle.Image,{'label' : 'Image de l\'article :','attr' : {'placeholder' : "Image  "}}
+        ) }}
 
-    <button type="submit" class="btn btn-success ">
-        {% if editMode %}
-            Enregistrer les modifications
-        {% else %}
-            Ajouter l'article
-        {% endif %}
-    </button>
+        <button type="submit" class="btn btn-success ">
+            {% if editMode %}
+                Enregistrer les modifications
+            {% else %}
+                Ajouter l'article
+            {% endif %}
+        </button>
 
-    {{ form(formArticle) }}
+        {{ form(formArticle) }}
+    </div>
 {% endblock %}
