@@ -71,7 +71,7 @@ class ContactDevisType extends AbstractType
                     ])
                 ],
             ])
-            ->add('adresse', TextType::class,array(
+            ->add('adresse', TextType::class, array(
                 'label' => 'Adresse de récupération de l\'objet',
                 'required' => true,
                 'attr' => [
