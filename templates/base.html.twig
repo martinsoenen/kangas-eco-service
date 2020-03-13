@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
     <title>{% block title %}Eco Service{% endblock %}</title>
 
@@ -25,8 +25,8 @@
 {% block body_before %}{% endblock %}
 {% include '_header.html.twig' %}
 
-{# TODO : Ajouter une condition - type_user_connecté == client #}
-{% include 'partials/_diy-button.html.twig' %}
+
+        {% include 'partials/_diy-button.html.twig' %}
 
 <div class="container">
 
