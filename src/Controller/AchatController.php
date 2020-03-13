@@ -79,8 +79,6 @@ class AchatController extends AbstractController
                 }
                 $details = (new Details())
                     ->setSubtotal($totalPrice);
-                //            TODO:Ajouter la TVA
-                //            ->setTax();
 
                 $amount = (new Amount())
                     ->setTotal($totalPrice)

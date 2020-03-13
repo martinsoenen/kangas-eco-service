@@ -9,36 +9,36 @@
 
 {% block body %}
 <div id="espace-entreprise">
-<ul id="nav-onglets-entreprises" class="nav nav-pills row" id="pills-tab">
-	<li class="nav-item item-entreprise  col-6">
-		<a class="nav-link w-100" id="services-tab" href="{{path('entreprise_services')}}">Nos Services
-		</a>
-	</li>
-	<li class="nav-item item-entreprise active col-6">
-		<a class="nav-link active w-100" id="devis-contact-tab" href="{{path('entreprise_devis')}}">Demande de devis</a>
-	</li>
-</ul>
-<div class="profil">
-    <div class="profil-container">
-        <h1>Demande de devis </h1>
-        <div class="user-info profil-info">
-        {{ form_start(form) }}
-            {{form_row(form.entreprise)}}
-            {{form_row(form.nom)}}
-            {{form_row(form.email)}}
-            {{form_row(form.tel)}}
-            {{form_row(form.objets)}}
-            {{form_row(form.poids)}}
-            {{form_row(form.taille)}}
-            {{form_row(form.image)}}
-            {{form_row(form.adresse)}}
-            {{form_row(form.cp)}}
-            {{form_row(form.ville)}}
-            {{form_row(form.date)}}
-            {{form_row(form.commentaire)}}
-        {{ form_end(form) }}
+    <ul id="nav-onglets-entreprises" class="nav nav-pills row" id="pills-tab">
+        <li class="nav-item item-entreprise  col-6">
+            <a class="nav-link w-100" id="services-tab" href="{{path('entreprise_services')}}">Nos Services
+            </a>
+        </li>
+        <li class="nav-item item-entreprise active col-6">
+            <a class="nav-link active w-100" id="devis-contact-tab" href="{{path('entreprise_devis')}}">Demande de devis</a>
+        </li>
+    </ul>
+    <div class="profil">
+        <div class="profil-container">
+            <h1>Demande de devis</h1>
+            <div class="user-info profil-info">
+            {{ form_start(form) }}
+                {{form_row(form.entreprise)}}
+                {{form_row(form.nom)}}
+                {{form_row(form.email)}}
+                {{form_row(form.tel)}}
+                {{form_row(form.objets)}}
+                {{form_row(form.poids)}}
+                {{form_row(form.taille)}}
+                {{form_row(form.image)}}
+                {{form_row(form.adresse)}}
+                {{form_row(form.cp)}}
+                {{form_row(form.ville)}}
+                {{form_row(form.date)}}
+                {{form_row(form.commentaire)}}
+            {{ form_end(form) }}
+            </div>
         </div>
     </div>
-</div>
 </div>
 {% endblock %}

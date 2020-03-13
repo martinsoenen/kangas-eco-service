@@ -3,7 +3,9 @@
 {% block title %}Espace entreprise - {{ parent() }}{% endblock %}
 
 {% block additional_stylesheets %}
-    <link rel="stylesheet" type="text/css" href="{{asset('../assets/entreprise/espace-entreprise.css')}}">
+
+    <link rel="stylesheet" type="text/css" href="{{ asset('../assets/entreprise/espace-entreprise.css') }}">
+
 {% endblock %}
 
 {% block body %}
@@ -12,7 +14,7 @@
         <ul id="nav-onglets-entreprises" class="nav nav-pills row" id="pills-tab">
             <li class="nav-item item-entreprise active col-6">
                 <a class="nav-link active w-100" id="services-tab" href="{{ path('entreprise_services') }}">Nos
-                    Services </a>
+                    Services</a>
             </li>
             <li class="nav-item item-entreprise col-6">
                 <a class="nav-link w-100" id="devis-contact-tab" href="{{path('entreprise_devis')}}">Demande de devis</a>
@@ -26,8 +28,8 @@
                     <img class="image-services-entreprise" src={{ asset('../assets/img/collecte-dechets.jpg') }}>
                     <h3>Collecte de déchets</h3>
                     <p class="">
-                        Eco service propose une solution très avantageuse pour nos entreprises partenaires. En effet, nous 
-                        récuperons tous vos déchets gratuitements. Pour cela, nous vous invitons à vous inscrire en tant qu'entreprise 
+                        Eco service propose une solution très avantageuse pour nos entreprises partenaires. En effet, nous
+                        récuperons tous vos déchets gratuitements. Pour cela, nous vous invitons à vous inscrire en tant qu'entreprise
                         sur ce site internet puis de remplir le formulaire dans la section "demande de devis".
                         Vous pouvez ainsi indiquer toutes les caractéristiques de votre demande et nous arrangerons pour
                         les respecter au mieux.
@@ -39,10 +41,10 @@
                     <img class="image-services-entreprise" src={{ asset('../assets/img/recyclage.jpg') }}>
                     <h3>Traitement des déchets</h3>
                     <p class="">
-                    Eco-service collecte vos déchets et les achemine jusqu’à ses centres de tri. Là, ils sont immédiatement pesés. 
-                    Les containers de papiers et cartons – qui constituent 85% des déchets de bureau – font l’objet d’un sur-tri 
-                    afin avant d’être transporté vers nos partenaires papetiers qui les recyclent. 
-                    Les containers d’autres déchets sont, eux, transférés directement vers nos autres partenaires spécialisés ; 
+                    Eco-service collecte vos déchets et les achemine jusqu’à ses centres de tri. Là, ils sont immédiatement pesés.
+                    Les containers de papiers et cartons – qui constituent 85% des déchets de bureau – font l’objet d’un sur-tri
+                    afin avant d’être transporté vers nos partenaires papetiers qui les recyclent.
+                    Les containers d’autres déchets sont, eux, transférés directement vers nos autres partenaires spécialisés ;
                     chaque type de déchets suit des méthodes de recyclage bien spécifiques.
                     </p>
                 </div>
@@ -56,9 +58,12 @@
                     Les papiers et cartons sont recyclés à 80% sous forme de papier : journaux, prospectus, cahiers…
                     Les plastiques – PEHD et le PET – servent à produire de nouvelles bouteilles et bidons en plastique. Mais, on peut fabriquer avec bien d’autres produits comme des pots de fleurs, des bancs, des pare-chocs de voiture ou encore des vêtements en fibres synthétiques ou des rembourrages de couettes ou d’oreillers.
                     Le verre est utilisé essentiellement pour fabriquer de nouveaux contenants en verre mais entre aussi dans la fabrication d’autres produits comme la laine de verre, un isolant bien connu.
-                    Les métaux   – acier et aluminium – peuvent être recyclés en boîtes de conserve et canettes ou être utilisés dans diverses industries pour la fabrication de boules de pétanques, de pièce de moteur d’automobile, de machines à laver, de fer à repasser, etc
+                    Les métaux – acier et aluminium – peuvent être recyclés en boîtes de conserve et canettes ou être utilisés dans diverses industries pour la fabrication de boules de pétanques, de pièce de moteur d’automobile, de machines à laver, de fer à repasser, etc
                     </p>
                 </div>
+            </div>
+
+            <div id="devis-contact" class="tab-pane">
             </div>
         </div>
     </div>

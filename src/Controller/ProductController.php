@@ -123,7 +123,7 @@ class ProductController extends AbstractController
                 'produits' => $produits
             ]);
         } else {
-            $this->addFlash('error', 'Vous avez un compte non admin. Accès refusé.');
+            $this->addFlash('error', 'Vous avez un compte qui n\'est pas administrateur. Accès refusé.');
             return $this->redirectToRoute('home');
         }
     }
@@ -193,7 +193,7 @@ class ProductController extends AbstractController
                 'editMode' => $editmode,
             ]);
         } else {
-            $this->addFlash('error', 'Vous avez un compte non admin. Accès refusé.');
+            $this->addFlash('error', 'Vous avez un compte qui n\'est pas administrateur. Accès refusé.');
             return $this->redirectToRoute('home');
         }
     }
@@ -209,7 +209,7 @@ class ProductController extends AbstractController
 
             return $this->redirectToRoute('admin_produits');
         } else {
-            $this->addFlash('error', 'Vous avez un compte non admin. Accès refusé.');
+            $this->addFlash('error', 'Vous avez un compte qui n\'est pas administrateur. Accès refusé.');
             return $this->redirectToRoute('home');
         }
     }
