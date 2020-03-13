@@ -19,17 +19,16 @@ class CommandeRepository extends ServiceEntityRepository
         parent::__construct($registry, Commande::class);
     }
 
-     /**
-      * @return Commande[] Returns an array of Commande objects
-      */
+    /**
+     * @return Commande[] Returns an array of Commande objects
+     */
     public function findByUserId($userId)
     {
         return $this->createQueryBuilder('c')
             ->andWhere('c.User = :val')
             ->setParameter('val', $userId)
             ->getQuery()
-            ->getResult()
-        ;
+            ->getResult();
     }
 
     /*

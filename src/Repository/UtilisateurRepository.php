@@ -19,33 +19,33 @@ class UtilisateurRepository extends ServiceEntityRepository
         parent::__construct($registry, Utilisateur::class);
     }
 
-    public function getUtilisateurClientById($id){
-        return $this->createQueryBuilder('c') 
+    public function getUtilisateurClientById($id)
+    {
+        return $this->createQueryBuilder('c')
             ->andWhere('c.id = :val')
-            ->setParameter('val', $id)           
+            ->setParameter('val', $id)
             ->getQuery()
             ->getOneOrNullResult();
     }
 
-     public function getUtilisateurProById($id){
-            return $this->createQueryBuilder('c')
+    public function getUtilisateurProById($id)
+    {
+        return $this->createQueryBuilder('c')
             ->andWhere('c.id = :val')
-            ->setParameter('val', $id)            
+            ->setParameter('val', $id)
             ->getQuery()
             ->getOneOrNullResult();
-        
     }
 
-     public function getAllUserAdministration(){ //Admin + Modérateurs
-            return $this->createQueryBuilder('u')
+    public function getAllUserAdministration()
+    { //Admin + Modérateurs
+        return $this->createQueryBuilder('u')
             ->andWhere('u.utilisateurType = :admin OR u.utilisateurType = :modo')
             ->setParameter('admin', 'admin')
-            ->setParameter('modo', 'modo')          
+            ->setParameter('modo', 'modo')
             ->getQuery()
             ->getResult();
-        
     }
-
 
 
 }

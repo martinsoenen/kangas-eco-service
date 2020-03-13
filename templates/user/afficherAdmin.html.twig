@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <table class="table" >
+    <table class="table">
         <thead class="thead-light">
         <tr>
             <th scope="col">Nom</th>
@@ -12,21 +12,21 @@
         </thead>
         <tbody>
         {% for utilisateur in utilisateurs %}
-        <tr>
-            <td>{{utilisateur.nom}}</td>
-            <td>{{utilisateur.prenom}}</td>
-            <td>{{utilisateur.utilisateurType}}</td>
-            <td>
-                <bouton onclick="window.location.href = '/admin/user/{{utilisateur.id}}/edit';">
-                    <i class="fa fa-pencil fa-2x"></i>
-                </bouton>
-                <bouton onclick="window.location.href = '/admin/user/{{utilisateur.id}}/delete';">
-                    <i class="fa fa-trash fa-2x"></i>
-                </bouton>
-            </td>
-        </tr>
+            <tr>
+                <td>{{ utilisateur.nom }}</td>
+                <td>{{ utilisateur.prenom }}</td>
+                <td>{{ utilisateur.utilisateurType }}</td>
+                <td>
+                    <bouton onclick="window.location.href = '/admin/user/{{ utilisateur.id }}/edit';">
+                        <i class="fa fa-pencil fa-2x"></i>
+                    </bouton>
+                    <bouton onclick="window.location.href = '/admin/user/{{ utilisateur.id }}/delete';">
+                        <i class="fa fa-trash fa-2x"></i>
+                    </bouton>
+                </td>
+            </tr>
         {% endfor %}
-        <a class="btn btn-outline-secondary" href="{{ path('add_user_admin')}}">Ajouter un admin</a>
+        <a class="btn btn-outline-secondary" href="{{ path('add_user_admin') }}">Ajouter un admin</a>
         </tbody>
     </table>
 

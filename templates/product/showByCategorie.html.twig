@@ -4,18 +4,18 @@
 
 {% block additional_stylesheets %}
 
-    <link rel="stylesheet" type="text/css" href="{{asset('../assets/product/magasin.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('../assets/product/magasin.css') }}">
 
 {% endblock %}
 
 {% block body_before %}
 <div id="menu-overlay" onclick="closeCategoryMenu()">
-{% endblock %}
+    {% endblock %}
 
     {% block body %}
         <form id="search-bar-magasin-container" class="row" action="{{ path('magasin_search') }}" method="get">
             <input id="search-bar-magasin" type="text" name="name" id="name" required placeholder="Rechercher">
-            <button id="search-bar-magasin-button" type="submit" value="Rechercher" >
+            <button id="search-bar-magasin-button" type="submit" value="Rechercher">
                 <i class="fa fa-search fa-lg"></i>
             </button>
         </form>
@@ -41,7 +41,8 @@
                                         <p>{{ produit.prix_unitaire_ht }} € / Unité</p>
                                     </div>
                                     <div class="produit-achat-direct">
-                                        <input class="small-input" id="{{ produit.id }}" type="number" name="quantite" value=1>
+                                        <input class="small-input" id="{{ produit.id }}" type="number" name="quantite"
+                                               value=1>
                                         <a id="{{ produit.id }}" class="bouton-ajout btn btn-success">
                                             <i class="fa fa-shopping-cart mr-1"></i>Ajouter
                                         </a>
@@ -64,7 +65,7 @@
 
     {% endblock %}
 
-{% block body_after %}
+    {% block body_after %}
 </div>
     <div id="categories-produits-container" class="sidenav">
         <a id="close-menu-button" href="javascript:closeCategoryMenu()" style="cursor:pointer">
@@ -109,20 +110,20 @@
 {% endblock %}
 
 {% block javascripts %}
-    {{ parent()}}
+    {{ parent() }}
     <script>
-        $('.btn.btn-success').click(function() {
+        $('.btn.btn-success').click(function () {
             let id = $(this).attr('id');
-            let value = $("#"+id+"[name='quantite']").val();
+            let value = $("#" + id + "[name='quantite']").val();
 
             $.ajax({
-                url : '/panier/add/'+ id,
-                type : 'GET',
-                data : {
+                url: '/panier/add/' + id,
+                type: 'GET',
+                data: {
                     quantite: value
                 },
                 dataType: "integer",
-                success: function(response) {
+                success: function (response) {
                     // console.log(response);
                 }
             });
