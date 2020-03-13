@@ -89,11 +89,11 @@ class EcoServiceController extends AbstractController
      */
     public function admin_index()
     {
-        if ($this->getUser() != null && $this->getUser()->getUtilisateurType() == "admin") {
+        if ($this->getUser() != null && $this->getUser()->getUtilisateurType() == "admin") { // Si l'utilisateur est administrateur
             return $this->render('eco_service/admin_index.html.twig', [
                 'controller_name' => 'EcoServiceController',
             ]);
-        } else {
+        } else { // Sinon l'accès lui est refusé
             $this->addFlash('error', 'Veuillez vous connecter en tant qu\'administrateur. Accès refusé.');
             return $this->redirectToRoute('security_login');
         }

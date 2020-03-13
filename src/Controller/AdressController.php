@@ -16,11 +16,11 @@ class AdressController extends AbstractController
      */
     public function index(Request $request)
     {
-        if ($this->getUser() != null) {
+        if ($this->getUser() != null) { // Si l'utilisateur n'est pas null
             $UtilisateurId = $this->getUser()->getId();
 
             //Aiguillage particulier/entreprise
-            if ($this->getUser()->getUtilisateurType() != "pro") {
+            if ($this->getUser()->getUtilisateurType() != "pro") { // Si l'utilisateur n'est pas de type pro on affiche la page
 
                 $id = $request->get('id');
 
@@ -52,10 +52,12 @@ class AdressController extends AbstractController
                     'controller_name' => 'AdressController',
                     'form' => $form->createView(),
                 ]);
-            } else {
+            } else { // Sinon on le redirige vers la page entreprise
+                $this->addFlash('error','Vous n\'avez pas l\'autorisation de modifier une adresse.');
                 return $this->redirectToRoute('profil_entreprise');
             }
-        } else {
+        } else { // Sinon on lui demande de se connecter
+            $this->addFlash('error','Veuillez vous connecter.');
             return $this->redirectToRoute('security_login');
         }
     }
@@ -66,11 +68,11 @@ class AdressController extends AbstractController
 
     public function new(Request $request)
     {
-        if ($this->getUser() != null) {
+        if ($this->getUser() != null) { // Si l'utilisateur n'est pas null
             $UtilisateurId = $this->getUser()->getId();
 
             //Aiguillage particulier/entreprise
-            if ($this->getUser()->getUtilisateurType() != "pro") {
+            if ($this->getUser()->getUtilisateurType() != "pro") { // Si l'utilisateur n'est pas de type pro on affiche la page
 
                 $form = $this->createForm(AdresseType::class)
                     ->add('save', SubmitType::class, array(
@@ -98,10 +100,12 @@ class AdressController extends AbstractController
                     'controller_name' => 'AdressController',
                     'form' => $form->createView(),
                 ]);
-            } else {
+            } else { // Sinon on le redirige vers la page entreprise
+                $this->addFlash('error','Vous n\'avez pas l\'autorisation d\'ajouter une adresse.');
                 return $this->redirectToRoute('profil_entreprise');
             }
-        } else {
+        } else { // Sinon on lui demande de se connecter
+            $this->addFlash('error','Veuillez vous connecter.');
             return $this->redirectToRoute('security_login');
         }
     }
