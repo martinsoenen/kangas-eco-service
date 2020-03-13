@@ -4,18 +4,18 @@
 
 {% block additional_stylesheets %}
 
-    <link rel="stylesheet" type="text/css" href="{{asset('../assets/product/magasin.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('../assets/product/magasin.css') }}">
 
 {% endblock %}
 
 {% block body_before %}
 <div id="menu-overlay" onclick="closeCategoryMenu()">
-{% endblock %}
+    {% endblock %}
 
     {% block body %}
         <form id="search-bar-magasin-container" class="row" action="{{ path('magasin_search') }}" method="get">
             <input id="search-bar-magasin" type="text" name="name" id="name" required placeholder="Rechercher">
-            <button id="search-bar-magasin-button" type="submit" value="Rechercher" >
+            <button id="search-bar-magasin-button" type="submit" value="Rechercher">
                 <i class="fa fa-search fa-lg"></i>
             </button>
         </form>
@@ -27,11 +27,13 @@
 
                     <div id="details-produit">
                         <h1>{{ produit.nomProduit }}</h1>
-                        <h5 class="text-center">{{ produit.SousCategorieProduit.categorieProduit.nom }} - {{ produit.SousCategorieProduit.nom }}</h5>
+                        <h5 class="text-center">{{ produit.SousCategorieProduit.categorieProduit.nom }}
+                            - {{ produit.SousCategorieProduit.nom }}</h5>
 
                         <div id="details-prix-produit">
                             <div id="details-ht-produit">
-                                <span class="details-produit-labels">Prix HT :</span> {{ produit.prixUnitaireHT }} € / Unité
+                                <span class="details-produit-labels">Prix HT :</span> {{ produit.prixUnitaireHT }} € /
+                                Unité
                             </div>
                             <div id="details-tva-produit">
                                 <span class="details-produit-labels">TVA :</span> {{ produit.tauxTVA }} %
@@ -42,7 +44,8 @@
                             </div>
                         </div>
                         <p id="desciption-details-produit">
-                            <span class="details-produit-labels">Description :</span> {{ produit.descriptionDetaillee }} <br/>
+                            <span class="details-produit-labels">Description :</span> {{ produit.descriptionDetaillee }}
+                            <br/>
                         </p>
                     </div>
 
@@ -90,7 +93,7 @@
                         <div id="self-{{ categ.id }}" class="sous-categorie-produits">
                             <a class="sous-categorie-produits-link"
                                href="{{ path('categorie_produit', {'id': categ.id }) }}">
-                                <h6>Toute la Catégorie</h6>
+                                <h6>Toute la catégorie</h6>
                             </a>
                         </div>
                         {% for souscateg in categ.sousCategorieProduits %}
@@ -109,20 +112,20 @@
 {% endblock %}
 
 {% block javascripts %}
-    {{ parent()}}
+    {{ parent() }}
     <script>
-        $('.btn.btn-success').click(function() {
+        $('.btn.btn-success').click(function () {
             let id = $(this).attr('id');
-            let value = $("#"+id+"[name='quantite']").val();
+            let value = $("#" + id + "[name='quantite']").val();
 
             $.ajax({
-                url : '/panier/add/'+ id,
-                type : 'GET',
-                data : {
+                url: '/panier/ajouter/' + id,
+                type: 'GET',
+                data: {
                     quantite: value
                 },
                 dataType: "integer",
-                success: function(response) {
+                success: function (response) {
                     // console.log(response);
                 }
             });

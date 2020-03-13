@@ -27,24 +27,23 @@ class AchatController extends AbstractController
      */
     public function index(PanierService $panierService)
     {
-        if($this->getUser()!=null) {
-            if($this->getUser()->getUtilisateurType()!="pro" ){
+        if ($this->getUser() != null) {
+            if ($this->getUser()->getUtilisateurType() != "pro") {
                 return $this->render('achat/index.html.twig', [
                     'controller_name' => 'AchatController',
                     'items' => $panierService->getPanierComplet(),
                     'total' => $panierService->getTotal()
                 ]);
-            }
-            else{
+            } else {
                 $this->addFlash('error', 'Vous avez un compte entreprise. Accès refusé.');
                 return $this->redirectToRoute('home');
             }
-        }else{
-        return $this->render('achat/index.html.twig', [
-                    'controller_name' => 'AchatController',
-                    'items' => $panierService->getPanierComplet(),
-                    'total' => $panierService->getTotal()
-                ]);
+        } else {
+            return $this->render('achat/index.html.twig', [
+                'controller_name' => 'AchatController',
+                'items' => $panierService->getPanierComplet(),
+                'total' => $panierService->getTotal()
+            ]);
         }
     }
 
@@ -53,8 +52,8 @@ class AchatController extends AbstractController
      */
     public function paiement(PanierService $panierService)
     {
-        if($this->getUser()!=null) {
-            if($this->getUser()->getUtilisateurType()!="pro"){
+        if ($this->getUser() != null) {
+            if ($this->getUser()->getUtilisateurType() != "pro") {
                 $credentials = [
                     'id' => 'Ae0q9Y6VL5tsv0vcBvzBMv3kjg7mM50yooD8C9u2nm1HmVa5pcCa9GH-Ov7swbpl1CHru_D2G_GXCQ4O',
                     'secret' => 'EFN_usuuBumAEyMgasVcamuZCaimCZ7JJzCWqsFbYKZ08HhQ6y43jENMHLJrk8qHhYfQRzXnt2SBYVHI'
@@ -111,12 +110,11 @@ class AchatController extends AbstractController
                 return $this->render('achat/showCommande.html.twig', [
                     'controller_name' => 'AchatController',
                 ]);
-            }
-            else {
+            } else {
                 $this->addFlash('error', 'Vous avez un compte entreprise. Accès refusé.');
                 return $this->redirectToRoute('home');
             }
-        }else{
+        } else {
             $this->addFlash('error', 'Veuillez vous connecter pour commander un article !');
             return $this->render('security/login.html.twig', [
                 'controller_name' => 'AchatController',
@@ -136,7 +134,7 @@ class AchatController extends AbstractController
             'secret' => 'EFN_usuuBumAEyMgasVcamuZCaimCZ7JJzCWqsFbYKZ08HhQ6y43jENMHLJrk8qHhYfQRzXnt2SBYVHI'
         ];
         $apiContext = new ApiContext(
-            new OAuthTokenCredential($credentials['id'],$credentials['secret']
+            new OAuthTokenCredential($credentials['id'], $credentials['secret']
             )
         );
         $payment = Payment::get($quantite = $request->get('paymentId'), $apiContext);
@@ -158,8 +156,8 @@ class AchatController extends AbstractController
         $montantHT = 0;
         $montantTVA = 0;
         $nbArticles = 0;
-        foreach($panier->getPanierComplet() as $item) {
-            for ($i = 0;  $i < $item['quantity']; $i++) {
+        foreach ($panier->getPanierComplet() as $item) {
+            for ($i = 0; $i < $item['quantity']; $i++) {
                 $montantHT += $item['product']->getPrixUnitaireHT();
                 $montantTVA += (($item['product']->getTauxTVA() / 100) * $item['product']->getPrixUnitaireHT());
                 $nbArticles++;
@@ -177,7 +175,7 @@ class AchatController extends AbstractController
         $commande->setNbArticles($nbArticles);
         $commande->setPayPalID($payment->id);
         $commande->setUser($this->getUser());
-        $commande->setShippingAddr($adresse->getLine1() . '|' . $adresse->getLine2() . '|' . $adresse->getPostalCode() . '|' . $adresse->getCity());
+        $commande->setShippingAddr($adresse->getLine1().'|'.$adresse->getLine2().'|'.$adresse->getPostalCode().'|'.$adresse->getCity());
         $entityManager->persist($commande);
         $entityManager->flush();
 
@@ -193,7 +191,7 @@ class AchatController extends AbstractController
     }
 
     /**
-     * @Route("/panier/add/{id}", name="panier_add", methods={"GET","HEAD"})
+     * @Route("/panier/ajouter/{id}", name="panier_add", methods={"GET","HEAD"})
      */
     public function add(Request $request, $id, PanierService $panierService)
     {
@@ -207,13 +205,12 @@ class AchatController extends AbstractController
     }
 
     /**
-     * @Route("/panier/remove/{id}", name="panier_remove")
+     * @Route("/panier/supprimer/{id}", name="panier_remove")
      */
     public function remove($id, PanierService $panierService)
     {
         $panierService->remove($id);
 
         return $this->redirectToRoute("panier");
-
     }
 }

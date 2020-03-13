@@ -23,23 +23,23 @@ class SecurityController extends AbstractController
      * @Route("/inscription", name="security_registration")
      */
     public function SignIn(Request $request, UserPasswordEncoderInterface $encoder)
-    {   
-        if($this->getUser() == null){
+    {
+        if ($this->getUser() == null) {
             $Utilisateur = new Utilisateur();
             $Adresse = new Adresse();
-            
+
             $typeCompte = $this->createFormBuilder($Utilisateur)
-                        ->add('utilisateurType', ChoiceType::class, array(
-                        'label' => false,
-                        'placeholder' => 'Type de compte',
-                        'choices' => array(
-                            'Particulier' => 'client',
-                            'Professionnel' => 'pro',
-                        ),
-                        'required' => true
-                    ))
+                ->add('utilisateurType', ChoiceType::class, array(
+                    'label' => false,
+                    'placeholder' => 'Type de compte',
+                    'choices' => array(
+                        'Particulier' => 'client',
+                        'Professionnel' => 'pro',
+                    ),
+                    'required' => true
+                ))
                 ->getForm();
-            $formClient = $this->createForm(RegistrationTypeClient::class,$Utilisateur);
+            $formClient = $this->createForm(RegistrationTypeClient::class, $Utilisateur);
             $formEntreprise = $this->createForm(RegistrationTypeEntreprise::class, $Utilisateur);
             $formAdresse = $this->createForm(AdresseType::class, $Adresse);
 
@@ -48,18 +48,17 @@ class SecurityController extends AbstractController
             $formAdresse->handleRequest($request);
 
             $em = $this->getDoctrine()->getManager();
-            
-            if ($formClient->isSubmitted() && $formClient->isValid()) { 
-                $hash = $encoder->encodePassword($Utilisateur, $Utilisateur->getPassword());    
+
+            if ($formClient->isSubmitted() && $formClient->isValid()) {
+                $hash = $encoder->encodePassword($Utilisateur, $Utilisateur->getPassword());
                 $Utilisateur->setPassword($hash);
-                $Utilisateur->setUtilisateurType("client");          
+                $Utilisateur->setUtilisateurType("client");
                 $em->persist($Utilisateur);
                 $em->flush();
-                
             }
-            
-            if ($formEntreprise->isSubmitted() && $formEntreprise->isValid()) { 
-                $hash = $encoder->encodePassword($Utilisateur, $Utilisateur->getPassword());    
+
+            if ($formEntreprise->isSubmitted() && $formEntreprise->isValid()) {
+                $hash = $encoder->encodePassword($Utilisateur, $Utilisateur->getPassword());
                 $Utilisateur->setPassword($hash);
                 $Utilisateur->setUtilisateurType("pro");
                 $em->persist($Utilisateur);
@@ -68,7 +67,7 @@ class SecurityController extends AbstractController
                 $this->addFlash('sucess', 'Votre compte a bien été créé !');
                 return $this->redirectToRoute('home');
             }
-            if ($formAdresse->isSubmitted() && $formAdresse->isValid()) { 
+            if ($formAdresse->isSubmitted() && $formAdresse->isValid()) {
                 $Adresse->setUtilisateur($Utilisateur);
                 $em->persist($Adresse);
                 $em->flush();
@@ -80,25 +79,25 @@ class SecurityController extends AbstractController
 
             return $this->render('security/signin.html.twig', [
                 'formClient' => $formClient->createView(),
-                'formEntreprise' =>$formEntreprise->createView(),                       
+                'formEntreprise' => $formEntreprise->createView(),
                 'formAdresse' => $formAdresse->createView(),
-                'typeCompte' => $typeCompte->createView(), 
+                'typeCompte' => $typeCompte->createView(),
                 'controller_name' => 'SecurityController',
             ]);
-        }
-        else{
+        } else {
             $this->addFlash('error', 'Vous êtes déja connecté !');
             return $this->redirectToRoute('home');
         }
     }
+
     /**
      * @Route("/connexion/mot-de-passe-oublie", name="security_forgot")
      */
     public function passwordForget(Request $request, UserPasswordEncoderInterface $encoder,
-                                     \Swift_Mailer $mailer,
-                                    TokenGeneratorInterface $tokenGenerator)
+        \Swift_Mailer $mailer,
+        TokenGeneratorInterface $tokenGenerator)
     {
-         if ($request->isMethod('POST')) {
+        if ($request->isMethod('POST')) {
 
             $email = $request->request->get('email');
 
@@ -111,7 +110,7 @@ class SecurityController extends AbstractController
             }
             $token = $tokenGenerator->generateToken();
 
-            try{
+            try {
                 $user->setTokenPassword($token);
                 $em->flush();
             } catch (\Exception $e) {
@@ -120,12 +119,17 @@ class SecurityController extends AbstractController
             }
 
             $url = $this->generateUrl('app_reset_password', array('token' => $token), UrlGeneratorInterface::ABSOLUTE_URL);
-          
+
             $message = (new \Swift_Message('Mot de passe oublié'))
                 ->setTo($user->getEmail())
                 ->setFrom('contact@kangas.fr')
                 ->setBody(
-                    "Cliquez ici pour réinitialiser votre mot de passe : " . $url,
+                    "Bonjour,<br/>
+                            <br/>
+                            Cliquez ici pour réinitialiser votre mot de passe : <a href=\"".$url."\" target='_blank'>$url</a>.<br/>
+                            <br/>
+                            Bien cordialement,<br/>
+                            L'équipe Eco-Service",
                     'text/html'
                 );
 
@@ -135,7 +139,7 @@ class SecurityController extends AbstractController
 
             return $this->redirectToRoute('home');
         }
-        
+
         return $this->render('security/passwordforget.html.twig', [
             'controller_name' => 'SecurityController',
         ]);
@@ -146,7 +150,7 @@ class SecurityController extends AbstractController
      */
     public function resetPassword(Request $request, string $token, UserPasswordEncoderInterface $passwordEncoder)
     {
-        
+
         if ($request->isMethod('POST')) {
             $em = $this->getDoctrine()->getManager();
 
@@ -164,7 +168,7 @@ class SecurityController extends AbstractController
             $this->addFlash('sucess', 'Votre mot de passe a bien été mis à jour, veuillez vous connecter.');
 
             return $this->redirectToRoute('home');
-        }else {
+        } else {
 
             return $this->render('security/resetPassword.html.twig', ['token' => $token]);
         }
@@ -173,28 +177,28 @@ class SecurityController extends AbstractController
     /**
      * @Route("/deconnexion/", name="security_logout")
      */
-    public function logout(){
+    public function logout()
+    {
         $this->addFlash('sucess', 'Vous avez été déconnecté.');
     }
 
     /**
      * @Route("/connexion/", name="security_login")
      */
-    public function login(AuthenticationUtils $authenticationUtils){
-        
+    public function login(AuthenticationUtils $authenticationUtils)
+    {
 
         $error = $authenticationUtils->getLastAuthenticationError();
 
-        if($this->getUser() == null){
+        if ($this->getUser() == null) {
             if ($error)
-                $this->addFlash('error', 'Mot de passe ou adresse e-mail invalide' );
-                
+                $this->addFlash('error', 'Mot de passe ou adresse e-mail invalide');
+
             return $this->render('security/login.html.twig', [
                 'controller_name' => 'SecurityController',
-                'error'         => $error,
+                'error' => $error,
             ]);
-        }
-        else{
+        } else {
             $this->addFlash('error', 'Vous êtes déja connecté !');
             return $this->redirectToRoute('home');
         }

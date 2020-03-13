@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Commande {% if commande is defined %}n°{{ commande.id }} {% endif %}- {{parent()}}{% endblock %}
+{% block title %}Commande {% if commande is defined %}n°{{ commande.id }} {% endif %}- {{ parent() }}{% endblock %}
 
 {% block additional_stylesheets %}
     <link rel="stylesheet" type="text/css" href="{{asset('../assets/Adresse/adresse.css')}}">

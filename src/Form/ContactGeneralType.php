@@ -17,30 +17,28 @@ class ContactGeneralType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('email', EmailType::class,array(
+            ->add('email', EmailType::class, array(
                 'label' => 'Email',
                 'required' => true,
             ))
-            ->add('nom', TextType::class,array(
+            ->add('nom', TextType::class, array(
                 'label' => 'Nom',
                 'required' => true,
             ))
-            ->add('prenom', TextType::class,array(
+            ->add('prenom', TextType::class, array(
                 'label' => 'Prénom',
                 'required' => true,
             ))
-             ->add('message', TextareaType::class,array(
+            ->add('message', TextareaType::class, array(
                 'label' => 'Message',
                 'required' => true,
             ))
             ->add('conditions', CheckboxType::class)
             ->add('save', SubmitType::class, array(
                 'label' => 'Envoyer',
-                'attr' => array('title' => 'Envoyer l\'email' ,'class' => 'btn btn-outline-success'
+                'attr' => array('title' => 'Envoyer l\'email', 'class' => 'btn btn-outline-success'
                 ),
-           ))
-
-        ;
+            ));
     }
 
     public function configureOptions(OptionsResolver $resolver)

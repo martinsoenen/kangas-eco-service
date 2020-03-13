@@ -1,0 +1,8 @@
+Le faux compte client à utiliser sur PayPal est :
+    sb-nnod81071114@personal.example.com / )f;xy-R2
+
+Le faux compte boutique à utiliser sur PayPal est :     (accès sur le site www.sandbox.paypal.com)
+    sb-5ex4471058141@business.example.com / 6QM3eHy<
+
+
+Svp ne faites pas de grosse commande et surtout NE METTEZ PAS DE VRAI COMPTE CLIENT

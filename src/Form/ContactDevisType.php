@@ -20,34 +20,34 @@ class ContactDevisType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('entreprise', TextType::class,array(
+            ->add('entreprise', TextType::class, array(
                 'label' => 'Entreprise',
                 'required' => true,
             ))
-            ->add('nom', TextType::class,array(
+            ->add('nom', TextType::class, array(
                 'label' => 'Nom et prénom du représentant',
                 'required' => true,
             ))
-            ->add('email', EmailType::class,array(
+            ->add('email', EmailType::class, array(
                 'label' => 'Email de contact',
                 'required' => true,
             ))
             ->add('tel')
-            ->add('objets', TextareaType::class,array(
+            ->add('objets', TextareaType::class, array(
                 'label' => 'Objets à collecter',
                 'required' => true,
                 'attr' => [
                     'placeholder' => 'Indiquez ici les objets à venir chercher et leur quantité',
                 ]
             ))
-            ->add('poids', IntegerType::class,array(
+            ->add('poids', IntegerType::class, array(
                 'label' => 'Poids de l\'objet',
                 'required' => true,
                 'attr' => [
                     'placeholder' => 'Poids de l\'objet',
                 ]
             ))
-            ->add('taille', IntegerType::class,array(
+            ->add('taille', IntegerType::class, array(
                 'label' => 'Taille de l\'objet',
                 'required' => true,
                 'attr' => [
@@ -71,35 +71,34 @@ class ContactDevisType extends AbstractType
                     ])
                 ],
             ])
-            ->add('adresse', TextType::class,array(
+            ->add('adresse', TextType::class, array(
                 'label' => 'Adresse de récupération de l\'objet',
                 'required' => true,
                 'attr' => [
                     'placeholder' => 'Renseignez l\'adresse de récupération de l\'objet',
                 ]
             ))
-            ->add('cp', IntegerType::class,array(
+            ->add('cp', IntegerType::class, array(
                 'label' => 'Code Postal',
                 'required' => true,
             ))
-            ->add('ville', TextType::class,array(
+            ->add('ville', TextType::class, array(
                 'label' => 'Ville',
                 'required' => true,
             ))
-            ->add('date', DateType::class,array(
+            ->add('date', DateType::class, array(
                 'label' => 'Date de récupération de l\'objet',
                 'required' => true,
             ))
-            ->add('commentaire', TextareaType::class,array(
+            ->add('commentaire', TextareaType::class, array(
                 'label' => 'Commentaire',
                 'required' => false,
             ))
             ->add('save', SubmitType::class, array(
                 'label' => 'Envoyer',
-                'attr' => array('title' => 'Envoyer l\'email' ,'class' => 'btn btn-outline-success'
+                'attr' => array('title' => 'Envoyer l\'email', 'class' => 'btn btn-outline-success'
                 ),
-            ))
-        ;
+            ));
     }
 
     public function configureOptions(OptionsResolver $resolver)
