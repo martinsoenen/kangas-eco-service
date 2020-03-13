@@ -36,7 +36,6 @@ class AdressController extends AbstractController
                     ));
                 $form->handleRequest($request);
 
-
                 if ($form->isSubmitted() && $form->isValid()) {
 
                     $data = $form->getData();
@@ -80,7 +79,6 @@ class AdressController extends AbstractController
                         ),
                     ));
                 $form->handleRequest($request);
-
 
                 if ($form->isSubmitted() && $form->isValid()) {
 

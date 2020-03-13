@@ -72,7 +72,7 @@ class EcoServiceController extends AbstractController
 
             $mailer->send($message);
 
-            $this->addFlash('sucess', 'Votre email a bien été envoyé. Nous vous repondrons au plus vite. ');
+            $this->addFlash('success', 'Votre email a bien été envoyé. Nous vous répondrons au plus vite. ');
 
             return $this->redirectToRoute('home');
         }
@@ -94,7 +94,7 @@ class EcoServiceController extends AbstractController
                 'controller_name' => 'EcoServiceController',
             ]);
         } else {
-            $this->addFlash('error', 'Veuillez vos connecter en tant qu\'administrateur. Accès refusé.');
+            $this->addFlash('error', 'Veuillez vous connecter en tant qu\'administrateur. Accès refusé.');
             return $this->redirectToRoute('security_login');
         }
     }

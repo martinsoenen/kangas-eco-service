@@ -13,7 +13,6 @@ class EntrepriseController extends AbstractController
      * @Route("/entreprise/services", name="entreprise_services")
      */
     public function services()
-
     {
         return $this->render('entreprise/services.html.twig', [
             'controller_name' => 'EntrepriseController',
@@ -65,7 +64,7 @@ class EntrepriseController extends AbstractController
 
                     $mailer->send($message);
 
-                    $this->addFlash('notice', 'Votre email a bien été envoyé. Nous vous répondrons au plus vite ');
+                    $this->addFlash('notice', 'Votre email a bien été envoyé. Nous vous répondrons au plus vite.');
 
                     return $this->redirectToRoute('home');
                 }
@@ -75,13 +74,12 @@ class EntrepriseController extends AbstractController
                     'form' => $form->createView(),
                 ]);
             } else {
-                $this->addFlash('error', 'Vous devez avoir un compte entreprise. Accès refusé. ');
+                $this->addFlash('error', 'Vous devez avoir un compte entreprise. Accès refusé.');
                 return $this->redirectToRoute('entreprise_services');
             }
         } else {
-            $this->addFlash('error', 'Vous devez être connecté pour accéder à cette page. Accès refusé. ');
+            $this->addFlash('error', 'Vous devez être connecté pour accéder à cette page. Accès refusé.');
             return $this->redirectToRoute('entreprise_services');
         }
     }
-
 }

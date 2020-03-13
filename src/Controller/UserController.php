@@ -49,7 +49,6 @@ class UserController extends AbstractController
 
                 $form = $this->createForm(RegistrationTypeClient::class, $userDetails);
 
-
                 return $this->render('user/profilClient.html.twig', [
                     'form' => $form->createView(),
                     'Adresse' => $Adresse,
@@ -111,8 +110,6 @@ class UserController extends AbstractController
             return $this->redirectToRoute('security_login');
         }
     }
-
-
 
     ////////////////////ENTREPRISE////////////////////////////////
 
@@ -202,7 +199,7 @@ class UserController extends AbstractController
                 'adresse' => explode('|', $commande->getShippingAddr()),
             ]);
         } else {
-            $this->addFlash('error', 'Veuillez vos connecter. Accès refusé.');
+            $this->addFlash('error', 'Veuillez vous connecter. Accès refusé.');
             return $this->redirectToRoute('security_login');
         }
     }
@@ -214,7 +211,6 @@ class UserController extends AbstractController
      */
     public function showAdminBlog()
     {
-
         if ($this->getUser() != null && $this->getUser()->getUtilisateurType() == "admin") {
             $repo = $this->getDoctrine()->getRepository(Utilisateur::class);
             $utilisateurs = $repo->getAllUserAdministration();
@@ -224,7 +220,7 @@ class UserController extends AbstractController
                 'utilisateurs' => $utilisateurs,
             ]);
         } else {
-            $this->addFlash('error', 'Veuillez vos connecter en tant qu\'administrateur. Accès refusé.');
+            $this->addFlash('error', 'Veuillez vous connecter en tant qu\'administrateur. Accès refusé.');
             return $this->redirectToRoute('security_login');
         }
     }
@@ -235,7 +231,6 @@ class UserController extends AbstractController
      */
     public function ajouterUtilisateur(Utilisateur $utilisateur = null, Request $request, EntityManagerInterface $manager)
     {
-
         if ($this->getUser() != null && $this->getUser()->getUtilisateurType() == "admin") {
 
             if (!$utilisateur) {
@@ -270,9 +265,7 @@ class UserController extends AbstractController
                 ->add('telephone', TelType::class)
                 ->getForm();
 
-
             $form->handleRequest($request);
-
 
             if ($form->isSubmitted() && $form->isValid()) {
 
@@ -298,7 +291,6 @@ class UserController extends AbstractController
      */
     public function deleteAdmin(Utilisateur $utilisateur, EntityManagerInterface $manager)
     {
-
         if ($this->getUser() != null && $this->getUser()->getUtilisateurType() == "admin") {
 
             $manager->remove($utilisateur);
@@ -306,9 +298,8 @@ class UserController extends AbstractController
 
             return $this->redirectToRoute('afficher_admin');
         } else {
-            $this->addFlash('error', 'Veuillez vos connecter en tant qu\'administrateur. Accès refusé.');
+            $this->addFlash('error', 'Veuillez vous connecter en tant qu\'administrateur. Accès refusé.');
             return $this->redirectToRoute('security_login');
         }
     }
-
 }

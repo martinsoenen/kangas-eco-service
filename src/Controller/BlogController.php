@@ -104,9 +104,7 @@ class BlogController extends AbstractController
             ])
             ->getForm();
 
-
         $form->handleRequest($request);
-
 
         if ($form->isSubmitted() && $form->isValid()) {
             $ImageFile = $form->get('Image')->getData();

@@ -64,7 +64,7 @@ class SecurityController extends AbstractController
                 $em->persist($Utilisateur);
                 $em->flush();
 
-                $this->addFlash('sucess', 'Votre compte a bien été créé !');
+                $this->addFlash('success', 'Votre compte a bien été créé !');
                 return $this->redirectToRoute('home');
             }
             if ($formAdresse->isSubmitted() && $formAdresse->isValid()) {
@@ -72,7 +72,7 @@ class SecurityController extends AbstractController
                 $em->persist($Adresse);
                 $em->flush();
 
-                $this->addFlash('sucess', 'Votre compte a bien été créé !');
+                $this->addFlash('success', 'Votre compte a bien été créé !');
                 return $this->redirectToRoute('home');
             }
 
@@ -93,9 +93,7 @@ class SecurityController extends AbstractController
     /**
      * @Route("/connexion/mot-de-passe-oublie", name="security_forgot")
      */
-    public function passwordForget(Request $request, UserPasswordEncoderInterface $encoder,
-        \Swift_Mailer $mailer,
-        TokenGeneratorInterface $tokenGenerator)
+    public function passwordForget(Request $request, UserPasswordEncoderInterface $encoder, \Swift_Mailer $mailer, TokenGeneratorInterface $tokenGenerator)
     {
         if ($request->isMethod('POST')) {
 
@@ -105,7 +103,7 @@ class SecurityController extends AbstractController
             $user = $em->getRepository(Utilisateur::class)->findOneByEmail($email);
 
             if ($user === null) {
-                $this->addFlash('danger', 'Email Inconnu');
+                $this->addFlash('danger', 'Cette adresse email est inconnue.');
                 return $this->redirectToRoute('home');
             }
             $token = $tokenGenerator->generateToken();
@@ -135,7 +133,7 @@ class SecurityController extends AbstractController
 
             $mailer->send($message);
 
-            $this->addFlash('notice', 'Un mail vient de vous être envoyé pour la réinitialisation. ');
+            $this->addFlash('notice', 'Un mail vient de vous être envoyé pour la réinitialisation.');
 
             return $this->redirectToRoute('home');
         }
@@ -165,7 +163,7 @@ class SecurityController extends AbstractController
             $user->setPassword($passwordEncoder->encodePassword($user, $request->request->get('password')));
             $em->flush();
 
-            $this->addFlash('sucess', 'Votre mot de passe a bien été mis à jour, veuillez vous connecter.');
+            $this->addFlash('success', 'Votre mot de passe a bien été mis à jour, veuillez vous connecter.');
 
             return $this->redirectToRoute('home');
         } else {
@@ -179,7 +177,7 @@ class SecurityController extends AbstractController
      */
     public function logout()
     {
-        $this->addFlash('sucess', 'Vous avez été déconnecté.');
+        $this->addFlash('success', 'Vous avez été déconnecté.');
     }
 
     /**
@@ -192,14 +190,14 @@ class SecurityController extends AbstractController
 
         if ($this->getUser() == null) {
             if ($error)
-                $this->addFlash('error', 'Mot de passe ou adresse e-mail invalide');
+                $this->addFlash('error', 'Mot de passe ou adresse e-mail invalide.');
 
             return $this->render('security/login.html.twig', [
                 'controller_name' => 'SecurityController',
                 'error' => $error,
             ]);
         } else {
-            $this->addFlash('error', 'Vous êtes déja connecté !');
+            $this->addFlash('error', 'Vous êtes déja connecté.');
             return $this->redirectToRoute('home');
         }
     }
