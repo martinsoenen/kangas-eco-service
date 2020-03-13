@@ -2,22 +2,28 @@
 
 {% block title %}Catégories - Produit - Admin - {{ parent() }}{% endblock %}
 
+{% block additional_stylesheets %}
+
+    <link rel="stylesheet" type="text/css" href="{{asset('../assets/admin.css')}}">
+
+{% endblock %}
+
 {% block body %}
-    <h1>Page d'administration des Catégories Produit</h1>
-    <tbody>
-    {% for categorie in categories %}
-        <tr>
-            <td>{{ categorie.nom }}</td>
-            <td>
-                <bouton onclick="window.location.href = '/admin/produit/categorie/{{ categorie.id }}/edit';">
-                    <i class="fa fa-pencil fa-2x"></i>
-                </bouton>
-                <bouton onclick="window.location.href = '/admin/produit/categorie/{{ categorie.id }}/delete';">
-                    <i class="fa fa-trash fa-2x"></i>
-                </bouton>
-            </td>
-        </tr>
-    {% endfor %}
-    <a class="btn btn-outline-secondary" href="{{ path('ajouter_categorie_produit') }}">Ajouter une catégorie</a>
-    </tbody>
+    <div id="admin-categories">
+        <h1>Page d'administration des Catégories Produit</h1>
+        <tbody>
+        {% for categorie in categories %}
+            <tr>
+                <td>{{ categorie.nom }}</td>
+                <td>
+                    <i class="fa fa-pencil fa-2x"
+                       onclick="window.location.href = '/admin/produit/categorie/{{ categorie.id }}/edit';"></i>
+                    <i class="fa fa-trash fa-2x"
+                       onclick="window.location.href = '/admin/produit/categorie/{{ categorie.id }}/delete';"></i>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+        <div class="btn" onclick="window.location.href = '{{ path('ajouter_categorie_produit') }}';">Ajouter un catégorie</div>
+    </div>
 {% endblock %}
