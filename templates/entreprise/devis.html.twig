@@ -4,10 +4,11 @@
 
 {% block additional_stylesheets %}
     <link rel="stylesheet" type="text/css" href="{{asset('../assets/connexion/profil.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('../assets/entreprise/espace-entreprise.css')}}">
 {% endblock %}
 
 {% block body %}
-
+<div id="espace-entreprise">
 <ul id="nav-onglets-entreprises" class="nav nav-pills row" id="pills-tab">
 	<li class="nav-item item-entreprise  col-6">
 		<a class="nav-link w-100" id="services-tab" href="{{path('entreprise_services')}}">Nos Services
@@ -38,5 +39,6 @@
         {{ form_end(form) }}
         </div>
     </div>
+</div>
 </div>
 {% endblock %}
