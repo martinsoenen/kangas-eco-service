@@ -129,7 +129,7 @@ class SecurityController extends AbstractController
                             Cliquez ici pour réinitialiser votre mot de passe : <a href=\"".$url."\" target='_blank'>$url</a>.<br/>
                             <br/>
                             Bien cordialement,<br/>
-                            L'équipe Kangas",
+                            L'équipe Eco-Service",
                     'text/html'
                 );
 
