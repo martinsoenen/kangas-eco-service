@@ -3,18 +3,16 @@
         <nav class="navbar navbar-expand-md container-md">
             <!-- Logo -->
             <a href="{{ path("home") }}" title="Retour à l'accueil">
-                <img src="{{asset('../assets/img/Logo_Eco-Service_Line.png')}}" id="header-logo" border="0">
+                <img src="{{ asset('../assets/img/Logo_Eco-Service_Line.png') }}" id="header-logo" border="0">
             </a>
-
-            <!-- TODO : BARRE DE RECHERCHE ICI -->
-
             <!-- Barre de navigation -->
             <div class="navbar-nav navbar-nav-container">
                 <a class="nav-link" id="shopping-cart-icon" href="{{ path('panier') }}" title="Accéder au Panier">
                     <i class="fa fa-shopping-cart fa-2x"></i>
                 </a>
 
-                <button class="nav-link navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+                <button class="nav-link navbar-toggler" type="button" data-toggle="collapse"
+                        data-target="#collapsibleNavbar">
                     <i class="fa fa-bars fa-2x"></i>
                 </button>
 
@@ -37,7 +35,7 @@
                         </a>
                     </li>
                     {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-                        <div class="profil-item ">
+                    <div class="profil-item ">
                         <li class="nav-item">
                             <a class="nav-link profil-button" href="{{ path('profil_client') }}">Profil
                                 <i id="profile-icon" class="link-icon fa fa-user fa-2x"></i>
@@ -49,13 +47,13 @@
                             </a>
                         </li>
                         <div>
-                    {% else %}
-                        <li class="nav-item">
-                            <a class="nav-link connexion-button" href="{{ path('security_login') }}">Connexion
-                                <i id="login-icon" class="link-icon fa fa-sign-in fa-2x"></i>
-                            </a>
-                        </li>     
-                    {% endif %}
+                            {% else %}
+                                <li class="nav-item">
+                                    <a class="nav-link connexion-button" href="{{ path('security_login') }}">Connexion
+                                        <i id="login-icon" class="link-icon fa fa-sign-in fa-2x"></i>
+                                    </a>
+                                </li>
+                            {% endif %}
                 </ul>
             </div>
 

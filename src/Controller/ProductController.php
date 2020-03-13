@@ -22,17 +22,18 @@ use Symfony\Component\Validator\Constraints\File;
 class ProductController extends AbstractController
 {
     const NB_BLOGS_PER_PAGE = 12;
+
     /**
      * @Route("/magasin", name="magasin")
      */
     public function index(PaginatorInterface $paginator, Request $request)
     {
         $produits = $this->getDoctrine()->getRepository(Produit::class)->findAll();
-            $pagination = $paginator->paginate(
-                $produits,
-                $request->query->getInt('page', 1),
-                self::NB_BLOGS_PER_PAGE
-            );
+        $pagination = $paginator->paginate(
+            $produits,
+            $request->query->getInt('page', 1),
+            self::NB_BLOGS_PER_PAGE
+        );
         $categories = $this->getDoctrine()->getRepository(CategorieProduit::class)->findCategories();
 
         return $this->render('product/index.html.twig', [
@@ -40,7 +41,6 @@ class ProductController extends AbstractController
             'produits' => $pagination,
             'categories' => $categories
         ]);
-
     }
 
     /**
@@ -48,7 +48,6 @@ class ProductController extends AbstractController
      */
     public function magasinRecherche(Request $request)
     {
-//        $request->query->get('name');
 
         $produits = $this->getDoctrine()->getRepository(Produit::class)->findBySearch($request->query->get('name'));
         $categories = $this->getDoctrine()->getRepository(CategorieProduit::class)->findCategories();
@@ -116,14 +115,14 @@ class ProductController extends AbstractController
      */
     public function admin_show()
     {
-        if($this->getUser() != null && $this->getUser()->getUtilisateurType()=="admin"){
+        if ($this->getUser() != null && $this->getUser()->getUtilisateurType() == "admin") {
             $repo = $this->getDoctrine()->getRepository(Produit::class);
             $produits = $repo->findAll();
             return $this->render('product/admin_show.html.twig', [
                 'controller_name' => 'ProductController',
                 'produits' => $produits
             ]);
-        }else{
+        } else {
             $this->addFlash('error', 'Vous avez un compte non admin. Accès refusé.');
             return $this->redirectToRoute('home');
         }
@@ -133,30 +132,25 @@ class ProductController extends AbstractController
      * @Route("/admin/produit/add", name="ajouter_produit")
      * @Route("/admin/produit/{id}/edit", name="modifier_produit")
      */
-    public function ajouterProduit(Produit $produit = null,Request $request,EntityManagerInterface $manager)
+    public function ajouterProduit(Produit $produit = null, Request $request, EntityManagerInterface $manager)
     {
-        if($this->getUser() != null && $this->getUser()->getUtilisateurType()=="admin"){
+        if ($this->getUser() != null && $this->getUser()->getUtilisateurType() == "admin") {
             $editmode = true;
-            if(!$produit) {
+            if (!$produit) {
                 $produit = new Produit();
                 $editmode = false;
             }
             $form = $this->createFormBuilder($produit)
-                ->add('Nomproduit',TextType::class,array('required'  => true))
-                ->add('PrixunitaireHT',NumberType::class,array('required'  => true))
-                ->add('TauxTVA',NumberType::class,array('required'  => true))
-                ->add('Presentation',TextType::class,array('required'  => true))
-                ->add('Descriptiondetaillee',TextareaType::class,array('required'  => true))
-                ->add('SousCategorieProduit',EntityType::class,[
+                ->add('Nomproduit', TextType::class, array('required' => true))
+                ->add('PrixunitaireHT', NumberType::class, array('required' => true))
+                ->add('TauxTVA', NumberType::class, array('required' => true))
+                ->add('Presentation', TextType::class, array('required' => true))
+                ->add('Descriptiondetaillee', TextareaType::class, array('required' => true))
+                ->add('SousCategorieProduit', EntityType::class, [
                     'class' => SousCategorieProduit::class,
                     'choice_label' => 'Nom',
-                    'required'  => true,
+                    'required' => true,
                 ])
-                // ->add('UtilisateurAdmin',EntityType::class,[
-                //     'class' => UtilisateurAdministration::class,
-                //     'choice_label' => 'Nom',
-                //     'required'  => true,
-                // ])
                 ->add('Image', FileType::class, [
                     'label' => 'Image',
                     'mapped' => false,
@@ -178,7 +172,7 @@ class ProductController extends AbstractController
 
             $form->handleRequest($request);
 
-            if($form->isSubmitted()&& $form->isValid()) {
+            if ($form->isSubmitted() && $form->isValid()) {
                 $ImageFile = $form->get('Image')->getData();
                 $originalFilename = pathinfo($ImageFile->getClientOriginalName(), PATHINFO_FILENAME);
                 $newFilename = $originalFilename.'-'.uniqid().'.'.$ImageFile->guessExtension();
@@ -195,25 +189,26 @@ class ProductController extends AbstractController
 
             return $this->render('product/ajouterProduit.html.twig', [
                 'controller_name' => 'ProductController',
-                'formProduit'=> $form->createView(),
-                'editMode'=>$editmode,
+                'formProduit' => $form->createView(),
+                'editMode' => $editmode,
             ]);
-        }else{
+        } else {
             $this->addFlash('error', 'Vous avez un compte non admin. Accès refusé.');
             return $this->redirectToRoute('home');
         }
     }
 
     /**
-     *  @Route("/admin/produit/{id}/delete", name="delete_produit")
+     * @Route("/admin/produit/{id}/delete", name="delete_produit")
      */
-    public function deleteProduit(Produit $produit, EntityManagerInterface $manager){
-        if($this->getUser() != null && $this->getUser()->getUtilisateurType()=="admin"){
+    public function deleteProduit(Produit $produit, EntityManagerInterface $manager)
+    {
+        if ($this->getUser() != null && $this->getUser()->getUtilisateurType() == "admin") {
             $manager->remove($produit);
             $manager->flush();
 
             return $this->redirectToRoute('admin_produits');
-        }else{
+        } else {
             $this->addFlash('error', 'Vous avez un compte non admin. Accès refusé.');
             return $this->redirectToRoute('home');
         }

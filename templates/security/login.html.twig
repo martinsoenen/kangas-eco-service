@@ -1,38 +1,40 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Connexion -
-	{{parent()}}
+    {{ parent() }}
 {% endblock %}
 
 {% block additional_stylesheets %}
-    <link rel="stylesheet" type="text/css" href="{{asset('../assets/connexion/login.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('../assets/connexion/login.css') }}">
 {% endblock %}
 
 {% block body %}
-<div class="profil">
-	<div class="form-container">
-		<ul class="nav nav-tabs menu-connexion" role="tablist">
-			<li class="nav-item menu-connexion-item ">
-				<a class="nav-link menu-connexion-link-active" data-toggle="tab" role="tab">Connexion</a>
-			</li>
-			<li class="nav-item menu-connexion-item ">
-				<a class="nav-link menu-connexion-link" href="{{path('security_registration')}}">Inscription</a>
-			</li>
-		</ul>
-		<div class="tab-content col-md-10 col-12">
-			<div class="tab-pane active" id="tabs-1" role="tabpanel">
-				<form action="{{path('security_login')}}" method="POST">
-					<div class="form-group">
-						<input type="text" placeholder="Adresse email" name="_username" class="form-control" required>
-						<input type="password" placeholder="Mot de passe" name="_password" class="form-control" required>
-						<a href="{{path('security_forgot')}}" class="text-center center">Mot de passe oublié</a>
-					</div>
-					<div class="form-group center">
-						<button type="submit" class="btn btn-success">Se connecter</button>
-					</div>
-				</form>
-			</div>
-		</div>
-	</div>
-</div>
+    <div class="profil">
+        <div class="form-container">
+            <ul class="nav nav-tabs menu-connexion" role="tablist">
+                <li class="nav-item menu-connexion-item ">
+                    <a class="nav-link menu-connexion-link-active" data-toggle="tab" role="tab">Connexion</a>
+                </li>
+                <li class="nav-item menu-connexion-item ">
+                    <a class="nav-link menu-connexion-link" href="{{ path('security_registration') }}">Inscription</a>
+                </li>
+            </ul>
+            <div class="tab-content col-md-10 col-12">
+                <div class="tab-pane active" id="tabs-1" role="tabpanel">
+                    <form action="{{ path('security_login') }}" method="POST">
+                        <div class="form-group">
+                            <input type="text" placeholder="Adresse email" name="_username" class="form-control"
+                                   required>
+                            <input type="password" placeholder="Mot de passe" name="_password" class="form-control"
+                                   required>
+                            <a href="{{ path('security_forgot') }}" class="text-center center">Mot de passe oublié</a>
+                        </div>
+                        <div class="form-group center">
+                            <button type="submit" class="btn btn-success">Se connecter</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

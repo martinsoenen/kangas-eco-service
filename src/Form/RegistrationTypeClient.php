@@ -32,17 +32,16 @@ class RegistrationTypeClient extends AbstractType
                 'required' => true
             ))
             ->add('password', PasswordType::class)
-            ->add('passwordConfirm',PasswordType::class)
-            ->add('nom',TextType::class)
-            ->add('prenom',TextType::class)
-            ->add('telephone', TelType::class )
+            ->add('passwordConfirm', PasswordType::class)
+            ->add('nom', TextType::class)
+            ->add('prenom', TextType::class)
+            ->add('telephone', TelType::class)
             ->add('conditions', CheckboxType::class)
             ->add('save', SubmitType::class, array(
                 'label' => 'Valider',
-                'attr' => array('title' => 'Valider les modifications' ,'class' => 'btn btn-outline-success'
+                'attr' => array('title' => 'Valider les modifications', 'class' => 'btn btn-outline-success'
                 ),
-           ))
-        ;
+            ));
     }
 
     public function configureOptions(OptionsResolver $resolver)
