@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Devis en ligne - {{ parent() }}{% endblock %}
+{% block title %}Demande de devis - {{ parent() }}{% endblock %}
 
 {% block body %}
 
@@ -10,13 +10,13 @@
 		</a>
 	</li>
 	<li class="nav-item item-entreprise active col-6">
-		<a class="nav-link active w-100" id="devis-contact-tab" href="{{path('entreprise_devis')}}">Devis en ligne</a>
+		<a class="nav-link active w-100" id="devis-contact-tab" href="{{path('entreprise_devis')}}">Demande de devis</a>
 	</li>
 </ul>
 
 
 
-    <h1>Devis en ligne </h1>
+    <h1>Demande de devis </h1>
     {{ form_start(form) }}
         {{form_row(form.entreprise)}}
         {{form_row(form.nom)}}
