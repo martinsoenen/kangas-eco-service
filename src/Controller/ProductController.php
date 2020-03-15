@@ -46,14 +46,19 @@ class ProductController extends AbstractController
     /**
      * @Route("/magasin/recherche", name="magasin_search", methods={"GET","POST"})
      */
-    public function magasinRecherche(Request $request)
+    public function magasinRecherche(PaginatorInterface $paginator, Request $request)
     {
         $produits = $this->getDoctrine()->getRepository(Produit::class)->findBySearch($request->query->get('name'));
+        $pagination = $paginator->paginate(
+            $produits,
+            $request->query->getInt('page', 1),
+            self::NB_BLOGS_PER_PAGE
+        );
         $categories = $this->getDoctrine()->getRepository(CategorieProduit::class)->findCategories();
 
         return $this->render('product/index.html.twig', [
             'controller_name' => 'ProductController',
-            'produits' => $produits,
+            'produits' => $pagination,
             'categories' => $categories
         ]);
     }
@@ -62,17 +67,22 @@ class ProductController extends AbstractController
      * @Route("/magasin/categorie/{id}", name="categorie_produit")
      * @Entity("CategorieProduit", expr="repository.find(id)")
      */
-    public function categorie(CategorieProduit $categorie)
+    public function categorie(PaginatorInterface $paginator, Request $request, CategorieProduit $categorie)
     {
         $id = $categorie->getId();
         $categories = $this->getDoctrine()->getRepository(CategorieProduit::class)->findCategories();
         $produits = $this->getDoctrine()->getRepository(Produit::class)->findProduitsByCategorie($id);
+        $pagination = $paginator->paginate(
+            $produits,
+            $request->query->getInt('page', 1),
+            self::NB_BLOGS_PER_PAGE
+        );
 
         return $this->render('product/showByCategorie.html.twig', [
             'controller_name' => 'ProductController',
             'categorie' => $categorie,
             'categories' => $categories,
-            'produits' => $produits
+            'produits' => $pagination
         ]);
     }
 
@@ -80,17 +90,22 @@ class ProductController extends AbstractController
      * @Route("/magasin/sous-categorie/{id}", name="sous_categorie_produit")
      * @Entity("SousCategorieProduit", expr="repository.find(id)")
      */
-    public function sous_categorie(SousCategorieProduit $souscategorie)
+    public function sous_categorie(PaginatorInterface $paginator, Request $request, SousCategorieProduit $souscategorie)
     {
         $id = $souscategorie->getId();
         $categories = $this->getDoctrine()->getRepository(CategorieProduit::class)->findCategories();
         $produits = $this->getDoctrine()->getRepository(Produit::class)->findProduitsBySousCategorie($id);
+        $pagination = $paginator->paginate(
+            $produits,
+            $request->query->getInt('page', 1),
+            self::NB_BLOGS_PER_PAGE
+        );
 
         return $this->render('product/showBySousCategorie.html.twig', [
             'controller_name' => 'ProductController',
             'categories' => $categories,
             'souscategorie' => $souscategorie,
-            'produits' => $produits
+            'produits' => $pagination
         ]);
     }
 
