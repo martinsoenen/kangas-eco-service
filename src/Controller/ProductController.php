@@ -46,14 +46,19 @@ class ProductController extends AbstractController
     /**
      * @Route("/magasin/recherche", name="magasin_search", methods={"GET","POST"})
      */
-    public function magasinRecherche(Request $request)
+    public function magasinRecherche(PaginatorInterface $paginator, Request $request)
     {
         $produits = $this->getDoctrine()->getRepository(Produit::class)->findBySearch($request->query->get('name'));
+        $pagination = $paginator->paginate(
+            $produits,
+            $request->query->getInt('page', 1),
+            self::NB_BLOGS_PER_PAGE
+        );
         $categories = $this->getDoctrine()->getRepository(CategorieProduit::class)->findCategories();
 
         return $this->render('product/index.html.twig', [
             'controller_name' => 'ProductController',
-            'produits' => $produits,
+            'produits' => $pagination,
             'categories' => $categories
         ]);
     }
