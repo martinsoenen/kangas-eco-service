@@ -26,3 +26,5 @@ entities:
 	$(SYMFONY) make:entity --regenerate App
 entity:
 	$(SYMFONY) make:entity
+fixtures:
+	echo Pas de fixtures, il faut ajouter le fichier BDD/insert.sql à la main dans PHPMyAdmin

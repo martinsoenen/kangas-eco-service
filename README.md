@@ -19,11 +19,9 @@ Pour accéder à PHPMyAdmin, il suffit d'aller sur le port 81 de votre URL (`loc
 Pour accéder à MailHog, il faut aller sur le port 82 de votre URL (`localhost:82` ou `dev.eco-service.com:82`).
 
 ## Site de production
-Dernière mise en prod : 13/03/2020
+Dernière mise en prod : 19/03/2021
 
-Pour accéder au site internet en production, vous pouvez aller sur eco-service.martinsoenen.com ou ajouter la ligne
- `149.91.91.63 eco-service.com www.eco-service.com` à votre fichier de hosts pour pouvoir ensuite accéder au site
-  directement depuis l'URL www.eco-service.com !
+Pour accéder au site internet en production, vous pouvez aller sur https://eco-service.martinsoenen.com.
 
 ## Docker-compose cheatsheet
 
